@@ -1,0 +1,91 @@
+parseCSV 0.2.0 beta
+-----------------------------------
+Date: 2-Jan-2007
+
+- Added auto() function to automatically detect
+  delimiter character.
+  Useful for user upload incase delimiter is
+  comma (,), tab, or semi-colon (;). Some
+  versions of MS Excel for Windows use
+  semi-colons instead of commas when saving to
+  CSV files.
+  It uses a process of elimination to eliminate
+  characters that can not be the delimiter,
+  so it should work on all CSV-structured files
+  almost no matter what the delimiter is.
+
+- Generally updated some of the core workings
+  to increase performance, and offer better 
+  support for large (1MB and up) files.
+
+- Added code examples to header comment.
+
+-----------------------------------
+
+
+parseCSV 0.1.6 beta
+-----------------------------------
+Date: 22-Dec-2006
+
+- Updated output() function.
+
+-----------------------------------
+
+
+parseCSV 0.1.5 beta
+-----------------------------------
+Date: 22-Dec-2006
+
+- Added output() function for easy output to
+  browser, for downloading features for example.
+
+-----------------------------------
+
+
+parseCSV 0.1.4 beta
+-----------------------------------
+Date: 17-Dec-2006
+
+- Minor changes and fixes
+
+-----------------------------------
+
+
+parseCSV 0.1.3 beta
+-----------------------------------
+Date: 17-Dec-2006
+
+- Added GPL v2.0 license.
+
+-----------------------------------
+
+
+parseCSV 0.1.2 beta
+-----------------------------------
+Date: 17-Dec-2006
+
+- Added encoding() function for easier character
+  encoding configuration.
+
+-----------------------------------
+
+
+parseCSV 0.1.1 beta
+-----------------------------------
+Date: 24-Nov-2006
+
+- Added support for a PHP die command on first
+  line of csv files if they have a .php extension
+  to protect secure data from being displayed
+  directly to the browser.
+
+-----------------------------------
+
+
+parseCSV 0.1 beta
+-----------------------------------
+Date: 23-Nov-2006
+
+- Initial release
+
+-----------------------------------
