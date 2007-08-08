@@ -4,7 +4,7 @@ class parseCSV {
 	
 /*
 
-	Class: parseCSV v0.2.0 beta
+	Class: parseCSV v0.2.1
 	http://code.google.com/p/parsecsv-for-php/
 	
 	Created by Jim Myhrberg (jim@zydev.info).
@@ -230,10 +230,12 @@ class parseCSV {
 		
 		if ( $prefered === null ) $prefered = $this->auto_prefered;
 		
-		if ( empty($data) ) {
-			if ( $this->check_data() ) {
+		if ( empty($this->file_data) ) {
+			if ( $this->check_data($file) ) {
 				$data = &$this->file_data;
 			} else return false;
+		} else {
+			$data = &$this->file_data;
 		}
 		
 		$chars = array();
@@ -324,7 +326,7 @@ class parseCSV {
 				$data = ltrim($strip[1]);
 			}
 			if ( $this->convert_encoding ) $data = iconv($this->input_encoding, $this->output_encoding, $data);
-			if ( $data[strlen($data)-1] != "\n" ) $data .= "\n";
+			if ( substr($data, -1) != "\n" ) $data .= "\n";
 			$this->file_data = &$data;
 			return true;
 		}
