@@ -1,3 +1,26 @@
+parseCSV 0.3.0
+-----------------------------------
+Date: 9-Aug-2007
+
+- Changed to the MIT license.
+
+- Added offset and limit options.
+
+- Added SQL-like conditions for quickly
+  filtering out entries. Documentation on the
+  condition syntax is forthcoming.
+
+- Small parsing modification to comply
+  with some recent changes to the specifications
+  outlined on Wikipedia's Comma-separated values
+  article.
+
+- Minor changes and optimizations, and a few
+  spelling corrections. Oops :)
+
+-----------------------------------
+
+
 parseCSV 0.2.1
 -----------------------------------
 Date: 8-Aug-2007
