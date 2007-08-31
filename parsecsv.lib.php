@@ -4,7 +4,7 @@ class parseCSV {
 	
 /*
 
-	Class: parseCSV v0.3.0
+	Class: parseCSV v0.3.1
 	http://code.google.com/p/parsecsv-for-php/
 	
 	
@@ -123,7 +123,7 @@ class parseCSV {
 	var $output_encoding = 'ISO-8859-1';
 	
 	# used by unparse(), save(), and output() functions
-	var $linefeed = "\n";
+	var $linefeed = "\r\n";
 	
 	# only used by output() function
 	var $output_delimiter = ',';

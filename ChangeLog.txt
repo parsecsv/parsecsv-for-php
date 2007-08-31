@@ -1,3 +1,16 @@
+parseCSV 0.3.1
+-----------------------------------
+Date: 1-Sep-2007
+
+- Small change to default output settings to
+  conform with RFC 4180 (http://rfc.net/rfc4180.html).
+  Only the LF (line feed) character was used
+  by default to separate rows, rather than
+  CRLF (carriage return & line feed).
+
+-----------------------------------
+
+
 parseCSV 0.3.0
 -----------------------------------
 Date: 9-Aug-2007
