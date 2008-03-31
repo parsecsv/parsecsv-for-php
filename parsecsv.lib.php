@@ -4,7 +4,7 @@ class parseCSV {
 	
 /*
 
-	Class: parseCSV v0.3.2 beta
+	Class: parseCSV v0.3.2
 	http://code.google.com/p/parsecsv-for-php/
 	
 	
@@ -503,11 +503,11 @@ class parseCSV {
 	function _validate_row_conditions ($row = array(), $conditions = null) {
 		if ( !empty($row) ) {
 			if ( !empty($conditions) ) {
-				$conditions = (strpos($conditions, 'OR') !== false) ? explode('OR', $conditions) : array($conditions) ;
+				$conditions = (strpos($conditions, ' OR ') !== false) ? explode(' OR ', $conditions) : array($conditions) ;
 				$or = '';
 				foreach( $conditions as $key => $value ) {
-					if ( strpos($value, 'AND') !== false ) {
-						$value = explode('AND', $value);
+					if ( strpos($value, ' AND ') !== false ) {
+						$value = explode(' AND ', $value);
 						$and = '';
 						foreach( $value as $k => $v ) {
 							$and .= $this->_validate_row_condition($row, $v);

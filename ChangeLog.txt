@@ -1,3 +1,29 @@
+parseCSV 0.3.2
+-----------------------------------
+Date: 1-Apr-2008
+
+This is primarily a bug-fix release for a critical
+bug which was brought to my attention.
+
+- Fixed a critical bug in conditions parsing which
+  would generate corrupt matching patterns causing
+  the condition(s) to not work at all in some
+  situations.
+
+- Fixed a small code error which would cause PHP to
+  generate a invalid offset notice when zero length
+  values were fed into the unparse() method to
+  generate CSV data from an array.
+
+Notice: If you have been using the "parsecsv-stable"
+branch as an external in any of your projects,
+please use the "stable/parsecsv" branch from this
+point on as I will eventually remove the former due
+to it's stupid naming.
+
+-----------------------------------
+
+
 parseCSV 0.3.1
 -----------------------------------
 Date: 1-Sep-2007
@@ -30,6 +56,9 @@ Date: 9-Aug-2007
 
 - Minor changes and optimizations, and a few
   spelling corrections. Oops :)
+
+- Included more complex code examples in the
+  parseCSV download.
 
 -----------------------------------
 

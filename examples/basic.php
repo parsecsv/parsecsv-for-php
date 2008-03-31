@@ -13,7 +13,11 @@ $csv = new parseCSV();
 # Parse '_books.csv' using automatic delimiter detection...
 $csv->auto('_books.csv');
 
-# ...or if you know the delimiter, use the parse() function.
+# ...or if you know the delimiter, set the delimiter character
+# if its not the default comma...
+// $csv->delimiter = "\t";   # tab delimited
+
+# ...and then use the parse() function.
 // $csv->parse('_books.csv');
 
 
