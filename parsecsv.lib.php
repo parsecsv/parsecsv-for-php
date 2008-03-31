@@ -4,7 +4,7 @@ class parseCSV {
 	
 /*
 
-	Class: parseCSV v0.3.1
+	Class: parseCSV v0.3.2 beta
 	http://code.google.com/p/parsecsv-for-php/
 	
 	
@@ -601,11 +601,13 @@ class parseCSV {
 	 * @return  Processed value
 	 */
 	function _enclose_value ($value = null) {
-		$delimiter = preg_quote($this->delimiter, '/');
-		$enclosure = preg_quote($this->enclosure, '/');
-		if ( preg_match("/".$delimiter."|".$enclosure."|\n|\r/i", $value) || ($value{0} == ' ' || substr($value, -1) == ' ') ) {
-			$value = str_replace($this->enclosure, $this->enclosure.$this->enclosure, $value);
-			$value = $this->enclosure.$value.$this->enclosure;
+		if ( $value !== null && $value != '' ) {
+			$delimiter = preg_quote($this->delimiter, '/');
+			$enclosure = preg_quote($this->enclosure, '/');
+			if ( preg_match("/".$delimiter."|".$enclosure."|\n|\r/i", $value) || ($value{0} == ' ' || substr($value, -1) == ' ') ) {
+				$value = str_replace($this->enclosure, $this->enclosure.$this->enclosure, $value);
+				$value = $this->enclosure.$value.$this->enclosure;
+			}
 		}
 		return $value;
 	}
