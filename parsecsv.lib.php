@@ -4,7 +4,7 @@ class parseCSV {
 	
 /*
 
-	Class: parseCSV v0.3.2
+	Class: parseCSV v0.3.3 beta
 	http://code.google.com/p/parsecsv-for-php/
 	
 	
@@ -140,6 +140,19 @@ class parseCSV {
 	# loaded file contents
 	var $file_data;
 	
+	# error while parsing input data
+	#  0 = No errors found. Everything should be fine :)
+	#  1 = Hopefully correctable syntax error was found.
+	#  2 = Enclosure character (double quote by default)
+	#      was found in non-enclosed field. This means
+	#      the file is either corrupt, or does not
+	#      standard CSV formatting. Please validate
+	#      the parsed data yourself.
+	var $error = 0;
+	
+	# detailed error info
+	var $error_info = array();
+	
 	# array of field values in data parsed
 	var $titles = array();
 	
@@ -170,6 +183,7 @@ class parseCSV {
 	 * @return  nothing
 	 */
 	function parse ($input = null, $offset = null, $limit = null, $conditions = null) {
+		if ( $input === null ) $input = $this->file;
 		if ( !empty($input) ) {
 			if ( $offset !== null ) $this->offset = $offset;
 			if ( $limit !== null ) $this->limit = $limit;
@@ -270,14 +284,14 @@ class parseCSV {
 			$ch = $data{$i};
 			$nch = ( isset($data{$i+1}) ) ? $data{$i+1} : false ;
 			$pch = ( isset($data{$i-1}) ) ? $data{$i-1} : false ;
-			
+
 			// open and closing quotes
-			if ( $ch == $enclosure && (!$enclosed || $nch != $enclosure) ) {
-				$enclosed = ( $enclosed ) ? false : true ;
-			
-			// inline quotes	
-			} elseif ( $ch == $enclosure && $enclosed ) {
-				$i++;
+			if ( $ch == $enclosure ) {
+				if ( !$enclosed || $nch != $enclosure ) {
+					$enclosed = ( $enclosed ) ? false : true ;
+				} elseif ( $enclosed ) {
+					$i++;
+				}
 
 			// end of row
 			} elseif ( ($ch == "\n" && $pch != "\r" || $ch == "\r") && !$enclosed ) {
@@ -311,13 +325,12 @@ class parseCSV {
 		
 		// capture most probable delimiter
 		ksort($filtered);
-		$delimiter = reset($filtered);
-		$this->delimiter = $delimiter;
+		$this->delimiter = reset($filtered);
 		
 		// parse data
 		if ( $parse ) $this->data = $this->parse_string();
 		
-		return $delimiter;
+		return $this->delimiter;
 		
 	}
 	
@@ -349,6 +362,8 @@ class parseCSV {
 			} else return false;
 		}
 		
+		$white_spaces = str_replace($this->delimiter, '', " \t\x0B\0");
+		
 		$rows = array();
 		$row = array();
 		$row_count = 0;
@@ -365,22 +380,65 @@ class parseCSV {
 			$nch = ( isset($data{$i+1}) ) ? $data{$i+1} : false ;
 			$pch = ( isset($data{$i-1}) ) ? $data{$i-1} : false ;
 			
-			// open and closing quotes
-			if ( $ch == $this->enclosure && (!$enclosed || $nch != $this->enclosure) ) {
-				$enclosed = ( $enclosed ) ? false : true ;
-				if ( $enclosed ) $was_enclosed = true;
-			
-			// inline quotes	
-			} elseif ( $ch == $this->enclosure && $enclosed ) {
-				$current .= $ch;
-				$i++;
+			// open/close quotes, and inline quotes
+			if ( $ch == $this->enclosure ) {
+				if ( !$enclosed ) {
+					if ( ltrim($current, $white_spaces) == '' ) {
+						$enclosed = true;
+						$was_enclosed = true;
+					} else {
+						$this->error = 2;
+						$error_row = count($rows) + 1;
+						$error_col = $col + 1;
+						if ( !isset($this->error_info[$error_row.'-'.$error_col]) ) {
+							$this->error_info[$error_row.'-'.$error_col] = array(
+								'info' => 'Syntax error found on row '.$error_row.'. Non-enclosed fields can not contain double-quotes.',
+								'row' => $error_row,
+								'field' => $error_col,
+								'field_name' => (!empty($head[$col])) ? $head[$col] : null,
+							);
+						}
+						$current .= $ch;
+					}
+				} elseif ($nch == $this->enclosure) {
+					$current .= $ch;
+					$i++;
+				} elseif ( $nch != $this->delimiter && $nch != "\r" && $nch != "\n" ) {
+					for ( $x=($i+1); isset($data{$x}) && ltrim($data{$x}, $white_spaces) == ''; $x++ ) {}
+					if ( $data{$x} == $this->delimiter ) {
+						$enclosed = false;
+						$i = $x;
+					} else {
+						$this->error = 1;
+						$error_row = count($rows) + 1;
+						$error_col = $col + 1;
+						if ( !isset($this->error_info[$error_row.'-'.$error_col]) ) {
+							$this->error_info[$error_row.'-'.$error_col] = array(
+								'info' =>
+									'Syntax error found on row '.(count($rows) + 1).'. '.
+									'Fields containing double quotes must be enclosed with double quotes. '.
+									'Additionally, two double quotes must be used within an enclosed field rather than a single one.',
+								'row' => count($rows) + 1,
+								'field' => $col + 1,
+								'field_name' => (!empty($head[$col])) ? $head[$col] : null,
+							);
+						}
+						$current .= $ch;
+						$enclosed = false;
+					}
+				} else {
+					$enclosed = false;
+				}
 
 			// end of field/row
-			} elseif ( ($ch == $this->delimiter || ($ch == "\n" && $pch != "\r") || $ch == "\r") && !$enclosed ) {
-				if ( !$was_enclosed ) $current = trim($current);
+			} elseif ( ($ch == $this->delimiter || $ch == "\n" || $ch == "\r") && !$enclosed ) {
 				$key = ( !empty($head[$col]) ) ? $head[$col] : $col ;
-				$row[$key] = $current;
+				if ( $was_enclosed && $current{strlen($current)-1} == $this->enclosure ) {
+					$current = substr($current, 0, -1);
+				}
+				$row[$key] = ( $was_enclosed ) ? $current : trim($current) ;
 				$current = '';
+				$was_enclosed = false;
 				$col++;
 			
 				// end of row
@@ -405,6 +463,7 @@ class parseCSV {
 					if ( $this->sort_by === null && $this->limit !== null && count($rows) == $this->limit ) {
 						$i = $strlen;
 					}
+					if ( $ch == "\r" && $nch == "\n" ) $i++;
 				}
 				
 			// append character to current field
