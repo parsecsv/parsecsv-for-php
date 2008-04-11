@@ -1,3 +1,32 @@
+parseCSV 0.4 beta
+-----------------------------------
+Date: 11-Apr-2008
+
+- Error reporting for files/data which is corrupt
+  or has formatting errors like using double
+  quotes in a field without enclosing quotes. Or
+  not escaping double quotes with a second one.
+
+- parse() method does not require input anymore
+  if the "$object->file" property has been set.
+
+I'm calling this a beta release due to the heavy
+modifications to the core parsing logic required
+for error reporting to work. I have tested the
+new code quite extensively, I'm fairly confident
+that it still parses exactly as it always has.
+
+The second reason I'm calling it a beta release
+is cause I'm sure the error reporting code will
+need more refinements and tweaks to detect more
+types of errors, as it's only picking two types
+or syntax errors right now. However, it seems
+these two are the most common errors that you
+would be likely to come across.
+
+-----------------------------------
+
+
 parseCSV 0.3.2
 -----------------------------------
 Date: 1-Apr-2008
