@@ -1,3 +1,13 @@
+parseCSV 0.4.1 beta
+-----------------------------------
+Date: 29-May-2008
+
+- Fixed a small bug in how the output() method
+  handles input data.
+
+-----------------------------------
+
+
 parseCSV 0.4 beta
 -----------------------------------
 Date: 11-Apr-2008

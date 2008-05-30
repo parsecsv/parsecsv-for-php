@@ -4,7 +4,7 @@ class parseCSV {
 	
 /*
 
-	Class: parseCSV v0.4 beta
+	Class: parseCSV v0.4.1 beta
 	http://code.google.com/p/parsecsv-for-php/
 	
 	
@@ -501,7 +501,7 @@ class parseCSV {
 		$entry = array();
 		
 		// create heading
-		if ( $this->heading && !$append ) {
+		if ( $this->heading && !$append && !empty($fields) ) {
 			foreach( $fields as $key => $value ) {
 				$entry[] = $this->_enclose_value($value);
 			}
