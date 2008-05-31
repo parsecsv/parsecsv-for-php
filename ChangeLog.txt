@@ -3,11 +3,11 @@ parseCSV 0.4.2 beta
 Date: 31-May-2008
 
 - IMPORTANT! If you're using the output(),
-  please note that the first parameter has been
-  completely removed as it was technically just
-  useless. Instead, the second parameter
-  (filename) doubles as its replacement. Simply
-  put, if filename is not set or null, the
+  method please note that the first parameter
+  has been completely removed as it was
+  technically just useless. Instead, the second
+  parameter (filename) doubles as its replacement.
+  Simply put, if filename is not set or null, the
   output() method will not output a downloadable
   file. Please update your existing code
   when using 0.4.2 and later :)
