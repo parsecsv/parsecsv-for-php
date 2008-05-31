@@ -1,3 +1,26 @@
+parseCSV 0.4.2 beta
+-----------------------------------
+Date: 31-May-2008
+
+- IMPORTANT! If you're using the output(),
+  please note that the first parameter has been
+  completely removed as it was technically just
+  useless. Instead, the second parameter
+  (filename) doubles as its replacement. Simply
+  put, if filename is not set or null, the
+  output() method will not output a downloadable
+  file. Please update your existing code
+  when using 0.4.2 and later :)
+
+- Small fix to the headers sent by the output()
+  method.
+
+- Added a download example using the output()
+  method to the examples folder.
+
+-----------------------------------
+
+
 parseCSV 0.4.1 beta
 -----------------------------------
 Date: 29-May-2008

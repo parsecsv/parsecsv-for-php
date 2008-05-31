@@ -4,7 +4,7 @@ class parseCSV {
 	
 /*
 
-	Class: parseCSV v0.4.1 beta
+	Class: parseCSV v0.4.2 beta
 	http://code.google.com/p/parsecsv-for-php/
 	
 	
@@ -216,20 +216,19 @@ class parseCSV {
 	
 	/**
 	 * Generate CSV based string for output
-	 * @param   output      if true, prints headers and strings to browser
-	 * @param   filename    filename sent to browser in headers if output is true
+	 * @param   filename    if specified, headers and data will be output directly to browser as a downloable file
 	 * @param   data        2D array with data
 	 * @param   fields      field names
 	 * @param   delimiter   delimiter used to separate data
 	 * @return  CSV data using delimiter of choice, or default
 	 */
-	function output ($output = true, $filename = null, $data = array(), $fields = array(), $delimiter = null) {
+	function output ($filename = null, $data = array(), $fields = array(), $delimiter = null) {
 		if ( empty($filename) ) $filename = $this->output_filename;
 		if ( $delimiter === null ) $delimiter = $this->output_delimiter;
 		$data = $this->unparse($data, $fields, null, null, $delimiter);
-		if ( $output ) {
+		if ( $filename !== null ) {
 			header('Content-type: application/csv');
-			header('Content-Disposition: inline; filename="'.$filename.'"');
+			header('Content-Disposition: attachment; filename="'.$filename.'"');
 			echo $data;
 		}
 		return $data;
