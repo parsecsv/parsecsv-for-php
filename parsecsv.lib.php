@@ -135,6 +135,8 @@ class parseCSV {
 	var $output_delimiter = ',';
 	var $output_filename = 'data.csv';
 	
+	# keep raw file data in memory after successful parsing (useful for debugging)
+	var $keep_file_data = false;
 	
 	/**
 	 * Internal variables
@@ -489,6 +491,9 @@ class parseCSV {
 			if ( $this->offset !== null || $this->limit !== null ) {
 				$rows = array_slice($rows, ($this->offset === null ? 0 : $this->offset) , $this->limit, true);
 			}
+		}
+		if ( !$this->keep_file_data ) {
+			$this->file_data = null;
 		}
 		return $rows;
 	}
