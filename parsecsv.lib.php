@@ -4,7 +4,7 @@ class parseCSV {
 	
 /*
 
-	Class: parseCSV v0.4.2 beta
+	Class: parseCSV v0.4.3 beta
 	http://code.google.com/p/parsecsv-for-php/
 	
 	

@@ -1,3 +1,21 @@
+parseCSV 0.4.3 beta
+-----------------------------------
+Date: 1-July-2008
+
+- Issue #4. Added an option for setting sorting
+  type behavior when sorting data.
+  Simply set $csv->sort_type to "regular", "numeric",
+  or "string".
+
+- Issue #6. Raw loaded file data is now cleared from
+  file_data property when it has been successfully
+  parsed to keep parseCSV's memory footprint to a
+  minimum. Specifically handy when using mulitple
+  instances of parseCSV to process large files.
+
+-----------------------------------
+
+
 parseCSV 0.4.2 beta
 -----------------------------------
 Date: 31-May-2008
