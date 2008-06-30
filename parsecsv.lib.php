@@ -94,6 +94,12 @@ class parseCSV {
 	var $sort_by = null;
 	var $sort_reverse = false;
 	
+	# sort behavior passed to ksort/krsort functions
+	# regular = SORT_REGULAR
+	# numeric = SORT_NUMERIC
+	# string  = SORT_STRING
+	var $sort_type = null;
+	
 	# delimiter (comma) and enclosure (double quote)
 	var $delimiter = ',';
 	var $enclosure = '"';
@@ -473,7 +479,13 @@ class parseCSV {
 		}
 		$this->titles = $head;
 		if ( !empty($this->sort_by) ) {
-			( $this->sort_reverse ) ? krsort($rows) : ksort($rows) ;
+			$sort_type = SORT_REGULAR;
+			if ( $this->sort_type == 'numeric' ) {
+				$sort_type = SORT_NUMERIC;
+			} elseif ( $this->sort_type == 'string' ) {
+				$sort_type = SORT_STRING;
+			}
+			( $this->sort_reverse ) ? krsort($rows, $sort_type) : ksort($rows, $sort_type) ;
 			if ( $this->offset !== null || $this->limit !== null ) {
 				$rows = array_slice($rows, ($this->offset === null ? 0 : $this->offset) , $this->limit, true);
 			}
