@@ -67,7 +67,7 @@ class parseCSV {
 	# add row/entry to end of CSV file
 	#  - only recommended when you know the extact sctructure of the file
 	$csv = new parseCSV();
-	$csv->save('data.csv', array('1986', 'Home', 'Nowhere', ''), true);
+	$csv->save('data.csv', array(array('1986', 'Home', 'Nowhere', '')), true);
 	----------------
 	# convert 2D array to csv data and send headers
 	# to browser to treat output as a file and download it
