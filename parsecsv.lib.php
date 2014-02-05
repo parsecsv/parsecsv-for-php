@@ -248,12 +248,15 @@ class parseCSV {
 	}
 	
 	/**
-	 * Save changes, or new file and/or data
-	 * @param   file     file to save to
-	 * @param   data     2D array with data
-	 * @param   append   append current data to end of target CSV if exists
-	 * @param   fields   field names
-	 * @return  true or false
+	 * Save
+	 * Save changes, or write a new file and/or data
+	 *
+	 * @access public
+	 * @param  [string] $file   File location to save to
+	 * @param  [array]  $data   2D array of data
+	 * @param  [bool]   $append Append current data to end of target CSV, if file exists
+	 * @param  [array]  $fields Field names
+	 * @return [bool]
 	 */
 	public function save ($file = null, $data = array(), $append = false, $fields = array()) {
 		if (empty($file)) {
