@@ -173,10 +173,10 @@ class parseCSV {
 	 * Class constructor
 	 *
 	 * @access public
-	 * @param   [input]      string  The CSV string or a direct filepath
-	 * @param   [offset]     integer Number of rows to ignore from the beginning of  the data
-	 * @param   [limit]      integer Limits the number of returned rows to specified amount
-	 * @param   [conditions] string  Basic SQL-like conditions for row matching
+	 * @param   [string]  input      The CSV string or a direct filepath
+	 * @param   [integer] offset     Number of rows to ignore from the beginning of  the data
+	 * @param   [integer] limit      Limits the number of returned rows to specified amount
+	 * @param   [string]  conditions Basic SQL-like conditions for row matching
 	 */
 	public function __construct ($input = null, $offset = null, $limit = null, $conditions = null) {
 		if ($offset!==null) {
@@ -236,7 +236,7 @@ class parseCSV {
 				return false;	
 			}
 		}
-		
+
 		return true;
 	}
 	
