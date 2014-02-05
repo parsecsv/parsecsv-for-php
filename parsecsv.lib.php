@@ -173,7 +173,7 @@ class parseCSV {
 	 * @param   input   CSV file or string
 	 * @return  nothing
 	 */
-	function parseCSV ($input = null, $offset = null, $limit = null, $conditions = null) {
+	public function __construct ($input = null, $offset = null, $limit = null, $conditions = null) {
 		if ($offset!==null) {
 			$this->offset = $offset;
 		}
