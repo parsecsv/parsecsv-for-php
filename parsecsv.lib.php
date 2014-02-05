@@ -206,20 +206,37 @@ class parseCSV {
 	 * @param   input   CSV file or string
 	 * @return  nothing
 	 */
-	function parse ($input = null, $offset = null, $limit = null, $conditions = null) {
-		if ( $input === null ) $input = $this->file;
-		if ( !empty($input) ) {
-			if ( $offset !== null ) $this->offset = $offset;
-			if ( $limit !== null ) $this->limit = $limit;
-			if ( count($conditions) > 0 ) $this->conditions = $conditions;
-			if ( is_readable($input) ) {
+	public function parse ($input = null, $offset = null, $limit = null, $conditions = null) {
+		if ($input===null) {
+			$input = $this->file;	
+		} 
+
+		if (!empty($input)) {
+			if ($offset!==null) {
+				$this->offset = $offset;	
+			}
+
+			if ($limit!==null) {
+				$this->limit = $limit;	
+			}
+
+			if (count($conditions)>0) {
+				$this->conditions = $conditions;
+			}
+
+			if (is_readable($input)) {
 				$this->data = $this->parse_file($input);
-			} else {
+			} 
+			else {
 				$this->file_data = &$input;
 				$this->data = $this->parse_string();
 			}
-			if ( $this->data === false ) return false;
+
+			if ($this->data===false) {
+				return false;	
+			}
 		}
+		
 		return true;
 	}
 	
