@@ -1,0 +1,122 @@
+# parseCSV
+
+_Note: I am no longer actively working on this library, but please submit pull
+requests for any fixes/features you would like to see added._
+
+parseCSV is an easy to use PHP class to read and write CSV data properly. It
+fully conforms to the specifications outlined on the on the
+[Wikipedia article][CSV]. It has a few advanced features which help make your
+life easier when dealing with CSV data.
+
+I originally created this library in early 2007 due to the lack of built-in
+and third-party support for handling CSV data in PHP.
+
+[csv]: http://en.wikipedia.org/wiki/Comma-separated_values
+
+
+## Features
+
+* parseCSV is the only complete and fully featured CSV solution for PHP (as
+  far as i know).
+* Supports enclosed values, enclosed commas, double quotes and new lines.
+* Automatic delimiter character detection.
+* Sort data by specific fields/columns.
+* Easy data manipulation.
+* Basic SQL-like _conditions_, _offset_ and _limit_ options for filtering
+  data.
+* Error detection for incorrectly formatted input. It attempts to be
+  intelligent, but can not be trusted 100% due to the structure of CSV, and
+  how different programs like Excel for example outputs CSV data.
+* Support for character encoding conversion using PHP's _iconv_ function
+  (requires PHP 5).
+* Supports both PHP 4 & 5.
+
+
+## Example Usage
+
+**General**
+
+```php
+$csv = new parseCSV('data.csv');
+print_r($csv->data);
+```
+
+**Tab delimited, and encoding conversion**
+
+```php
+$csv = new parseCSV();
+$csv->encoding('UTF-16', 'UTF-8');
+$csv->delimiter = "\t";
+$csv->parse('data.tsv');
+print_r($csv->data);
+```
+
+**Auto-detect delimiter character**
+
+```php
+$csv = new parseCSV();
+$csv->auto('data.csv');
+print_r($csv->data);
+```
+
+**Modify data in a CSV file**
+
+```php
+$csv = new parseCSV();
+$csv->sort_by = 'id';
+$csv->parse('data.csv');
+# "4" is the value of the "id" column of the CSV row
+$csv->data[4] = array('firstname' => 'John', 'lastname' => 'Doe', 'email' => 'john@doe.com');
+$csv->save();
+```
+
+**Add row/entry to end of CSV file**
+
+_Only recommended when you know the extact sctructure of the file._
+
+```php
+$csv = new parseCSV();
+$csv->save('data.csv', array('1986', 'Home', 'Nowhere', ''), true);
+```
+
+**Convert 2D array to csv data and send headers to browser to treat output as
+a file and download it**
+
+```php
+$csv = new parseCSV();
+$csv->output(true, 'movies.csv', $array);
+```
+
+
+## Credits
+
+* parseCSV is based on the concept of [Ming Hong Ng][ming]'s [CsvFileParser][]
+  class.
+
+[ming]: http://minghong.blogspot.com/
+[CsvFileParser]: http://minghong.blogspot.com/2006/07/csv-parser-for-php.html
+
+
+## License
+
+(The MIT license)
+
+Copyright (c) 2007 Jim Myhrberg.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
