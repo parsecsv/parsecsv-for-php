@@ -201,10 +201,17 @@ class parseCSV {
 	// ----- [ Main Functions ] ---------------------
 	// ==============================================
 	
+	
 	/**
-	 * Parse CSV file or string
-	 * @param   input   CSV file or string
-	 * @return  nothing
+	 * Parse
+	 * Parse a CSV file or string
+	 *
+	 * @access public
+	 * @param  [string]  input      The CSV string or a direct filepath
+	 * @param  [integer] offset     Number of rows to ignore from the beginning of  the data
+	 * @param  [integer] limit      Limits the number of returned rows to specified amount
+	 * @param  [string]  conditions Basic SQL-like conditions for row matching
+	 * @return [bool]
 	 */
 	public function parse ($input = null, $offset = null, $limit = null, $conditions = null) {
 		if ($input===null) {
@@ -229,7 +236,7 @@ class parseCSV {
 			} 
 			else {
 				$this->file_data = &$input;
-				$this->data = $this->parse_string();
+				$this->data      = $this->parse_string();
 			}
 
 			if ($this->data===false) {
