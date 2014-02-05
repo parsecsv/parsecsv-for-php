@@ -255,10 +255,14 @@ class parseCSV {
 	 * @param   fields   field names
 	 * @return  true or false
 	 */
-	function save ($file = null, $data = array(), $append = false, $fields = array()) {
-		if ( empty($file) ) $file = &$this->file;
-		$mode = ( $append ) ? 'at' : 'wt' ;
-		$is_php = ( preg_match('/\.php$/i', $file) ) ? true : false ;
+	public function save ($file = null, $data = array(), $append = false, $fields = array()) {
+		if (empty($file)) {
+			$file = &$this->file;
+		}
+
+		$mode   = ($append) ? 'at' : 'wt';
+		$is_php = (preg_match('/\.php$/i', $file)) ? true : false;
+
 		return $this->_wfile($file, $this->unparse($data, $fields, $append, $is_php), $mode);
 	}
 	
