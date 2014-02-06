@@ -308,7 +308,7 @@ class parseCSV {
 	 * @param  [string] $input  Input character encoding, uses default if left blank
 	 * @param  [string] $output Output character encoding, uses default if left blank
 	 */
-	function encoding ($input = null, $output = null) {
+	public function encoding ($input = null, $output = null) {
 		$this->convert_encoding = true;
 		if ($input!== null) {
 			$this->input_encoding = $input;
