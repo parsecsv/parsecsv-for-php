@@ -270,14 +270,17 @@ class parseCSV {
 	}
 	
 	/**
-	 * Generate CSV based string for output
-	 * @param   filename    if specified, headers and data will be output directly to browser as a downloable file
-	 * @param   data        2D array with data
-	 * @param   fields      field names
-	 * @param   delimiter   delimiter used to separate data
-	 * @return  CSV data using delimiter of choice, or default
+	 * Output
+	 * Generate a CSV based string for output.
+	 *
+	 * @access public
+	 * @param  [string] $filename  If specified, headers and data will be output directly to browser as a downloable file
+	 * @param  [array]  $data      2D array with data
+	 * @param  [array]  $fields    Field names
+	 * @param  [type]   $delimiter delimiter used to separate data
+	 * @return [string]
 	 */
-	function output ($filename = null, $data = array(), $fields = array(), $delimiter = null) {
+	public function output ($filename = null, $data = array(), $fields = array(), $delimiter = null) {
 		if (empty($filename)) {
 			$filename = $this->output_filename;
 		}
