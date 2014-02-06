@@ -444,9 +444,15 @@ class parseCSV {
 	 * @param   file   local CSV file
 	 * @return  2D array with CSV data, or false on failure
 	 */
-	function parse_file ($file = null) {
-		if ( $file === null ) $file = $this->file;
-		if ( empty($this->file_data) ) $this->load_data($file);
+	public function parse_file ($file = null) {
+		if ( $file === null ) {
+			$file = $this->file;
+		}
+
+		if ( empty($this->file_data) ) {
+			$this->load_data($file);
+		}
+		
 		return ( !empty($this->file_data) ) ? $this->parse_string() : false ;
 	}
 	
