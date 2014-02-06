@@ -278,14 +278,22 @@ class parseCSV {
 	 * @return  CSV data using delimiter of choice, or default
 	 */
 	function output ($filename = null, $data = array(), $fields = array(), $delimiter = null) {
-		if ( empty($filename) ) $filename = $this->output_filename;
-		if ( $delimiter === null ) $delimiter = $this->output_delimiter;
+		if (empty($filename)) {
+			$filename = $this->output_filename;
+		}
+
+		if ($delimiter===null) {
+			$delimiter = $this->output_delimiter;
+		}
+
 		$data = $this->unparse($data, $fields, null, null, $delimiter);
-		if ( $filename !== null ) {
+
+		if ($filename!==null) {
 			header('Content-type: application/csv');
 			header('Content-Disposition: attachment; filename="'.$filename.'"');
 			echo $data;
 		}
+
 		return $data;
 	}
 	
