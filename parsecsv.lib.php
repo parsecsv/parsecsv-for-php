@@ -325,14 +325,17 @@ class parseCSV {
 	}
 	
 	/**
+	 * Auto
 	 * Auto-Detect Delimiter: Find delimiter by analyzing a specific number of
 	 * rows to determine most probable delimiter character
-	 * @param   file           local CSV file
-	 * @param   parse          true/false parse file directly
-	 * @param   search_depth   number of rows to analyze
-	 * @param   preferred      preferred delimiter characters
-	 * @param   enclosure      enclosure character, default is double quote (").
-	 * @return  delimiter character
+	 *
+	 * @access public
+	 * @param  [string] $file         Local CSV file
+	 * @param  [bool]   $parse        True/false parse file directly
+	 * @param  [int]    $search_depth Number of rows to analyze
+	 * @param  [string] $preferred    Preferred delimiter characters
+	 * @param  [string] $enclosure    Enclosure character, default is double quote (").
+	 * @return [string]
 	 */
 	public function auto ($file = null, $parse = true, $search_depth = null, $preferred = null, $enclosure = null) {
 		
