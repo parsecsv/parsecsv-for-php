@@ -12,7 +12,12 @@ class parseCSV {
 	 - http://en.wikipedia.org/wiki/Comma-separated_values
 	
 	Based on the concept of Ming Hong Ng's CsvFileParser class:
-	 - http://minghong.blogspot.com/2006/07/csv-parser-for-php.html
+	 - 
+
+
+
+
+
 	
 	
 	
@@ -179,19 +184,19 @@ class parseCSV {
 	 * @param  [string]  conditions Basic SQL-like conditions for row matching
 	 */
 	public function __construct ($input = null, $offset = null, $limit = null, $conditions = null) {
-		if ($offset!==null) {
+		if ( $offset !== null ) {
 			$this->offset = $offset;
 		}
 
-		if ($limit!==null) {
+		if ( $limit !== null ) {
 			$this->limit = $limit;	
 		}
 
-		if (count($conditions)>0) {
+		if ( count($conditions) > 0 ) {
 			$this->conditions = $conditions;	
 		} 
 
-		if (!empty($input)) {
+		if ( !empty($input) ) {
 			$this->parse($input);
 		}
 	}
@@ -214,24 +219,24 @@ class parseCSV {
 	 * @return [bool]
 	 */
 	public function parse ($input = null, $offset = null, $limit = null, $conditions = null) {
-		if ($input===null) {
+		if ( $input === null ) {
 			$input = $this->file;	
 		} 
 
-		if (!empty($input)) {
-			if ($offset!==null) {
+		if ( !empty($input) ) {
+			if ( $offset !== null ) {
 				$this->offset = $offset;	
 			}
 
-			if ($limit!==null) {
+			if  ($limit !== null ) {
 				$this->limit = $limit;	
 			}
 
-			if (count($conditions)>0) {
+			if ( count($conditions) > 0 ) {
 				$this->conditions = $conditions;
 			}
 
-			if (is_readable($input)) {
+			if ( is_readable($input) ) {
 				$this->data = $this->parse_file($input);
 			} 
 			else {
@@ -239,7 +244,7 @@ class parseCSV {
 				$this->data      = $this->parse_string();
 			}
 
-			if ($this->data===false) {
+			if ( $this->data === false ) {
 				return false;	
 			}
 		}
@@ -259,7 +264,7 @@ class parseCSV {
 	 * @return [bool]
 	 */
 	public function save ($file = null, $data = array(), $append = false, $fields = array()) {
-		if (empty($file)) {
+		if ( empty($file) ) {
 			$file = &$this->file;
 		}
 
@@ -281,17 +286,17 @@ class parseCSV {
 	 * @return [string]
 	 */
 	public function output ($filename = null, $data = array(), $fields = array(), $delimiter = null) {
-		if (empty($filename)) {
+		if ( empty($filename) ) {
 			$filename = $this->output_filename;
 		}
 
-		if ($delimiter===null) {
+		if ( $delimiter === null ) {
 			$delimiter = $this->output_delimiter;
 		}
 
 		$data = $this->unparse($data, $fields, null, null, $delimiter);
 
-		if ($filename!==null) {
+		if ( $filename !== null ) {
 			header('Content-type: application/csv');
 			header('Content-Disposition: attachment; filename="'.$filename.'"');
 			echo $data;
@@ -310,11 +315,11 @@ class parseCSV {
 	 */
 	public function encoding ($input = null, $output = null) {
 		$this->convert_encoding = true;
-		if ($input!== null) {
+		if ( $input !== null ) {
 			$this->input_encoding = $input;
 		}
 
-		if ($output!==null)  {
+		if ( $output !== null )  {
 			$this->output_encoding = $output;
 		}
 	}
