@@ -3,23 +3,14 @@
 class parseCSV {
 
 /*
-
 	Class: parseCSV v0.4.3 beta
 	https://github.com/jimeh/php-parsecsv
-
 
 	Fully conforms to the specifications lined out on wikipedia:
 	 - http://en.wikipedia.org/wiki/Comma-separated_values
 
 	Based on the concept of Ming Hong Ng's CsvFileParser class:
 	 -
-
-
-
-
-
-
-
 
 	Copyright (c) 2007 Jim Myhrberg (jim@zydev.info).
 
@@ -40,8 +31,6 @@ class parseCSV {
 	LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 	THE SOFTWARE.
-
-
 
 	Code Examples
 	----------------
@@ -79,8 +68,6 @@ class parseCSV {
 	$csv = new parseCSV();
 	$csv->output (true, 'movies.csv', $array);
 	----------------
-
-
 */
 
 
