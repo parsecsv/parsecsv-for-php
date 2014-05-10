@@ -792,19 +792,28 @@ class parseCSV {
 	 * @param   delimiter   field delimiter to use
 	 * @return  CSV data (text string)
 	 */
-	function unparse ( $data = array(), $fields = array(), $append = false , $is_php = false, $delimiter = null) {
-		if ( !is_array($data) || empty($data) ) $data = &$this->data;
-		if ( !is_array($fields) || empty($fields) ) $fields = &$this->titles;
-		if ( $delimiter === null ) $delimiter = $this->delimiter;
+	public function unparse ( $data = array(), $fields = array(), $append = false , $is_php = false, $delimiter = null) {
+		if ( !is_array($data) || empty($data) ) {
+			$data = &$this->data;
+		}
+
+		if ( !is_array($fields) || empty($fields) )  {
+			$fields = &$this->titles;
+		}
+
+		if ( $delimiter === null ) {
+			$delimiter = $this->delimiter;
+		}
 
 		$string = ( $is_php ) ? "<?php header('Status: 403'); die(' '); ?>".$this->linefeed : '' ;
-		$entry = array();
+		$entry  = array();
 
 		// create heading
 		if ( $this->heading && !$append && !empty($fields) ) {
 			foreach( $fields as $key => $value ) {
 				$entry[] = $this->_enclose_value($value);
 			}
+
 			$string .= implode($delimiter, $entry).$this->linefeed;
 			$entry = array();
 		}
@@ -814,8 +823,9 @@ class parseCSV {
 			foreach( $row as $field => $value ) {
 				$entry[] = $this->_enclose_value($value);
 			}
+
 			$string .= implode($delimiter, $entry).$this->linefeed;
-			$entry = array();
+			$entry   = array();
 		}
 
 		return $string;
