@@ -836,26 +836,41 @@ class parseCSV {
 	 * @param   input   local CSV file
 	 * @return  true or false
 	 */
-	function load_data ($input = null) {
+	public function load_data ($input = null) {
 		$data = null;
 		$file = null;
+
 		if ( $input === null ) {
 			$file = $this->file;
-		} elseif ( file_exists($input) ) {
+		}
+		elseif ( file_exists($input) ) {
 			$file = $input;
-		} else {
+		}
+		else {
 			$data = $input;
 		}
+
 		if ( !empty($data) || $data = $this->_rfile($file) ) {
-			if ( $this->file != $file ) $this->file = $file;
+			if ( $this->file != $file ) {
+				$this->file = $file;
+			}
+
 			if ( preg_match('/\.php$/i', $file) && preg_match('/<\?.*?\?>(.*)/ims', $data, $strip) ) {
 				$data = ltrim($strip[1]);
 			}
-			if ( $this->convert_encoding ) $data = iconv($this->input_encoding, $this->output_encoding, $data);
-			if ( substr($data, -1) != "\n" ) $data .= "\n";
+
+			if ( $this->convert_encoding ) {
+				$data = iconv($this->input_encoding, $this->output_encoding, $data);
+			}
+
+			if ( substr($data, -1) != "\n" ) {
+				$data .= "\n";
+			}
+
 			$this->file_data = &$data;
 			return true;
 		}
+
 		return false;
 	}
 
