@@ -70,93 +70,260 @@ class parseCSV {
 	----------------
 */
 
-
 	/**
 	 * Configuration
 	 * - set these options with $object->var_name = 'value';
 	 */
 
-	# use first line/entry as field names
+	/**
+	 * Heading
+	 * Use first line/entry as field names
+	 *
+	 * @access public
+	 * @var bool
+	 */
 	public $heading = true;
 
-	# override field names
+	/**
+	 * Fields
+	 * Override field names
+	 *
+	 * @access public
+	 * @var array
+	 */
 	public $fields = array();
 
-	# sort entries by this field
+	/**
+	 * Sort By
+	 * Sort csv by this field
+	 *
+	 * @access public
+	 * @var string
+	 */
 	public $sort_by = null;
+
+	/**
+	 * Sort Reverse
+	 * Reverse the sort function
+	 *
+	 * @access public
+	 * @var bool
+	 */
 	public $sort_reverse = false;
 
-	# sort behavior passed to ksort/krsort functions
-	# regular = SORT_REGULAR
-	# numeric = SORT_NUMERIC
-	# string  = SORT_STRING
+	/**
+	 * Sort Type
+	 * Sort behavior passed to sort methods
+	 *
+	 * regular = SORT_REGULAR
+	 * numeric = SORT_NUMERIC
+	 * string  = SORT_STRING
+	 *
+	 * @access public
+	 * @var string
+	 */
 	public $sort_type = null;
 
-	# delimiter (comma) and enclosure (double quote)
+	/**
+	 * Delimiter
+	 * Delimiter character
+	 *
+	 * @access public
+	 * @var string
+	 */
 	public $delimiter = ',';
+
+	/**
+	 * Enclosure
+	 * Enclosure character
+	 *
+	 * @access public
+	 * @var string
+	 */
 	public $enclosure = '"';
 
-	# basic SQL-like conditions for row matching
+	/**
+	 * Conditions
+	 * Basic SQL-Like conditions for row matching
+	 *
+	 * @access public
+	 * @var string
+	 */
 	public $conditions = null;
 
-	# number of rows to ignore from beginning of data
+	/**
+	 * Offset
+	 * Number of rows to ignore from beginning of data
+	 *
+	 * @access public
+	 * @var int
+	 */
 	public $offset = null;
 
-	# limits the number of returned rows to specified amount
+	/**
+	 * Limit
+	 * Limits the number of returned rows to the specified amount
+	 *
+	 * @access public
+	 * @var int
+	 */
 	public $limit = null;
 
-	# number of rows to analyze when attempting to auto-detect delimiter
+	/**
+	 * Auto Depth
+	 * Number of rows to analyze when attempting to auto-detect delimiter
+	 *
+	 * @access public
+	 * @var int
+	 */
 	public $auto_depth = 15;
 
-	# characters to ignore when attempting to auto-detect delimiter
+	/**
+	 * Auto Non Charts
+	 * Characters that should be ignored when attempting to auto-detect delimiter
+	 *
+	 * @access public
+	 * @var string
+	 */
 	public $auto_non_chars = "a-zA-Z0-9\n\r";
 
-	# preferred delimiter characters, only used when all filtering method
-	# returns multiple possible delimiters (happens very rarely)
+	/**
+	 * Auto Preferred
+	 * preferred delimiter characters, only used when all filtering method
+	 * returns multiple possible delimiters (happens very rarely)
+	 *
+	 * @access public
+	 * @var string
+	 */
 	public $auto_preferred = ",;\t.:|";
 
-	# character encoding options
+	/**
+	 * Convert Encoding
+	 * Should we convert the csv encoding?
+	 *
+	 * @access public
+	 * @var bool
+	 */
 	public $convert_encoding = false;
+
+	/**
+	 * Input Encoding
+	 * Set the input encoding
+	 *
+	 * @access public
+	 * @var string
+	 */
 	public $input_encoding = 'ISO-8859-1';
+
+	/**
+	 * Output Encoding
+	 * Set the output encoding
+	 *
+	 * @access public
+	 * @var string
+	 */
 	public $output_encoding = 'ISO-8859-1';
 
-	# used by unparse(), save(), and output() functions
+	/**
+	 * Linefeed
+	 * Line feed characters used by unparse, save, and output methods
+	 *
+	 * @access public
+	 * @var string
+	 */
 	public $linefeed = "\r\n";
 
-	# only used by output() function
+	/**
+	 * Output Delimiter
+	 * Sets the output delimiter used by the output method
+	 *
+	 * @access public
+	 * @var string
+	 */
 	public $output_delimiter = ',';
+
+	/**
+	 * Output filename
+	 * Sets the output filename
+	 *
+	 * @access public
+	 * @var string
+	 */
 	public $output_filename = 'data.csv';
 
-	# keep raw file data in memory after successful parsing (useful for debugging)
+	/**
+	 * Keep File Data
+	 * keep raw file data in memory after successful parsing (useful for debugging)
+	 *
+	 * @access public
+	 * @var bool
+	 */
 	public $keep_file_data = false;
 
 	/**
 	 * Internal variables
 	 */
 
-	# current file
+	/**
+	 * File
+	 * Current Filename
+	 *
+	 * @access public
+	 * @var string
+	 */
 	public $file;
 
-	# loaded file contents
+	/**
+	 * File Data
+	 * Current file data
+	 *
+	 * @access public
+	 * @var string
+	 */
 	public $file_data;
 
-	# error while parsing input data
-	#  0 = No errors found. Everything should be fine :)
-	#  1 = Hopefully correctable syntax error was found.
-	#  2 = Enclosure character (double quote by default)
-	#      was found in non-enclosed field. This means
-	#      the file is either corrupt, or does not
-	#      standard CSV formatting. Please validate
-	#      the parsed data yourself.
+	/**
+	 * Error
+	 * Contains the error code if one occured
+	 *
+	 * 0 = No errors found. Everything should be fine :)
+	 * 1 = Hopefully correctable syntax error was found.
+	 * 2 = Enclosure character (double quote by default)
+	 *     was found in non-enclosed field. This means
+	 *     the file is either corrupt, or does not
+	 *     standard CSV formatting. Please validate
+	 *     the parsed data yourself.
+	 *
+	 * @access public
+	 * @var int
+	 */
 	public $error = 0;
 
-	# detailed error info
+	/**
+	 * Error Information
+	 * Detailed error information
+	 *
+	 * @access public
+	 * @var array
+	 */
 	public $error_info = array();
 
-	# array of field values in data parsed
+	/**
+	 * Titles
+	 * CSV titles if they exists
+	 *
+	 * @access public
+	 * @var array
+	 */
 	public $titles = array();
 
-	# two dimentional array of CSV data
+	/**
+	 * Data
+	 * Two dimensional array of CSV data
+	 *
+	 * @access public
+	 * @var array
+	 */
 	public $data = array();
 
 
