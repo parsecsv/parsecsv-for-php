@@ -492,7 +492,6 @@ class parseCSV {
 	 * @return [string]
 	 */
 	public function auto ($file = null, $parse = true, $search_depth = null, $preferred = null, $enclosure = null) {
-
 		if ( $file === null ) {
 			$file = $this->file;
 		}
