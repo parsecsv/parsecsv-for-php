@@ -815,7 +815,7 @@ class parseCSV {
 			}
 
 			$string .= implode($delimiter, $entry).$this->linefeed;
-			$entry = array();
+			$entry   = array();
 		}
 
 		// create data
