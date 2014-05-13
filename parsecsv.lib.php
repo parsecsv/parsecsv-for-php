@@ -674,7 +674,7 @@ class parseCSV {
 					$i++;
 				}
 				elseif ( $nch != $this->delimiter && $nch != "\r" && $nch != "\n" ) {
-					#for ( $x=($i+1); isset($data{$x}) && ltrim($data{$x}, $white_spaces) == ''; $x++ ) {} //this line does nothing?
+					for ( $x=($i+1); isset($data{$x}) && ltrim($data{$x}, $white_spaces) == ''; $x++ ) {}
 					if ( $data{$x} == $this->delimiter ) {
 						$enclosed = false;
 						$i        = $x;
@@ -727,7 +727,7 @@ class parseCSV {
 								if ( isset($rows[$row[$this->sort_by]]) ) {
 									$rows[$row[$this->sort_by].'_0'] = &$rows[$row[$this->sort_by]];
 									unset($rows[$row[$this->sort_by]]);
-									#for ( $sn=1; isset($rows[$row[$this->sort_by].'_'.$sn]); $sn++ ) {} //this line does nothing
+									for ( $sn=1; isset($rows[$row[$this->sort_by].'_'.$sn]); $sn++ ) {}
 									$rows[$row[$this->sort_by].'_'.$sn] = $row;
 								}
 								else $rows[$row[$this->sort_by]] = $row;
@@ -893,12 +893,15 @@ class parseCSV {
 				foreach( $conditions as $key => $value ) {
 					if ( strpos($value, ' AND ') !== false ) {
 						$value = explode(' AND ', $value);
-						$and = '';
+						$and   = '';
+
 						foreach( $value as $k => $v ) {
 							$and .= $this->_validate_row_condition($row, $v);
 						}
+
 						$or .= (strpos($and, '0') !== false) ? '0' : '1' ;
-					} else {
+					}
+					else {
 						$or .= $this->_validate_row_condition($row, $value);
 					}
 				}
