@@ -1047,16 +1047,19 @@ class parseCSV {
 
 	/**
 	 * Read local file
+	 *
+	 * @access public
 	 * @param   file   local filename
 	 * @return  Data from file, or false on failure
 	 */
-	function _rfile ($file = null) {
+	public function _rfile ($file = null) {
 		if ( is_readable($file) ) {
 			if ( !($fh = fopen($file, 'r')) ) return false;
 			$data = fread($fh, filesize($file));
 			fclose($fh);
 			return $data;
 		}
+
 		return false;
 	}
 
@@ -1068,9 +1071,10 @@ class parseCSV {
 	 * @param   string   data to write to file
 	 * @param   mode     fopen() mode
 	 * @param   lock     flock() mode
+	 *
 	 * @return  true or false
 	 */
-	function _wfile ($file, $string = '', $mode = 'wb', $lock = 2) {
+	public function _wfile ($file, $string = '', $mode = 'wb', $lock = 2) {
 		if ( $fp = fopen($file, $mode) ) {
 			flock($fp, $lock);
 			$re  = fwrite($fp, $string);
