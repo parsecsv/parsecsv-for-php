@@ -1013,35 +1013,49 @@ class parseCSV {
 		return true;
 	}
 
-
 	/**
 	 * Check if passed info might be delimiter
-	 *  - only used by find_delimiter()
-	 * @return  special string used for delimiter selection, or false
+	 * Only used by find_delimiter
+	 *
+	 * @access public
+	 * @param  [type] $char      [description]
+	 * @param  [type] $array     [description]
+	 * @param  [type] $depth     [description]
+	 * @param  [type] $preferred [description]
+	 *
+	 * @return special string used for delimiter selection, or false
 	 */
-	function _check_count ($char, $array, $depth, $preferred) {
+	public function _check_count ($char, $array, $depth, $preferred) {
 		if ( $depth == count($array) ) {
-			$first = null;
-			$equal = null;
+			$first  = null;
+			$equal  = null;
 			$almost = false;
 			foreach( $array as $key => $value ) {
 				if ( $first == null ) {
 					$first = $value;
-				} elseif ( $value == $first && $equal !== false) {
+				}
+				elseif ( $value == $first && $equal !== false) {
 					$equal = true;
-				} elseif ( $value == $first+1 && $equal !== false ) {
+				}
+				elseif ( $value == $first+1 && $equal !== false ) {
 					$equal = true;
 					$almost = true;
-				} else {
+				}
+				else {
 					$equal = false;
 				}
 			}
+
 			if ( $equal ) {
 				$match = ( $almost ) ? 2 : 1 ;
-				$pref = strpos($preferred, $char);
-				$pref = ( $pref !== false ) ? str_pad($pref, 3, '0', STR_PAD_LEFT) : '999' ;
+				$pref  = strpos($preferred, $char);
+				$pref  = ( $pref !== false ) ? str_pad($pref, 3, '0', STR_PAD_LEFT) : '999' ;
+
 				return $pref.$match.'.'.(99999 - str_pad($first, 5, '0', STR_PAD_LEFT));
-			} else return false;
+			}
+			else {
+				return false;
+			}
 		}
 	}
 
@@ -1050,11 +1064,15 @@ class parseCSV {
 	 *
 	 * @access public
 	 * @param   file   local filename
+	 *
 	 * @return  Data from file, or false on failure
 	 */
 	public function _rfile ($file = null) {
 		if ( is_readable($file) ) {
-			if ( !($fh = fopen($file, 'r')) ) return false;
+			if ( !($fh = fopen($file, 'r')) ) {
+				return false;
+			}
+
 			$data = fread($fh, filesize($file));
 			fclose($fh);
 			return $data;
