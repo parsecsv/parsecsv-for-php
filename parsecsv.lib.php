@@ -1159,5 +1159,3 @@ class parseCSV {
 		return false;
 	}
 }
-
-?>
