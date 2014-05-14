@@ -97,6 +97,14 @@ $csv->output(true, 'movies.csv', $array);
 [CsvFileParser]: http://minghong.blogspot.com/2006/07/csv-parser-for-php.html
 
 
+## Contributors
+
+Please find a complete list on the project's [contributors][] page.
+
+[contributors]: https://github.com/parsecsv/parsecsv-for-php/graphs/contributors
+
+
+
 ## License
 
 (The MIT license)
