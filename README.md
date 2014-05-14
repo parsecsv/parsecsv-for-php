@@ -101,7 +101,7 @@ $csv->output(true, 'movies.csv', $array);
 
 (The MIT license)
 
-Copyright (c) 2007 Jim Myhrberg.
+Copyright (c) 2014 Jim Myhrberg.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
