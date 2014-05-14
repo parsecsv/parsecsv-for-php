@@ -370,6 +370,7 @@ class parseCSV {
 	 * @param  [integer] offset     Number of rows to ignore from the beginning of  the data
 	 * @param  [integer] limit      Limits the number of returned rows to specified amount
 	 * @param  [string]  conditions Basic SQL-like conditions for row matching
+	 *
 	 * @return [bool]
 	 */
 	public function parse ($input = null, $offset = null, $limit = null, $conditions = null) {
@@ -415,6 +416,7 @@ class parseCSV {
 	 * @param  [array]  $data   2D array of data
 	 * @param  [bool]   $append Append current data to end of target CSV, if file exists
 	 * @param  [array]  $fields Field names
+	 *
 	 * @return [bool]
 	 */
 	public function save ($file = null, $data = array(), $append = false, $fields = array()) {
@@ -437,6 +439,7 @@ class parseCSV {
 	 * @param  [array]  $data      2D array with data
 	 * @param  [array]  $fields    Field names
 	 * @param  [type]   $delimiter delimiter used to separate data
+	 *
 	 * @return [string]
 	 */
 	public function output ($filename = null, $data = array(), $fields = array(), $delimiter = null) {
@@ -489,6 +492,7 @@ class parseCSV {
 	 * @param  [int]    $search_depth Number of rows to analyze
 	 * @param  [string] $preferred    Preferred delimiter characters
 	 * @param  [string] $enclosure    Enclosure character, default is double quote (").
+	 *
 	 * @return [string]
 	 */
 	public function auto ($file = null, $parse = true, $search_depth = null, $preferred = null, $enclosure = null) {
@@ -597,7 +601,9 @@ class parseCSV {
 	 * Read file to string and call parse_string()
 	 *
 	 * @access public
+	 *
 	 * @param  [string] $file Local CSV file
+	 *
 	 * @return [array|bool]
 	 */
 	public function parse_file ($file = null) {
@@ -614,7 +620,10 @@ class parseCSV {
 
 	/**
 	 * Parse CSV strings to arrays
+	 *
+	 * @access public
 	 * @param   data   CSV string
+	 *
 	 * @return  2D array with CSV data, or false on failure
 	 */
 	public function parse_string ($data = null) {
@@ -784,12 +793,15 @@ class parseCSV {
 
 	/**
 	 * Create CSV data from array
+	 *
+	 * @access public
 	 * @param   data        2D array with data
 	 * @param   fields      field names
 	 * @param   append      if true, field names will not be output
 	 * @param   is_php      if a php die() call should be put on the first
 	 *                      line of the file, this is later ignored when read.
 	 * @param   delimiter   field delimiter to use
+	 *
 	 * @return  CSV data (text string)
 	 */
 	public function unparse ( $data = array(), $fields = array(), $append = false , $is_php = false, $delimiter = null) {
@@ -833,7 +845,10 @@ class parseCSV {
 
 	/**
 	 * Load local file or string
+	 *
+	 * @access public
 	 * @param   input   local CSV file
+	 *
 	 * @return  true or false
 	 */
 	public function load_data ($input = null) {
