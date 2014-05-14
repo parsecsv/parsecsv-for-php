@@ -881,11 +881,14 @@ class parseCSV {
 
 	/**
 	 * Validate a row against specified conditions
+	 *
+	 * @access public
 	 * @param   row          array with values from a row
 	 * @param   conditions   specified conditions that the row must match
+	 *
 	 * @return  true of false
 	 */
-	function _validate_row_conditions ($row = array(), $conditions = null) {
+	public function _validate_row_conditions ($row = array(), $conditions = null) {
 		if ( !empty($row) ) {
 			if ( !empty($conditions) ) {
 				$conditions = (strpos($conditions, ' OR ') !== false) ? explode(' OR ', $conditions) : array($conditions) ;
@@ -905,10 +908,13 @@ class parseCSV {
 						$or .= $this->_validate_row_condition($row, $value);
 					}
 				}
+
 				return (strpos($or, '1') !== false) ? true : false ;
 			}
+
 			return true;
 		}
+
 		return false;
 	}
 
