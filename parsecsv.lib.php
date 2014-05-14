@@ -12,6 +12,9 @@ class parseCSV {
 	Based on the concept of Ming Hong Ng's CsvFileParser class:
 	 - http://minghong.blogspot.com/2006/07/csv-parser-for-php.html
 
+
+	(The MIT license)
+
 	Copyright (c) 2014 Jim Myhrberg.
 
 	Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -31,6 +34,7 @@ class parseCSV {
 	LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 	THE SOFTWARE.
+
 
 	Code Examples
 	----------------
