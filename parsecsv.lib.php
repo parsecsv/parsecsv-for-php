@@ -10,7 +10,7 @@ class parseCSV {
 	 - http://en.wikipedia.org/wiki/Comma-separated_values
 
 	Based on the concept of Ming Hong Ng's CsvFileParser class:
-	 -
+	 - http://minghong.blogspot.com/2006/07/csv-parser-for-php.html
 
 	Copyright (c) 2014 Jim Myhrberg.
 
