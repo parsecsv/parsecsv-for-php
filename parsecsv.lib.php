@@ -914,11 +914,13 @@ class parseCSV {
 
 	/**
 	 * Validate a row against a single condition
+	 *
 	 * @param   row          array with values from a row
 	 * @param   condition   specified condition that the row must match
+	 *
 	 * @return  true of false
 	 */
-	function _validate_row_condition ($row, $condition) {
+	public function _validate_row_condition ($row, $condition) {
 		$operators = array(
 			'=', 'equals', 'is',
 			'!=', 'is not',
@@ -929,15 +931,20 @@ class parseCSV {
 			'contains',
 			'does not contain',
 		);
+
 		$operators_regex = array();
+
 		foreach( $operators as $value ) {
 			$operators_regex[] = preg_quote($value, '/');
 		}
+
 		$operators_regex = implode('|', $operators_regex);
+
 		if ( preg_match('/^(.+) ('.$operators_regex.') (.+)$/i', trim($condition), $capture) ) {
 			$field = $capture[1];
-			$op = $capture[2];
+			$op    = $capture[2];
 			$value = $capture[3];
+
 			if ( preg_match('/^([\'\"]{1})(.*)([\'\"]{1})$/i', $value, $capture) ) {
 				if ( $capture[1] == $capture[3] ) {
 					$value = $capture[2];
@@ -947,28 +954,38 @@ class parseCSV {
 					$value = stripslashes($value);
 				}
 			}
+
 			if ( array_key_exists($field, $row) ) {
 				if ( ($op == '=' || $op == 'equals' || $op == 'is') && $row[$field] == $value ) {
 					return '1';
-				} elseif ( ($op == '!=' || $op == 'is not') && $row[$field] != $value ) {
+				}
+				elseif ( ($op == '!=' || $op == 'is not') && $row[$field] != $value ) {
 					return '1';
-				} elseif ( ($op == '<' || $op == 'is less than' ) && $row[$field] < $value ) {
+				}
+				elseif ( ($op == '<' || $op == 'is less than' ) && $row[$field] < $value ) {
 					return '1';
-				} elseif ( ($op == '>' || $op == 'is greater than') && $row[$field] > $value ) {
+				}
+				elseif ( ($op == '>' || $op == 'is greater than') && $row[$field] > $value ) {
 					return '1';
-				} elseif ( ($op == '<=' || $op == 'is less than or equals' ) && $row[$field] <= $value ) {
+				}
+				elseif ( ($op == '<=' || $op == 'is less than or equals' ) && $row[$field] <= $value ) {
 					return '1';
-				} elseif ( ($op == '>=' || $op == 'is greater than or equals') && $row[$field] >= $value ) {
+				}
+				elseif ( ($op == '>=' || $op == 'is greater than or equals') && $row[$field] >= $value ) {
 					return '1';
-				} elseif ( $op == 'contains' && preg_match('/'.preg_quote($value, '/').'/i', $row[$field]) ) {
+				}
+				elseif ( $op == 'contains' && preg_match('/'.preg_quote($value, '/').'/i', $row[$field]) ) {
 					return '1';
-				} elseif ( $op == 'does not contain' && !preg_match('/'.preg_quote($value, '/').'/i', $row[$field]) ) {
+				}
+				elseif ( $op == 'does not contain' && !preg_match('/'.preg_quote($value, '/').'/i', $row[$field]) ) {
 					return '1';
-				} else {
+				}
+				else {
 					return '0';
 				}
 			}
 		}
+
 		return '1';
 	}
 
