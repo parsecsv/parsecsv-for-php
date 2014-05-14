@@ -70,7 +70,7 @@ class parseCSV {
 	# convert 2D array to csv data and send headers
 	# to browser to treat output as a file and download it
 	$csv = new parseCSV();
-	$csv->output (true, 'movies.csv', $array);
+	$csv->output('movies.csv', $array, array('field 1', 'field 2'), ',');
 	----------------
 	*/
 
