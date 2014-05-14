@@ -1002,14 +1002,19 @@ class parseCSV {
 
 	/**
 	 * Check file data
+	 *
+	 * @access public
 	 * @param   file   local filename
+	 *
 	 * @return  true or false
 	 */
-	function _check_data ($file = null) {
+	public function _check_data ($file = null) {
 		if ( empty($this->file_data) ) {
 			if ( $file === null ) $file = $this->file;
+
 			return $this->load_data($file);
 		}
+
 		return true;
 	}
 
