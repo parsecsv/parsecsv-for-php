@@ -985,10 +985,13 @@ class parseCSV {
 	/**
 	 * Enclose values if needed
 	 *  - only used by unparse()
-	 * @param   value   string to process
-	 * @return  Processed value
+	 *
+	 * @access public
+	 * @param  value   string to process
+	 *
+	 * @return Processed value
 	 */
-	function _enclose_value ($value = null) {
+	public function _enclose_value ($value = null) {
 		if ( $value !== null && $value != '' ) {
 			$delimiter = preg_quote($this->delimiter, '/');
 			$enclosure = preg_quote($this->enclosure, '/');
@@ -997,6 +1000,7 @@ class parseCSV {
 				$value = $this->enclosure.$value.$this->enclosure;
 			}
 		}
+
 		return $value;
 	}
 
