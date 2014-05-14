@@ -2,7 +2,7 @@
 
 class parseCSV {
 
-/*
+	/*
 	Class: parseCSV v0.4.3 beta
 	https://github.com/parsecsv/parsecsv-for-php
 
@@ -72,7 +72,7 @@ class parseCSV {
 	$csv = new parseCSV();
 	$csv->output (true, 'movies.csv', $array);
 	----------------
-*/
+	*/
 
 	/**
 	 * Configuration
