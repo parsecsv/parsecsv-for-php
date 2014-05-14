@@ -915,6 +915,7 @@ class parseCSV {
 	/**
 	 * Validate a row against a single condition
 	 *
+	 * @access public
 	 * @param   row          array with values from a row
 	 * @param   condition   specified condition that the row must match
 	 *
