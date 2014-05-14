@@ -231,7 +231,7 @@ class parseCSV {
 	 * @access public
 	 * @var string
 	 */
-	public $linefeed = "\r\n";
+	public $linefeed = "\r";
 
 	/**
 	 * Output Delimiter
