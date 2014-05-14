@@ -458,7 +458,15 @@ class parseCSV {
 		$data = $this->unparse($data, $fields, null, null, $delimiter);
 
 		if ( $filename !== null ) {
-			header('Content-type: application/csv');
+			if ( $this->output_encoding  == 'UTF-8') {
+				header('Content-Encoding: UTF-8');
+				header('Content-type: text/csv; charset=UTF-8');
+				echo "\xEF\xBB\xBF"; // UTF-8 Byte Order Mark (BOM)
+			}
+			else {
+				header('Content-type: application/csv');
+			}
+			
 			header('Content-Disposition: attachment; filename="'.$filename.'"');
 			echo $data;
 		}
