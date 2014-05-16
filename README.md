@@ -16,7 +16,7 @@ and third-party support for handling CSV data in PHP.
 ## Features
 
 * parseCSV is the only complete and fully featured CSV solution for PHP (as
-  far as i know).
+  far as I know).
 * Supports enclosed values, enclosed commas, double quotes and new lines.
 * Automatic delimiter character detection.
 * Sort data by specific fields/columns.
