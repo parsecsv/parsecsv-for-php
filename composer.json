@@ -1,0 +1,17 @@
+{
+    "name": "parsecsv/php-parsecsv",
+    "description": "CSV data parser for PHP",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Jim Mygrberg",
+            "email": "contact@jimeh.me"
+        }
+    ],
+    "autoload": {
+        "classmap": ["."]
+    },
+    "require-dev": {
+        "phpunit/phpunit": "4.1.*"
+    }
+}
