@@ -1,14 +1,13 @@
 # parseCSV
 
-_Note: I am no longer actively working on this library, but please submit pull
-requests for any fixes/features you would like to see added._
+Note: parseCSV is now being revised to PHP 5 standards. If you have an issue or a feature request we encourage you to open an issue.
 
-parseCSV is an easy to use PHP class to read and write CSV data properly. It
+parseCSV is an easy to use PHP class that reads and writes CSV data properly. It
 fully conforms to the specifications outlined on the on the
-[Wikipedia article][CSV]. It has a few advanced features which help make your
+[Wikipedia article][CSV]. It has many advanced features which help make your
 life easier when dealing with CSV data.
 
-I originally created this library in early 2007 due to the lack of built-in
+This library was originaly created in early 2007 by [jimeh](https://github.com/jimeh) due to the lack of built-in
 and third-party support for handling CSV data in PHP.
 
 [csv]: http://en.wikipedia.org/wiki/Comma-separated_values
@@ -17,7 +16,7 @@ and third-party support for handling CSV data in PHP.
 ## Features
 
 * parseCSV is the only complete and fully featured CSV solution for PHP (as
-  far as i know).
+  far as I know).
 * Supports enclosed values, enclosed commas, double quotes and new lines.
 * Automatic delimiter character detection.
 * Sort data by specific fields/columns.
@@ -84,7 +83,7 @@ a file and download it**
 
 ```php
 $csv = new parseCSV();
-$csv->output(true, 'movies.csv', $array);
+$csv->output('movies.csv', $array, array('field 1', 'field 2'), ',');
 ```
 
 
