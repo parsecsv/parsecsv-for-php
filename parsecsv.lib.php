@@ -467,7 +467,7 @@ class parseCSV {
 		$data = $this->unparse($data, $fields, null, null, $delimiter);
 
 		if ( $filename !== null ) {
-			if ( $this->output_encoding  == 'UTF-8') {
+			if (( $this->output_encoding  == 'UTF-8') and ( $this->force_utf_bom===true )) {
 				header('Content-Encoding: UTF-8');
 				header('Content-type: text/csv; charset=UTF-8');
 				echo "\xEF\xBB\xBF"; // UTF-8 Byte Order Mark (BOM)
