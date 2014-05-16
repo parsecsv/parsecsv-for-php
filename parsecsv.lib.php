@@ -330,6 +330,15 @@ class parseCSV {
 	 */
 	public $data = array();
 
+	/**
+	 * Force UTF-8 BOM
+	 * Forces the output to have a utf8 byte order mark
+	 *
+	 * @access protected
+	 * @var boolean
+	 */
+	protected $force_utf_bom = false;
+
 
 	/**
 	 * Constructor
@@ -1169,5 +1178,32 @@ class parseCSV {
 		}
 
 		return false;
+	}
+
+	/**
+	 * Force UTF-8 BOM
+	 * Set whether to force the UTF Byte order mark
+	 *
+	 * @access public
+	 * @param [bool]
+	 *
+	 * @return parseCSV
+	 */
+	public function set_force_utf_bom($val) {
+		$this->force_utf_bom = $val;
+
+		return $this;
+	}
+
+	/**
+	 * Get UTF-8 BOM
+	 * Returns whether or not the dev has chosen to force the UTF-8 BOM
+	 *
+	 * @access public
+	 * 
+	 * @return [bool]
+	 */
+	public function get_force_utf_bom() {
+		return $this->force_utf_bom;
 	}
 }
