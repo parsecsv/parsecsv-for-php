@@ -447,19 +447,23 @@ class parseCSV {
 	 * @return [string]
 	 */
 	public function output ($filename = null, $data = array(), $fields = array(), $delimiter = null) {
-		if ( empty($filename) ) {
+		if (empty($filename)) {
 			$filename = $this->output_filename;
 		}
 
-		if ( $delimiter === null ) {
+		if (is_null($delimiter)) {
 			$delimiter = $this->output_delimiter;
 		}
 
 		$data = $this->unparse($data, $fields, null, null, $delimiter);
 
-		if ( $filename !== null ) {
+		if (!is_null($filename)) {
 			header('Content-type: application/csv');
-			header('Content-Disposition: attachment; filename="'.$filename.'"');
+			header("Content-Length: ".strlen($data));
+			header('Expires: 0');
+			header('Pragma: cache');
+			header('Cache-Control: private');
+			header('Content-Disposition: attachment; filename="'.$filename.'"; modification-date="'.date('r').'";');
 			echo $data;
 		}
 
