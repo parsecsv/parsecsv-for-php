@@ -463,6 +463,9 @@ class parseCSV {
         if ( $delimiter === null ) {
             $delimiter = $this->output_delimiter;
         }
+        else {
+            $this->output_delimiter = $delimiter;
+        }
 
         $data = $this->unparse($data, $fields, null, null, $delimiter);
 
