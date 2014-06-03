@@ -463,10 +463,6 @@ class parseCSV {
         if ( $delimiter === null ) {
             $delimiter = $this->output_delimiter;
         }
-        else {
-            $this->delimiter = $delimiter;
-            $this->output_delimiter = $delimiter;
-        }
 
         $data = $this->unparse($data, $fields, null, null, $delimiter);
 
@@ -845,7 +841,7 @@ class parseCSV {
         // create heading
         if ( $this->heading && !$append && !empty($fields) ) {
             foreach( $fields as $key => $value ) {
-                $entry[] = $this->_enclose_value($value);
+                $entry[] = $this->_enclose_value($value, $delimiter);
             }
 
             $string .= implode($delimiter, $entry).$this->linefeed;
@@ -855,7 +851,7 @@ class parseCSV {
         // create data
         foreach( $data as $key => $row ) {
             foreach( $row as $field => $value ) {
-                $entry[] = $this->_enclose_value($value);
+                $entry[] = $this->_enclose_value($value, $delimiter);
             }
 
             $string .= implode($delimiter, $entry).$this->linefeed;
@@ -1058,11 +1054,14 @@ class parseCSV {
      *
      * @return Processed value
      */
-    public function _enclose_value ($value = null) {
+    public function _enclose_value ($value = null, $delimiter = null) {
+        if ( $delimiter === null ) {
+            $delimiter = $this->delimiter;
+        }
         if ( $value !== null && $value != '' ) {
-            $delimiter = preg_quote($this->delimiter, '/');
-            $enclosure = preg_quote($this->enclosure, '/');
-            if ( preg_match("/".$delimiter."|".$enclosure."|\n|\r/i", $value) || ($value{0} == ' ' || substr($value, -1) == ' ') || $this->enclose_all ) {
+            $delimiter_quoted = preg_quote($delimiter, '/');
+            $enclosure_quoted = preg_quote($this->enclosure, '/');
+            if ( preg_match("/".$delimiter_quoted."|".$enclosure_quoted."|\n|\r/i", $value) || ($value{0} == ' ' || substr($value, -1) == ' ') || $this->enclose_all ) {
                 $value = str_replace($this->enclosure, $this->enclosure.$this->enclosure, $value);
                 $value = $this->enclosure.$value.$this->enclosure;
             }
