@@ -464,6 +464,7 @@ class parseCSV {
             $delimiter = $this->output_delimiter;
         }
         else {
+            $this->delimiter = $delimiter;
             $this->output_delimiter = $delimiter;
         }
 
