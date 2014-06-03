@@ -145,6 +145,15 @@ class parseCSV {
      * @var string
      */
     public $enclosure = '"';
+    
+    /**
+     * Enclose All
+     * Force enclosing all columns
+     *
+     * @access public
+     * @var bool
+     */
+    public $enclose_all = false;
 
     /**
      * Conditions
@@ -1049,7 +1058,7 @@ class parseCSV {
         if ( $value !== null && $value != '' ) {
             $delimiter = preg_quote($this->delimiter, '/');
             $enclosure = preg_quote($this->enclosure, '/');
-            if ( preg_match("/".$delimiter."|".$enclosure."|\n|\r/i", $value) || ($value{0} == ' ' || substr($value, -1) == ' ') ) {
+            if ( preg_match("/".$delimiter."|".$enclosure."|\n|\r/i", $value) || ($value{0} == ' ' || substr($value, -1) == ' ') || $this->enclose_all ) {
                 $value = str_replace($this->enclosure, $this->enclosure.$this->enclosure, $value);
                 $value = $this->enclosure.$value.$this->enclosure;
             }
