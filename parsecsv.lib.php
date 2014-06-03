@@ -459,16 +459,12 @@ class parseCSV {
 
         if ( $filename !== null ) {
             header('Content-type: application/csv');
-<<<<<<< HEAD
-            header('Content-Disposition: attachment; filename="'.$filename.'"');
-=======
             header('Content-Length: '.strlen($data));
             header('Cache-Control: no-cache, must-revalidate');
             header('Pragma: no-cache');
             header('Expires: 0');
             header('Content-Disposition: attachment; filename="'.$filename.'"; modification-date="'.date('r').'";');
 
->>>>>>> 7b6692d7fd7a9c09d9919c26380a1aa9fef3a6d7
             echo $data;
         }
 
