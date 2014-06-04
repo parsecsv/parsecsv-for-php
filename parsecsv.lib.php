@@ -626,15 +626,15 @@ class parseCSV {
      * @return [array|bool]
      */
     public function parse_file ($file = null) {
-        if ( $file === null ) {
+        if (is_null($file)) {
             $file = $this->file;
         }
 
-        if ( empty($this->file_data) ) {
+        if (empty($this->file_data)) {
             $this->load_data($file);
         }
 
-        return ( !empty($this->file_data) ) ? $this->parse_string() : false ;
+        return (!empty($this->file_data)) ? $this->parse_string() : false ;
     }
 
     /**
