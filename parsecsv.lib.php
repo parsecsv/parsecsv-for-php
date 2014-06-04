@@ -387,24 +387,24 @@ class parseCSV {
      * @return [bool]
      */
     public function parse ($input = null, $offset = null, $limit = null, $conditions = null) {
-        if ( $input === null ) {
+        if (is_null($input)) {
             $input = $this->file;
         }
 
-        if ( !empty($input) ) {
-            if ( $offset !== null ) {
+        if (!empty($input)) {
+            if (!is_null($offeset)) {
                 $this->offset = $offset;
             }
 
-            if  ($limit !== null ) {
+            if (!is_null($limit)) {
                 $this->limit = $limit;
             }
 
-            if ( count($conditions) > 0 ) {
+            if (count($conditions)>0) {
                 $this->conditions = $conditions;
             }
 
-            if ( is_readable($input) ) {
+            if (is_readable($input)) {
                 $this->data = $this->parse_file($input);
             }
             else {
@@ -412,7 +412,7 @@ class parseCSV {
                 $this->data      = $this->parse_string();
             }
 
-            if ( $this->data === false ) {
+            if ($this->data===false) {
                 return false;
             }
         }
