@@ -923,27 +923,27 @@ class parseCSV {
      * @return  true of false
      */
     public function _validate_row_conditions ($row = array(), $conditions = null) {
-        if ( !empty($row) ) {
-            if ( !empty($conditions) ) {
-                $conditions = (strpos($conditions, ' OR ') !== false) ? explode(' OR ', $conditions) : array($conditions) ;
+        if (!empty($row)) {
+            if (!empty($conditions)) {
+                $conditions = (strpos($conditions,' OR ')!==false) ? explode(' OR ',$conditions) : array($conditions);
                 $or = '';
-                foreach( $conditions as $key => $value ) {
-                    if ( strpos($value, ' AND ') !== false ) {
-                        $value = explode(' AND ', $value);
+                foreach ($conditions as $key => $value) {
+                    if (strpos($value, ' AND ')!==false) {
+                        $value = explode(' AND ',$value);
                         $and   = '';
 
-                        foreach( $value as $k => $v ) {
-                            $and .= $this->_validate_row_condition($row, $v);
+                        foreach ($value as $k => $v) {
+                            $and.=$this->_validate_row_condition($row, $v);
                         }
 
-                        $or .= (strpos($and, '0') !== false) ? '0' : '1' ;
+                        $or.=(strpos($and, '0') !== false) ? '0' : '1';
                     }
                     else {
-                        $or .= $this->_validate_row_condition($row, $value);
+                        $or.=$this->_validate_row_condition($row, $value);
                     }
                 }
 
-                return (strpos($or, '1') !== false) ? true : false ;
+                return (strpos($or, '1')!==false) ? true : false;
             }
 
             return true;
