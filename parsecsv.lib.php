@@ -1056,13 +1056,13 @@ class parseCSV {
      * @return Processed value
      */
     public function _enclose_value ($value = null, $delimiter = null) {
-        if ( $delimiter === null ) {
+        if (is_null($delimiter)) {
             $delimiter = $this->delimiter;
         }
-        if ( $value !== null && $value != '' ) {
+        if (!is_null($value) && $value!='') {
             $delimiter_quoted = preg_quote($delimiter, '/');
             $enclosure_quoted = preg_quote($this->enclosure, '/');
-            if ( preg_match("/".$delimiter_quoted."|".$enclosure_quoted."|\n|\r/i", $value) || ($value{0} == ' ' || substr($value, -1) == ' ') || $this->enclose_all ) {
+            if (preg_match("/".$delimiter_quoted."|".$enclosure_quoted."|\n|\r/i", $value) || ($value{0}==' ' || substr($value, -1)==' ') || $this->enclose_all) {
                 $value = str_replace($this->enclosure, $this->enclosure.$this->enclosure, $value);
                 $value = $this->enclosure.$value.$this->enclosure;
             }
