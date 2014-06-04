@@ -1169,11 +1169,11 @@ class parseCSV {
      * @return  true or false
      */
     public function _wfile ($file, $string = '', $mode = 'wb', $lock = 2) {
-        if ( $fp = fopen($file, $mode) ) {
+        if ($fp=fopen($file, $mode)) {
             flock($fp, $lock);
             $re  = fwrite($fp, $string);
             $re2 = fclose($fp);
-            if ( $re != false && $re2 != false )  {
+            if ($re != false && $re2!=false)  {
                 return true;
             }
         }
