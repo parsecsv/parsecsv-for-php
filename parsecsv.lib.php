@@ -433,7 +433,7 @@ class parseCSV {
      * @return [bool]
      */
     public function save ($file = null, $data = array(), $append = false, $fields = array()) {
-        if ( empty($file) ) {
+        if (empty($file)) {
             $file = &$this->file;
         }
 
