@@ -490,11 +490,12 @@ class parseCSV {
      */
     public function encoding ($input = null, $output = null) {
         $this->convert_encoding = true;
-        if ( $input !== null ) {
+
+        if (!is_null($input)) {
             $this->input_encoding = $input;
         }
 
-        if ( $output !== null )  {
+        if (!is_null($output)) {
             $this->output_encoding = $output;
         }
     }
