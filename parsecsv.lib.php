@@ -392,7 +392,7 @@ class parseCSV {
         }
 
         if (!empty($input)) {
-            if (!is_null($offeset)) {
+            if (!is_null($offset)) {
                 $this->offset = $offset;
             }
 
