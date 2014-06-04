@@ -12,6 +12,16 @@ and third-party support for handling CSV data in PHP.
 
 [csv]: http://en.wikipedia.org/wiki/Comma-separated_values
 
+## Installation
+Installation is easy using Composer. Include the following in your composer.json
+```
+"parsecsv/php-parsecsv": "0.4.5"
+```
+
+You may also manually include the parsecsv.lib.php file
+```php
+require_once 'parsecsv.lib.php';
+```
 
 ## Features
 

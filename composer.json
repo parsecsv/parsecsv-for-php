@@ -6,6 +6,10 @@
         {
             "name": "Jim Myhrberg",
             "email": "contact@jimeh.me"
+        },
+        {
+            "name": "William Knauss",
+            "email": "will.knauss@gmail.com"
         }
     ],
     "autoload": {
