@@ -676,7 +676,7 @@ class parseCSV {
             // open/close quotes, and inline quotes
             if ($ch == $this->enclosure) {
                 if ($enclosed === false) {
-                    if (ltrim($current,$white_spaces)=='') {
+                    if (ltrim($current, $white_spaces) == '') {
                         $enclosed     = true;
                         $was_enclosed = true;
                     }
