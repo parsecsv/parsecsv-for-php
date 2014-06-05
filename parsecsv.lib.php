@@ -694,11 +694,11 @@ class parseCSV {
                             );
                         }
 
-                        $current.=$ch;
+                        $current. = $ch;
                     }
                 }
                 elseif ($nch == $this->enclosure) {
-                    $current.=$ch;
+                    $current. = $ch;
                     $i++;
                 }
                 elseif ($nch != $this->delimiter && $nch != "\r" && $nch != "\n") {
@@ -727,7 +727,7 @@ class parseCSV {
                             );
                         }
 
-                        $current.=$ch;
+                        $current. = $ch;
                         $enclosed = false;
                     }
                 }
@@ -782,7 +782,7 @@ class parseCSV {
             // append character to current field
             }
             else {
-                $current.=$ch;
+                $current. = $ch;
             }
         }
 
@@ -898,7 +898,7 @@ class parseCSV {
             }
 
             if (substr($data, -1) != "\n") {
-                $data.="\n";
+                $data. = "\n";
             }
 
             $this->file_data = &$data;
@@ -1110,7 +1110,7 @@ class parseCSV {
                 if (is_null($first)) {
                     $first = $value;
                 }
-                elseif ($value == first && $equal !== false) {
+                elseif ($value == $first && $equal !== false) {
                     $equal = true;
                 }
                 elseif ($value == $first+1 && $equal !== false) {
