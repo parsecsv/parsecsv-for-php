@@ -145,7 +145,7 @@ class parseCSV {
      * @var string
      */
     public $enclosure = '"';
-    
+
     /**
      * Enclose All
      * Force enclosing all columns
