@@ -933,13 +933,13 @@ class parseCSV {
                         $and   = '';
 
                         foreach ($value as $k => $v) {
-                            $and.=$this->_validate_row_condition($row, $v);
+                            $and. = $this->_validate_row_condition($row, $v);
                         }
 
-                        $or.=(strpos($and, '0') !== false) ? '0' : '1';
+                        $or. = (strpos($and, '0') !== false) ? '0' : '1';
                     }
                     else {
-                        $or.=$this->_validate_row_condition($row, $value);
+                        $or. = $this->_validate_row_condition($row, $value);
                     }
                 }
 
