@@ -925,7 +925,7 @@ class parseCSV {
     public function _validate_row_conditions ($row = array(), $conditions = null) {
         if (!empty($row)) {
             if (!empty($conditions)) {
-                $conditions = (strpos($conditions,' OR ') !== false) ? explode(' OR ',$conditions) : array($conditions);
+                $conditions = (strpos($conditions, ' OR ') !== false) ? explode(' OR ', $conditions) : array($conditions);
                 $or = '';
                 foreach ($conditions as $key => $value) {
                     if (strpos($value, ' AND ') !== false) {
