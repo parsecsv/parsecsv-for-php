@@ -845,7 +845,7 @@ class parseCSV {
                 $entry[] = $this->_enclose_value($value, $delimiter);
             }
 
-            $string.=implode($delimiter, $entry).$this->linefeed;
+            $string. = implode($delimiter, $entry).$this->linefeed;
             $entry   = array();
         }
 
@@ -855,7 +855,7 @@ class parseCSV {
                 $entry[] = $this->_enclose_value($value, $delimiter);
             }
 
-            $string.=implode($delimiter, $entry).$this->linefeed;
+            $string. = implode($delimiter, $entry).$this->linefeed;
             $entry   = array();
         }
 
