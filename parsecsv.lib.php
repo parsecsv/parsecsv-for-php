@@ -702,7 +702,7 @@ class parseCSV {
                     $i++;
                 }
                 elseif ($nch != $this->delimiter && $nch != "\r" && $nch != "\n") {
-                    for ($x=($i+1); isset($data{$x}) && ltrim($data{$x}, $white_spaces)== ''; $x++ ) {}
+                    for ($x=($i+1); isset($data{$x}) && ltrim($data{$x}, $white_spaces) == ''; $x++ ) {}
                     if ($data{$x} == $this->delimiter) {
                         $enclosed = false;
                         $i        = $x;
