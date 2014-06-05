@@ -359,7 +359,7 @@ class parseCSV {
             $this->limit = $limit;
         }
 
-        if ( count($conditions) > 0 ) {
+        if ( !is_null($conditions) ) {
             $this->conditions = $conditions;
         }
 
@@ -404,7 +404,7 @@ class parseCSV {
                 $this->limit = $limit;
             }
 
-            if ( count($conditions) > 0 ) {
+            if ( !is_null($conditions) ) {
                 $this->conditions = $conditions;
             }
 
