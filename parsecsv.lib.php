@@ -987,7 +987,7 @@ class parseCSV {
             $value = $capture[3];
 
             if (preg_match('/^([\'\"]{1})(.*)([\'\"]{1})$/i', $value, $capture)) {
-                if ($capture[1]==$capture[3]) {
+                if ($capture[1] == $capture[3]) {
                     $value = $capture[2];
                     $value = str_replace("\\n", "\n", $value);
                     $value = str_replace("\\r", "\r", $value);
