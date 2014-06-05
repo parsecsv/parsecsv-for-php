@@ -666,9 +666,16 @@ class parseCSV {
         $was_enclosed = false;
         $strlen       = strlen($data);
 
+        // force the parser to process end of data as a character (false) when
+        // data does not end with a line feed or carriage return character.
+        $lch = $data{$strlen-1};
+        if ($lch != "\n" && $lch != "\r") {
+            $strlen++;
+        }
+
         // walk through each character
         for ( $i=0; $i < $strlen; $i++ ) {
-            $ch  = $data{$i};
+            $ch  = ( isset($data{$i}) )   ? $data{$i}   : false ;
             $nch = ( isset($data{$i+1}) ) ? $data{$i+1} : false ;
             $pch = ( isset($data{$i-1}) ) ? $data{$i-1} : false ;
 
@@ -734,9 +741,9 @@ class parseCSV {
                     $enclosed = false;
                 }
 
-            // end of field/row
+            // end of field/row/csv
             }
-            elseif ( ($ch == $this->delimiter || $ch == "\n" || $ch == "\r") && !$enclosed ) {
+            elseif ( ($ch == $this->delimiter || $ch == "\n" || $ch == "\r" || $ch === false) && !$enclosed ) {
                 $key           = ( !empty($head[$col]) ) ? $head[$col] : $col ;
                 $row[$key]     = ( $was_enclosed ) ? $current : trim($current) ;
                 $current       = '';
@@ -744,7 +751,7 @@ class parseCSV {
                 $col++;
 
                 // end of row
-                if ( $ch == "\n" || $ch == "\r" ) {
+                if ( $ch == "\n" || $ch == "\r" || $ch === false ) {
                     if ( $this->_validate_offset($row_count) && $this->_validate_row_conditions($row, $this->conditions) ) {
                         if ( $this->heading && empty($head) ) {
                             $head = $row;
