@@ -708,7 +708,7 @@ class parseCSV {
                         $i        = $x;
                     }
                     else {
-                        if ($this->error<1) {
+                        if ($this->error < 1) {
                             $this->error = 1;
                         }
 
