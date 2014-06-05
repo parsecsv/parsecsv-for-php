@@ -350,7 +350,7 @@ class parseCSV {
      * @param  [integer] limit      Limits the number of returned rows to specified amount
      * @param  [string]  conditions Basic SQL-like conditions for row matching
      */
-    public function __construct ($input = null, $offset = null, $limit = null, $conditions = null) {
+    public function __construct ($input = null, $offset = null, $limit = null, $conditions = null, $keep_file_data = null) {
         if ( $offset !== null ) {
             $this->offset = $offset;
         }
@@ -361,6 +361,10 @@ class parseCSV {
 
         if ( count($conditions) > 0 ) {
             $this->conditions = $conditions;
+        }
+
+        if ( !is_null($keep_file_data) ) {
+        	$this->keep_file_data = $keep_file_data;
         }
 
         if ( !empty($input) ) {
