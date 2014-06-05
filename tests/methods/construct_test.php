@@ -52,9 +52,16 @@ class construct_methods_Test extends PHPUnit_Framework_TestCase {
         $this->assertEquals($conditions,$this->csv->conditions);
     }
 
+    public function test_keep_file_data_param() {
+        $keep = true;
+        $this->csv = new parseCSV(null,null,null,null,$keep);
+        $this->assertTrue(is_bool($this->csv->keep_file_data));
+        $this->assertEquals($keep,$this->csv->keep_file_data);
+    }
+
     public function test_input_param() {
        $csv = "col1,col2,col3\r\nval1,val2,val3\r\nval1A,val2A,val3A\r\n";
-       $this->csv = new parseCSV($csv);
+       $this->csv = new parseCSV($csv,null,null,null,true);
        $this->assertTrue(is_string($this->csv->file_data));
        $this->assertEquals($csv,$this->csv->file_data);
     }
