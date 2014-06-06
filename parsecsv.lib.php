@@ -1103,7 +1103,7 @@ class parseCSV {
      * Check if passed info might be delimiter
      * Only used by find_delimiter
      *
-     * @access public
+     * @access protected
      * @param  [type] $char      [description]
      * @param  [type] $array     [description]
      * @param  [type] $depth     [description]
@@ -1111,7 +1111,7 @@ class parseCSV {
      *
      * @return special string used for delimiter selection, or false
      */
-    public function _check_count ($char, $array, $depth, $preferred) {
+    protected function _check_count ($char, $array, $depth, $preferred) {
         if ( $depth == count($array) ) {
             $first  = null;
             $equal  = null;
