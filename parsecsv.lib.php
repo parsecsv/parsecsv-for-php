@@ -1049,7 +1049,7 @@ class parseCSV {
      * @return  true of false
      */
     protected function _validate_offset ($current_row) {
-        if ( $this->sort_by === null && $this->offset !== null && $current_row < $this->offset ) {
+        if ($this->sort_by === null && $this->offset !== null && $current_row < $this->offset) {
             return false;
         }
 
