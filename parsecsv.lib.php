@@ -1148,12 +1148,12 @@ class parseCSV {
     /**
      * Read local file
      *
-     * @access public
+     * @access protected
      * @param   file   local filename
      *
      * @return  Data from file, or false on failure
      */
-    public function _rfile ($file = null) {
+    protected function _rfile ($file = null) {
         if ( is_readable($file) ) {
             if ( !($fh = fopen($file, 'r')) ) {
                 return false;
