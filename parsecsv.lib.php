@@ -1043,12 +1043,12 @@ class parseCSV {
     /**
      * Validates if the row is within the offset or not if sorting is disabled
      *
-     * @access public
+     * @access protected
      * @param   current_row   the current row number being processed
      *
      * @return  true of false
      */
-    public function _validate_offset ($current_row) {
+    protected function _validate_offset ($current_row) {
         if ( $this->sort_by === null && $this->offset !== null && $current_row < $this->offset ) {
             return false;
         }
