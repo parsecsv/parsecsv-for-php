@@ -1112,19 +1112,19 @@ class parseCSV {
      * @return special string used for delimiter selection, or false
      */
     protected function _check_count ($char, $array, $depth, $preferred) {
-        if ( $depth == count($array) ) {
+        if ($depth == count($array)) {
             $first  = null;
             $equal  = null;
             $almost = false;
-            foreach( $array as $key => $value ) {
-                if ( $first == null ) {
+            foreach ($array as $key => $value) {
+                if ($first == null) {
                     $first = $value;
                 }
-                elseif ( $value == $first && $equal !== false) {
+                elseif ($value == $first && $equal !== false) {
                     $equal = true;
                 }
-                elseif ( $value == $first+1 && $equal !== false ) {
-                    $equal = true;
+                elseif ($value == $first+1 && $equal !== false) {
+                    $equal  = true;
                     $almost = true;
                 }
                 else {
@@ -1132,10 +1132,10 @@ class parseCSV {
                 }
             }
 
-            if ( $equal ) {
-                $match = ( $almost ) ? 2 : 1 ;
+            if ($equal) {
+                $match = ($almost) ? 2 : 1;
                 $pref  = strpos($preferred, $char);
-                $pref  = ( $pref !== false ) ? str_pad($pref, 3, '0', STR_PAD_LEFT) : '999' ;
+                $pref  = ($pref !== false) ? str_pad($pref, 3, '0', STR_PAD_LEFT) : '999';
 
                 return $pref.$match.'.'.(99999 - str_pad($first, 5, '0', STR_PAD_LEFT));
             }
