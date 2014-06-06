@@ -1090,8 +1090,8 @@ class parseCSV {
      * @return  true or false
      */
     protected function _check_data ($file = null) {
-        if ( empty($this->file_data) ) {
-            if ( $file === null ) $file = $this->file;
+        if (empty($this->file_data)) {
+            if (is_null($file)) $file = $this->file;
 
             return $this->load_data($file);
         }
