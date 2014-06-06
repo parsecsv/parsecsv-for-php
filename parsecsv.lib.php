@@ -460,17 +460,17 @@ class parseCSV {
      * @return [string]
      */
     public function output ($filename = null, $data = array(), $fields = array(), $delimiter = null) {
-        if ( empty($filename) ) {
+        if (empty($filename)) {
             $filename = $this->output_filename;
         }
 
-        if ( $delimiter === null ) {
+        if ($delimiter === null) {
             $delimiter = $this->output_delimiter;
         }
 
         $data = $this->unparse($data, $fields, null, null, $delimiter);
 
-        if ( $filename !== null ) {
+        if (!is_null($filename)) {
             header('Content-type: application/csv');
             header('Content-Length: '.strlen($data));
             header('Cache-Control: no-cache, must-revalidate');
