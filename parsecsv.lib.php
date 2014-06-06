@@ -518,24 +518,24 @@ class parseCSV {
      * @return [string]
      */
     public function auto ($file = null, $parse = true, $search_depth = null, $preferred = null, $enclosure = null) {
-        if ( $file === null ) {
+        if (is_null($file)) {
             $file = $this->file;
         }
 
-        if ( empty($search_depth) ) {
+        if (empty($search_depth)) {
             $search_depth = $this->auto_depth;
         }
 
-        if ( $enclosure === null ) {
+        if (is_null($enclosure)) {
             $enclosure = $this->enclosure;
         }
 
-        if ( $preferred === null ) {
+        if (is_null($preferred)) {
             $preferred = $this->auto_preferred;
         }
 
-        if ( empty($this->file_data) ) {
-            if ( $this->_check_data($file) ) {
+        if (empty($this->file_data)) {
+            if ($this->_check_data($file)) {
                 $data = &$this->file_data;
             }
             else {
@@ -553,24 +553,24 @@ class parseCSV {
         $to_end   = true;
 
         // walk specific depth finding posssible delimiter characters
-        for ( $i=0; $i < $strlen; $i++ ) {
+        for ($i=0; $i < $strlen; $i++) {
             $ch  = $data{$i};
-            $nch = ( isset($data{$i+1}) ) ? $data{$i+1} : false ;
-            $pch = ( isset($data{$i-1}) ) ? $data{$i-1} : false ;
+            $nch = (isset($data{$i+1})) ? $data{$i+1} : false ;
+            $pch = (isset($data{$i-1})) ? $data{$i-1} : false ;
 
             // open and closing quotes
-            if ( $ch == $enclosure ) {
-                if ( !$enclosed || $nch != $enclosure ) {
-                    $enclosed = ( $enclosed ) ? false : true ;
+            if ($ch == $enclosure) {
+                if (!$enclosed || $nch != $enclosure) {
+                    $enclosed = ($enclosed) ? false : true ;
                 }
-                elseif ( $enclosed ) {
+                elseif ($enclosed) {
                     $i++;
                 }
 
             // end of row
             }
-            elseif ( ($ch == "\n" && $pch != "\r" || $ch == "\r") && !$enclosed ) {
-                if ( $n >= $search_depth ) {
+            elseif (($ch == "\n" && $pch != "\r" || $ch == "\r") && !$enclosed) {
+                if ($n >= $search_depth) {
                     $strlen = 0;
                     $to_end = false;
                 }
@@ -581,8 +581,8 @@ class parseCSV {
             // count character
             }
             elseif (!$enclosed) {
-                if ( !preg_match('/['.preg_quote($this->auto_non_chars, '/').']/i', $ch) ) {
-                    if ( !isset($chars[$ch][$n]) ) {
+                if (!preg_match('/['.preg_quote($this->auto_non_chars, '/').']/i', $ch)) {
+                    if (!isset($chars[$ch][$n])) {
                         $chars[$ch][$n] = 1;
                     }
                     else {
@@ -593,10 +593,10 @@ class parseCSV {
         }
 
         // filtering
-        $depth    = ( $to_end ) ? $n-1 : $n ;
+        $depth    = ($to_end) ? $n-1 : $n;
         $filtered = array();
-        foreach( $chars as $char => $value ) {
-            if ( $match = $this->_check_count($char, $value, $depth, $preferred) ) {
+        foreach ($chars as $char => $value) {
+            if ($match = $this->_check_count($char, $value, $depth, $preferred)) {
                 $filtered[$match] = $char;
             }
         }
@@ -606,7 +606,7 @@ class parseCSV {
         $this->delimiter = reset($filtered);
 
         // parse data
-        if ( $parse ) {
+        if ($parse) {
             $this->data = $this->parse_string();
         }
 
