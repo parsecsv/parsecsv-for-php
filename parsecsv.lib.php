@@ -1154,8 +1154,8 @@ class parseCSV {
      * @return  Data from file, or false on failure
      */
     protected function _rfile ($file = null) {
-        if ( is_readable($file) ) {
-            if ( !($fh = fopen($file, 'r')) ) {
+        if (is_readable($file)) {
+            if (!($fh = fopen($file, 'r'))) {
                 return false;
             }
 
