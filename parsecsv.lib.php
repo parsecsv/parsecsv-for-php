@@ -884,30 +884,30 @@ class parseCSV {
         $data = null;
         $file = null;
 
-        if ( $input === null ) {
+        if (is_null($input)) {
             $file = $this->file;
         }
-        elseif ( file_exists($input) ) {
+        elseif (file_exists($input)) {
             $file = $input;
         }
         else {
             $data = $input;
         }
 
-        if ( !empty($data) || $data = $this->_rfile($file) ) {
-            if ( $this->file != $file ) {
+        if (!empty($data) || $data = $this->_rfile($file)) {
+            if ($this->file != $file) {
                 $this->file = $file;
             }
 
-            if ( preg_match('/\.php$/i', $file) && preg_match('/<\?.*?\?>(.*)/ims', $data, $strip) ) {
+            if (preg_match('/\.php$/i', $file) && preg_match('/<\?.*?\?>(.*)/ims', $data, $strip)) {
                 $data = ltrim($strip[1]);
             }
 
-            if ( $this->convert_encoding ) {
+            if ($this->convert_encoding) {
                 $data = iconv($this->input_encoding, $this->output_encoding, $data);
             }
 
-            if ( substr($data, -1) != "\n" ) {
+            if (substr($data, -1) != "\n") {
                 $data .= "\n";
             }
 
