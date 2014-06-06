@@ -926,13 +926,13 @@ class parseCSV {
     /**
      * Validate a row against specified conditions
      *
-     * @access public
+     * @access protected
      * @param   row          array with values from a row
      * @param   conditions   specified conditions that the row must match
      *
      * @return  true of false
      */
-    public function _validate_row_conditions ($row = array(), $conditions = null) {
+    protected function _validate_row_conditions ($row = array(), $conditions = null) {
         if ( !empty($row) ) {
             if ( !empty($conditions) ) {
                 $conditions = (strpos($conditions, ' OR ') !== false) ? explode(' OR ', $conditions) : array($conditions) ;
@@ -965,13 +965,13 @@ class parseCSV {
     /**
      * Validate a row against a single condition
      *
-     * @access public
+     * @access protected
      * @param   row          array with values from a row
      * @param   condition   specified condition that the row must match
      *
      * @return  true of false
      */
-    public function _validate_row_condition ($row, $condition) {
+    protected function _validate_row_condition ($row, $condition) {
         $operators = array(
             '=', 'equals', 'is',
             '!=', 'is not',
@@ -1043,12 +1043,12 @@ class parseCSV {
     /**
      * Validates if the row is within the offset or not if sorting is disabled
      *
-     * @access public
+     * @access protected
      * @param   current_row   the current row number being processed
      *
      * @return  true of false
      */
-    public function _validate_offset ($current_row) {
+    protected function _validate_offset ($current_row) {
         if ( $this->sort_by === null && $this->offset !== null && $current_row < $this->offset ) {
             return false;
         }
@@ -1060,12 +1060,12 @@ class parseCSV {
      * Enclose values if needed
      *  - only used by unparse()
      *
-     * @access public
+     * @access protected
      * @param  value   string to process
      *
      * @return Processed value
      */
-    public function _enclose_value ($value = null, $delimiter = null) {
+    protected function _enclose_value ($value = null, $delimiter = null) {
         if ( $delimiter === null ) {
             $delimiter = $this->delimiter;
         }
@@ -1084,12 +1084,12 @@ class parseCSV {
     /**
      * Check file data
      *
-     * @access public
+     * @access protected
      * @param   file   local filename
      *
      * @return  true or false
      */
-    public function _check_data ($file = null) {
+    protected function _check_data ($file = null) {
         if ( empty($this->file_data) ) {
             if ( $file === null ) $file = $this->file;
 
@@ -1103,7 +1103,7 @@ class parseCSV {
      * Check if passed info might be delimiter
      * Only used by find_delimiter
      *
-     * @access public
+     * @access protected
      * @param  [type] $char      [description]
      * @param  [type] $array     [description]
      * @param  [type] $depth     [description]
@@ -1111,7 +1111,7 @@ class parseCSV {
      *
      * @return special string used for delimiter selection, or false
      */
-    public function _check_count ($char, $array, $depth, $preferred) {
+    protected function _check_count ($char, $array, $depth, $preferred) {
         if ( $depth == count($array) ) {
             $first  = null;
             $equal  = null;
@@ -1148,12 +1148,12 @@ class parseCSV {
     /**
      * Read local file
      *
-     * @access public
+     * @access protected
      * @param   file   local filename
      *
      * @return  Data from file, or false on failure
      */
-    public function _rfile ($file = null) {
+    protected function _rfile ($file = null) {
         if ( is_readable($file) ) {
             if ( !($fh = fopen($file, 'r')) ) {
                 return false;
@@ -1170,7 +1170,7 @@ class parseCSV {
     /**
      * Write to local file
      *
-     * @access public
+     * @access protected
      * @param   file     local filename
      * @param   string   data to write to file
      * @param   mode     fopen() mode
@@ -1178,7 +1178,7 @@ class parseCSV {
      *
      * @return  true or false
      */
-    public function _wfile ($file, $string = '', $mode = 'wb', $lock = 2) {
+    protected function _wfile ($file, $string = '', $mode = 'wb', $lock = 2) {
         if ( $fp = fopen($file, $mode) ) {
             flock($fp, $lock);
             $re  = fwrite($fp, $string);
