@@ -833,25 +833,25 @@ class parseCSV {
      *
      * @return  CSV data (text string)
      */
-    public function unparse ( $data = array(), $fields = array(), $append = false , $is_php = false, $delimiter = null) {
-        if ( !is_array($data) || empty($data) ) {
+    public function unparse ($data = array(), $fields = array(), $append = false , $is_php = false, $delimiter = null) {
+        if (!is_array($data) || empty($data)) {
             $data = &$this->data;
         }
 
-        if ( !is_array($fields) || empty($fields) )  {
+        if (!is_array($fields) || empty($fields))  {
             $fields = &$this->titles;
         }
 
-        if ( $delimiter === null ) {
+        if ($delimiter === null) {
             $delimiter = $this->delimiter;
         }
 
-        $string = ( $is_php ) ? "<?php header('Status: 403'); die(' '); ?>".$this->linefeed : '' ;
+        $string = ($is_php) ? "<?php header('Status: 403'); die(' '); ?>".$this->linefeed : '';
         $entry  = array();
 
         // create heading
-        if ( $this->heading && !$append && !empty($fields) ) {
-            foreach( $fields as $key => $value ) {
+        if ($this->heading && !$append && !empty($fields)) {
+            foreach ($fields as $key => $value) {
                 $entry[] = $this->_enclose_value($value, $delimiter);
             }
 
@@ -860,8 +860,8 @@ class parseCSV {
         }
 
         // create data
-        foreach( $data as $key => $row ) {
-            foreach( $row as $field => $value ) {
+        foreach ($data as $key => $row) {
+            foreach ($row as $field => $value) {
                 $entry[] = $this->_enclose_value($value, $delimiter);
             }
 
