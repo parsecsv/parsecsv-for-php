@@ -1170,7 +1170,7 @@ class parseCSV {
     /**
      * Write to local file
      *
-     * @access public
+     * @access protected
      * @param   file     local filename
      * @param   string   data to write to file
      * @param   mode     fopen() mode
@@ -1178,7 +1178,7 @@ class parseCSV {
      *
      * @return  true or false
      */
-    public function _wfile ($file, $string = '', $mode = 'wb', $lock = 2) {
+    protected function _wfile ($file, $string = '', $mode = 'wb', $lock = 2) {
         if ( $fp = fopen($file, $mode) ) {
             flock($fp, $lock);
             $re  = fwrite($fp, $string);
