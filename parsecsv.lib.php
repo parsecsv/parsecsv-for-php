@@ -1060,12 +1060,12 @@ class parseCSV {
      * Enclose values if needed
      *  - only used by unparse()
      *
-     * @access public
+     * @access protected
      * @param  value   string to process
      *
      * @return Processed value
      */
-    public function _enclose_value ($value = null, $delimiter = null) {
+    protected function _enclose_value ($value = null, $delimiter = null) {
         if ( $delimiter === null ) {
             $delimiter = $this->delimiter;
         }
