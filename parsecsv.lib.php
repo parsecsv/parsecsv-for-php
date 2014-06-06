@@ -965,13 +965,13 @@ class parseCSV {
     /**
      * Validate a row against a single condition
      *
-     * @access public
+     * @access protected
      * @param   row          array with values from a row
      * @param   condition   specified condition that the row must match
      *
      * @return  true of false
      */
-    public function _validate_row_condition ($row, $condition) {
+    protected function _validate_row_condition ($row, $condition) {
         $operators = array(
             '=', 'equals', 'is',
             '!=', 'is not',
