@@ -351,23 +351,23 @@ class parseCSV {
      * @param  [string]  conditions Basic SQL-like conditions for row matching
      */
     public function __construct ($input = null, $offset = null, $limit = null, $conditions = null, $keep_file_data = null) {
-        if ( $offset !== null ) {
+        if (!is_null($offset)) {
             $this->offset = $offset;
         }
 
-        if ( $limit !== null ) {
+        if (!is_null($limit)) {
             $this->limit = $limit;
         }
 
-        if ( !is_null($conditions) ) {
+        if (!is_null($conditions)) {
             $this->conditions = $conditions;
         }
 
-        if ( !is_null($keep_file_data) ) {
+        if (!is_null($keep_file_data)) {
         	$this->keep_file_data = $keep_file_data;
         }
 
-        if ( !empty($input) ) {
+        if (!empty($input)) {
             $this->parse($input);
         }
     }
