@@ -6,9 +6,9 @@ test: phpunit-dep
 
 phpunit-dep:
 	test -f ${COMPOSER_BIN_DIR}/phpunit || ( \
-	echo "phpunit is required to run tests." \
-		"Please run: composer install" >&2 && \
-	exit 1 \
+		echo "phpunit is required to run tests." \
+			"Please run: composer install" >&2 && \
+		exit 1 \
 	)
 
 .SILENT:
