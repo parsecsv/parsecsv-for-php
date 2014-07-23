@@ -356,7 +356,12 @@ class parseCSV {
      *
      * @return [bool]
      */
-    public function parse ($input = null, $offset = null, $limit = null, $conditions = null) {
+    public function parse () {
+        $input      = $this->getInput();
+        $offset     = $this->getOffset();
+        $limit      = $this->getLimit();
+        $conditions = $this->getConditions();
+
         if (is_null($input)) {
             $input = $this->file;
         }
