@@ -86,7 +86,7 @@ class parseCSV {
      * @access public
      * @var bool
      */
-    public $heading = true;
+    protected $heading = true;
 
     /**
      * Fields
@@ -95,7 +95,7 @@ class parseCSV {
      * @access public
      * @var array
      */
-    public $fields = array();
+    protected $fields = array();
 
     /**
      * Sort By
@@ -104,7 +104,7 @@ class parseCSV {
      * @access public
      * @var string
      */
-    public $sort_by = null;
+    protected $sort_by = null;
 
     /**
      * Sort Reverse
@@ -113,7 +113,7 @@ class parseCSV {
      * @access public
      * @var bool
      */
-    public $sort_reverse = false;
+    protected $sort_reverse = false;
 
     /**
      * Sort Type
@@ -126,7 +126,7 @@ class parseCSV {
      * @access public
      * @var string
      */
-    public $sort_type = null;
+    protected $sort_type = null;
 
     /**
      * Delimiter
@@ -135,7 +135,7 @@ class parseCSV {
      * @access public
      * @var string
      */
-    public $delimiter = ',';
+    protected $delimiter = ',';
 
     /**
      * Enclosure
@@ -144,7 +144,7 @@ class parseCSV {
      * @access public
      * @var string
      */
-    public $enclosure = '"';
+    protected $enclosure = '"';
 
     /**
      * Enclose All
@@ -153,7 +153,7 @@ class parseCSV {
      * @access public
      * @var bool
      */
-    public $enclose_all = false;
+    protected $enclose_all = false;
 
     /**
      * Conditions
@@ -162,7 +162,7 @@ class parseCSV {
      * @access public
      * @var string
      */
-    public $conditions = null;
+    protected $conditions = null;
 
     /**
      * Offset
@@ -171,7 +171,7 @@ class parseCSV {
      * @access public
      * @var int
      */
-    public $offset = null;
+    protected $offset = null;
 
     /**
      * Limit
@@ -180,7 +180,7 @@ class parseCSV {
      * @access public
      * @var int
      */
-    public $limit = null;
+    protected $limit = null;
 
     /**
      * Auto Depth
@@ -189,7 +189,7 @@ class parseCSV {
      * @access public
      * @var int
      */
-    public $auto_depth = 15;
+    protected $auto_depth = 15;
 
     /**
      * Auto Non Charts
@@ -198,7 +198,7 @@ class parseCSV {
      * @access public
      * @var string
      */
-    public $auto_non_chars = "a-zA-Z0-9\n\r";
+    protected $auto_non_chars = "a-zA-Z0-9\n\r";
 
     /**
      * Auto Preferred
@@ -208,7 +208,7 @@ class parseCSV {
      * @access public
      * @var string
      */
-    public $auto_preferred = ",;\t.:|";
+    protected $auto_preferred = ",;\t.:|";
 
     /**
      * Convert Encoding
@@ -217,7 +217,7 @@ class parseCSV {
      * @access public
      * @var bool
      */
-    public $convert_encoding = false;
+    protected $convert_encoding = false;
 
     /**
      * Input Encoding
@@ -226,7 +226,7 @@ class parseCSV {
      * @access public
      * @var string
      */
-    public $input_encoding = 'ISO-8859-1';
+    protected $input_encoding = 'ISO-8859-1';
 
     /**
      * Output Encoding
@@ -235,7 +235,7 @@ class parseCSV {
      * @access public
      * @var string
      */
-    public $output_encoding = 'ISO-8859-1';
+    protected $output_encoding = 'ISO-8859-1';
 
     /**
      * Linefeed
@@ -244,7 +244,7 @@ class parseCSV {
      * @access public
      * @var string
      */
-    public $linefeed = "\r";
+    protected $linefeed = "\r";
 
     /**
      * Output Delimiter
@@ -253,7 +253,7 @@ class parseCSV {
      * @access public
      * @var string
      */
-    public $output_delimiter = ',';
+    protected $output_delimiter = ',';
 
     /**
      * Output filename
@@ -262,7 +262,7 @@ class parseCSV {
      * @access public
      * @var string
      */
-    public $output_filename = 'data.csv';
+    protected $output_filename = 'data.csv';
 
     /**
      * Keep File Data
@@ -271,7 +271,7 @@ class parseCSV {
      * @access public
      * @var bool
      */
-    public $keep_file_data = false;
+    protected $keep_file_data = false;
 
     /**
      * Internal variables
@@ -284,7 +284,7 @@ class parseCSV {
      * @access public
      * @var string
      */
-    public $file;
+    protected $file;
 
     /**
      * File Data
@@ -293,7 +293,7 @@ class parseCSV {
      * @access public
      * @var string
      */
-    public $file_data;
+    protected $file_data;
 
     /**
      * Error
@@ -310,7 +310,7 @@ class parseCSV {
      * @access public
      * @var int
      */
-    public $error = 0;
+    protected $error = 0;
 
     /**
      * Error Information
@@ -319,7 +319,7 @@ class parseCSV {
      * @access public
      * @var array
      */
-    public $error_info = array();
+    protected $error_info = array();
 
     /**
      * Titles
@@ -328,7 +328,7 @@ class parseCSV {
      * @access public
      * @var array
      */
-    public $titles = array();
+    protected $titles = array();
 
     /**
      * Data
@@ -337,41 +337,7 @@ class parseCSV {
      * @access public
      * @var array
      */
-    public $data = array();
-
-
-    /**
-     * Constructor
-     * Class constructor
-     *
-     * @access public
-     * @param  [string]  input      The CSV string or a direct filepath
-     * @param  [integer] offset     Number of rows to ignore from the beginning of  the data
-     * @param  [integer] limit      Limits the number of returned rows to specified amount
-     * @param  [string]  conditions Basic SQL-like conditions for row matching
-     */
-    public function __construct ($input = null, $offset = null, $limit = null, $conditions = null, $keep_file_data = null) {
-        if (!is_null($offset)) {
-            $this->offset = $offset;
-        }
-
-        if (!is_null($limit)) {
-            $this->limit = $limit;
-        }
-
-        if (!is_null($conditions)) {
-            $this->conditions = $conditions;
-        }
-
-        if (!is_null($keep_file_data)) {
-        	$this->keep_file_data = $keep_file_data;
-        }
-
-        if (!empty($input)) {
-            $this->parse($input);
-        }
-    }
-
+    protected $data = array();
 
     // ==============================================
     // ----- [ Main Functions ] ---------------------
@@ -390,7 +356,12 @@ class parseCSV {
      *
      * @return [bool]
      */
-    public function parse ($input = null, $offset = null, $limit = null, $conditions = null) {
+    public function parse () {
+        $input      = $this->getInput();
+        $offset     = $this->getOffset();
+        $limit      = $this->getLimit();
+        $conditions = $this->getConditions();
+
         if (is_null($input)) {
             $input = $this->file;
         }
@@ -436,7 +407,12 @@ class parseCSV {
      *
      * @return [bool]
      */
-    public function save ($file = null, $data = array(), $append = false, $fields = array()) {
+    public function save () {
+        $file   = $this->getFile();
+        $data   = $this->getData();
+        $append = $this->getAppend();
+        $fields = $this->getFields();
+
         if (empty($file)) {
             $file = &$this->file;
         }
