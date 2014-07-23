@@ -407,7 +407,12 @@ class parseCSV {
      *
      * @return [bool]
      */
-    public function save ($file = null, $data = array(), $append = false, $fields = array()) {
+    public function save () {
+        $file   = $this->getFile();
+        $data   = $this->getData();
+        $append = $this->getAppend();
+        $fields = $this->getFields();
+
         if (empty($file)) {
             $file = &$this->file;
         }
