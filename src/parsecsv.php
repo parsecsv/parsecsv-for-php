@@ -339,40 +339,6 @@ class parseCSV {
      */
     protected $data = array();
 
-
-    /**
-     * Constructor
-     * Class constructor
-     *
-     * @access public
-     * @param  [string]  input      The CSV string or a direct filepath
-     * @param  [integer] offset     Number of rows to ignore from the beginning of  the data
-     * @param  [integer] limit      Limits the number of returned rows to specified amount
-     * @param  [string]  conditions Basic SQL-like conditions for row matching
-     */
-    public function __construct ($input = null, $offset = null, $limit = null, $conditions = null, $keep_file_data = null) {
-        if (!is_null($offset)) {
-            $this->offset = $offset;
-        }
-
-        if (!is_null($limit)) {
-            $this->limit = $limit;
-        }
-
-        if (!is_null($conditions)) {
-            $this->conditions = $conditions;
-        }
-
-        if (!is_null($keep_file_data)) {
-        	$this->keep_file_data = $keep_file_data;
-        }
-
-        if (!empty($input)) {
-            $this->parse($input);
-        }
-    }
-
-
     // ==============================================
     // ----- [ Main Functions ] ---------------------
     // ==============================================
