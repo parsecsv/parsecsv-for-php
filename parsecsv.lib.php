@@ -911,7 +911,6 @@ class parseCSV {
                 $data .= "\n";
             }
             
-            // Supprime les caractères d'en-tête
             // strip off BOM (UTF-8)
             if (strpos($data, "\xef\xbb\xbf") !== FALSE) {
                 $data = substr($data, 3);
