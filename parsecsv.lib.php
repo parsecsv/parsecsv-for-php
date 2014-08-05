@@ -910,6 +910,20 @@ class parseCSV {
             if (substr($data, -1) != "\n") {
                 $data .= "\n";
             }
+            
+            // Supprime les caractères d'en-tête
+            // strip off BOM (UTF-8)
+            if (strpos($data, "\xef\xbb\xbf") !== FALSE) {
+                $data = substr($data, 3);
+            }
+            // strip off BOM (LE UTF-16)
+            else if (strpos($data, "\xff\xfe") !== FALSE) {
+                $data = substr($data, 2);
+            }
+            // strip off BOM (BE UTF-16)
+            else if (strpos($data, "\xfe\xff") !== FALSE) {
+                $data = substr($data, 2);
+            }
 
             $this->file_data = &$data;
             return true;
