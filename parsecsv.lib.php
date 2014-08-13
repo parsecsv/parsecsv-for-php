@@ -920,7 +920,7 @@ class parseCSV {
                 $data .= "\n";
             }
             
-            if($this->remove_bom != FALSE){
+            if($this->remove_bom !== FALSE){
                 // strip off BOM (UTF-8)
                 if (strpos($data, "\xef\xbb\xbf") !== FALSE) {
                     $data = substr($data, 3);
