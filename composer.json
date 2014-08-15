@@ -1,5 +1,5 @@
 {
-    "name": "parsecsv/php-parsecsv",
+    "name": "foued611/parsecsv",
     "description": "CSV data parser for PHP",
     "license": "MIT",
     "authors": [
@@ -13,7 +13,9 @@
         }
     ],
     "autoload": {
-        "classmap": ["."]
+       psr-0": {
+            "Parser\\Csv\\": ""
+        }
     },
     "require-dev": {
         "phpunit/phpunit": "4.1.*"
