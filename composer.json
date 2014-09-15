@@ -14,7 +14,7 @@
     ],
     "autoload": {
        "psr-0": {
-            "Parser\\Csv\\": "src"
+            "Parse\\Csv\\": "src"
         }
     },
     "require-dev": {

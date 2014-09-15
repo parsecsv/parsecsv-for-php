@@ -1,7 +1,7 @@
 <?php
 namespace Parse\Csv;
 
-class parseCSV
+class ParseCSV
 {
 
     /*
