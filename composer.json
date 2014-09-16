@@ -14,6 +14,7 @@
     ],
     "autoload": {
        "psr-0": {
+           "Parse": "src",
             "Parse\\Csv\\": "src"
         }
     },
