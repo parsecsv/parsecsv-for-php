@@ -868,6 +868,10 @@ class parseCSV {
             $string .= implode($delimiter, $entry).$this->linefeed;
             $entry   = array();
         }
+        
+        if ($this->convert_encoding) {
+            $string = iconv($this->input_encoding, $this->output_encoding, $string);
+        }
 
         return $string;
     }
