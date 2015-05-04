@@ -81,7 +81,7 @@ $csv->save();
 
 **Add row/entry to end of CSV file**
 
-_Only recommended when you know the extact sctructure of the file._
+_Only recommended when you know the extact structure of the file._
 
 ```php
 $csv = new parseCSV();
