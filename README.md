@@ -85,7 +85,7 @@ _Only recommended when you know the extact structure of the file._
 
 ```php
 $csv = new parseCSV();
-$csv->save('data.csv', array('1986', 'Home', 'Nowhere', ''), true);
+$csv->save('data.csv', array(array('1986', 'Home', 'Nowhere', '')), true);
 ```
 
 **Convert 2D array to csv data and send headers to browser to treat output as
