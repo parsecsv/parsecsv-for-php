@@ -1183,7 +1183,11 @@ class parseCSV {
      * @return  true or false
      */
     protected function _wfile ($file, $string = '') {
-        file_put_contents($file,$string);
+        $rtn = file_put_contents($file, $string);
+        
+        if (!$rtn) {
+            return false;
+        }
 
         return true;
     }
