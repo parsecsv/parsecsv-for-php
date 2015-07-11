@@ -1147,9 +1147,17 @@ class parseCSV {
      *
      * @return  true or false
      */
-    protected function _wfile($file, $string = '') {
-        file_put_contents($file, $string);
+    protected function _wfile($file, $string = '', $mode = 'wb', $lock = 2) {
+        if ($fp = fopen($file, $mode)) {
+            flock($fp, $lock);
+            $re = fwrite($fp, $string);
+            $re2 = fclose($fp);
 
-        return true;
+            if ($re != false && $re2 != false) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
