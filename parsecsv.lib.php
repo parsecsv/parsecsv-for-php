@@ -338,6 +338,15 @@ class parseCSV {
      * @var array
      */
     public $data = array();
+    
+    /**
+     * Remove BOM
+     * Strip off BOM (UTF-8)
+     *
+     * @access public
+     * @var bool
+     */
+    public $remove_bom = false;
 
     /**
      * Constructor
@@ -890,6 +899,24 @@ class parseCSV {
 
             if (substr($data, -1) != "\n") {
                 $data .= "\n";
+            }
+            
+            if($this->remove_bom !== FALSE){
+                // strip off BOM (UTF-8)
+                if (strpos($data, "\xef\xbb\xbf") !== FALSE) {
+                    $data = substr($data, 3);
+                    break;
+                }
+                // strip off BOM (LE UTF-16)
+                else if (strpos($data, "\xff\xfe") !== FALSE) {
+                    $data = substr($data, 2);
+                    break;
+                }
+                // strip off BOM (BE UTF-16)
+                else if (strpos($data, "\xfe\xff") !== FALSE) {
+                    $data = substr($data, 2);
+                    break;
+                }
             }
 
             $this->file_data = &$data;
