@@ -405,7 +405,7 @@ class parseCSV {
                 $this->conditions = $conditions;
             }
 
-            if (is_readable($input)) {
+            if (strlen($input) <= PHP_MAXPATHLEN && is_readable($input)) {
                 $this->data = $this->parse_file($input);
             } else {
                 $this->file_data = &$input;
