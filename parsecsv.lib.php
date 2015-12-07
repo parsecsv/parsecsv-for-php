@@ -595,16 +595,16 @@ class parseCSV {
         $this->delimiter = reset($filtered);
 
         // delimiter detection has failed, try the ad-hoc workaround using "sep=;"
-        if(false === $this->delimiter) {
+        if (false === $this->delimiter) {
             $this->delimiter = $this->_get_delimiter_from_sep($data);
             if (false !== $this->delimiter) { 
                 // likely to be 5, but let's not assume we're always single-byte.
                 $pos = 4 + strlen($this->delimiter);
                 // the next characters should be a line-end
-                if(substr($data, $pos, 1) === "\r") {
+                if (substr($data, $pos, 1) === "\r") {
                     $pos++;
                 }
-                if(substr($data, $pos, 1) === "\n") {
+                if (substr($data, $pos, 1) === "\n") {
                     $pos++;
                 }
                 // remove delimiter and its line-end
@@ -613,7 +613,7 @@ class parseCSV {
         }
 
         // parse data
-        if($parse) {
+        if ($parse) {
             $this->data = $this->parse_string($data);
         }
 
@@ -1187,8 +1187,7 @@ class parseCSV {
      *
      * @return string|false detected delimiter, or false if none found
      */
-    protected function _get_delimiter_from_sep($data)
-    {
+    protected function _get_delimiter_from_sep($data) {
         $sep = false;
          // 32 bytes should be quite enough data for our sniffing, chosen arbitrarily
         $sepPrefix = substr($data,0,32);
