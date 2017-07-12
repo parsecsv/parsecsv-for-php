@@ -840,7 +840,8 @@ class parseCSV {
 
         // create data
         foreach ($data as $key => $row) {
-            foreach ($row as $field => $value) {
+            foreach ($fields as $key => $fieldname) {
+                $value = isset($row[$fieldname]) ? $row[$fieldname]: null;
                 $entry[] = $this->_enclose_value($value, $delimiter);
             }
 
