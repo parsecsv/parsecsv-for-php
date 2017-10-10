@@ -731,7 +731,7 @@ class parseCSV {
                 }
 
                 // end of field/row/csv
-            } elseif (($ch == $this->delimiter || $ch == "\n" || $ch == "\r" || $ch === false) && !$enclosed) {
+            } elseif (($ch === $this->delimiter || $ch == "\n" || $ch == "\r" || $ch === false) && !$enclosed) {
                 $key = (!empty($head[$col])) ? $head[$col] : $col;
                 $row[$key] = ($was_enclosed) ? $current : trim($current);
                 $current = '';
