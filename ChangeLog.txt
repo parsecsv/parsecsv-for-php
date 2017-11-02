@@ -10,7 +10,7 @@ Date: 1-July-2008
 - Issue #6. Raw loaded file data is now cleared from
   file_data property when it has been successfully
   parsed to keep parseCSV's memory footprint to a
-  minimum. Specifically handy when using mulitple
+  minimum. Specifically handy when using multiple
   instances of parseCSV to process large files.
 
 -----------------------------------
