@@ -806,12 +806,13 @@ class parseCSV {
      * Create CSV data from array
      *
      * @access public
-     * @param   data        2D array with data
-     * @param   fields      field names
-     * @param   append      if true, field names will not be output
-     * @param   is_php      if a php die() call should be put on the first
-     *                      line of the file, this is later ignored when read.
-     * @param   delimiter   field delimiter to use
+     * @param array[]     $data       2D array with data
+     * @param array       $fields     field names
+     * @param bool        $append     if true, field names will not be output
+     * @param bool        $is_php     if a php die() call should be put on the
+     *                                first line of the file, this is later
+     *                                ignored when read.
+     * @param string|null $delimiter  field delimiter to use
      *
      * @return  CSV data (text string)
      */
@@ -1035,7 +1036,8 @@ class parseCSV {
      *  - only used by unparse()
      *
      * @access protected
-     * @param  value   string to process
+     * @param string      $value     Cell value to process
+     * @param string|null $delimiter
      *
      * @return Processed value
      */
