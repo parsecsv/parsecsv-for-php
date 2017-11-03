@@ -448,14 +448,20 @@ class parseCSV {
      * Generate a CSV based string for output.
      *
      * @access public
-     * @param  [string] $filename  If specified, headers and data will be output directly to browser as a downloadable file
-     * @param  [array]  $data      2D array with data
-     * @param  [array]  $fields    Field names
-     * @param  [type]   $delimiter delimiter used to separate data
+     * @param  string|null  $filename  If a filename is specified here or in the
+     *                                 object, headers and data will be output
+     *                                 directly to browser as a downloadable
+     *                                 file.
+     * @param  array[]      $data      2D array with data
+     * @param  array        $fields    Field names
+     * @param  string|null  $delimiter character used to separate data
      *
-     * @return [string] the resulting CSV string
+     * @return string  The resulting CSV string
      */
     public function output($filename = null, $data = array(), $fields = array(), $delimiter = null) {
+        if (empty($filename)) {
+            $filename = $this->output_filename;
+        }
 
         if ($delimiter === null) {
             $delimiter = $this->output_delimiter;
