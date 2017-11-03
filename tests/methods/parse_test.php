@@ -29,13 +29,25 @@ class parse_test extends PHPUnit_Framework_TestCase {
 
     private function parse_repetitive_string($content) {
         $this->csv->delimiter = ';';
-        $this->csv->heading = FALSE;
+        $this->csv->heading = false;
         $success = $this->csv->parse(str_repeat($content . ';', 500));
-        $this->assertEquals(TRUE, $success);
+        $this->assertEquals(true, $success);
 
         $row = array_pop($this->csv->data);
         $expected_data = array_fill(0, 500, $content);
         $expected_data [] = '';
         $this->assertEquals($expected_data, $row);
+    }
+
+    public function test_single_row() {
+        $this->csv->auto(__DIR__ . '/../example_files/single_row.csv');
+        $expected = [
+            ['SMS' => '0444'],
+            ['SMS' => '5555'],
+            ['SMS' => '6606'],
+            ['SMS' => '7777'],
+        ];
+
+        $this->assertEquals($expected, $this->csv->data);
     }
 }
