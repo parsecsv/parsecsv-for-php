@@ -79,6 +79,14 @@ $csv->data[4] = array('firstname' => 'John', 'lastname' => 'Doe', 'email' => 'jo
 $csv->save();
 ```
 
+**Replace field names or set ones if missing**
+
+```php
+$csv = new parseCSV();
+$csv->fields = ['id', 'name', 'category']
+$csv->parse('data.csv');
+```
+
 **Add row/entry to end of CSV file**
 
 _Only recommended when you know the extact structure of the file._
