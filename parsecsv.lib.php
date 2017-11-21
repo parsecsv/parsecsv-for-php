@@ -964,6 +964,7 @@ class parseCSV {
             '>=', 'is greater than or equals',
             'contains',
             'does not contain',
+			'D>=', 'D<=', 'D=','D!=','D<','D>'
         );
 
         $operators_regex = array();
@@ -1006,8 +1007,20 @@ class parseCSV {
                     return '1';
                 } elseif ($op == 'does not contain' && !preg_match('/' . preg_quote($value, '/') . '/i', $row[$field])) {
                     return '1';
-                } else {
-                    return '0';
+                } elseif ($op == "D=" && normalizeDatetime($row[$field]) == normalizeDatetime($value)) {						
+				    return '1';
+			    } elseif ($op == "D!=" && normalizeDatetime($row[$field]) != normalizeDatetime($value)) {						
+				    return '1';
+			    } elseif ($op == "D<" && normalizeDatetime($row[$field]) < normalizeDatetime($value)) {						
+				   return '1';
+				} elseif ($op == "D>" && normalizeDatetime($row[$field]) > normalizeDatetime($value)) {						
+				  return '1';
+				} elseif ($op == "D<=" && normalizeDatetime($row[$field]) <= normalizeDatetime($value)) {						
+				  return '1';
+				} elseif ($op == "D>=" && normalizeDatetime($row[$field]) >= normalizeDatetime($value)) {						
+				  return '1';
+				} else {
+                  return '0';
                 }
             }
         }
@@ -1165,4 +1178,10 @@ class parseCSV {
 
         return false;
     }
+	
+	protected function normalizeDatetime($val) {
+		//see: http://stackoverflow.com/questions/10306999/php-convert-date-format-dd-mm-yyyy-yyyy-mm-dd, sometimes dates are '/' seperated, which messed things up
+		return strtotime(str_replace('/', '-', $val));
+}
+	
 }
