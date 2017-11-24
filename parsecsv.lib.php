@@ -1165,4 +1165,27 @@ class parseCSV {
 
         return false;
     }
+
+    /**
+     * Detect separator using a nonstandard hack: such file starts with the
+     * first line containing only "sep=;", where the last character is the
+     * separator.
+     *
+     * @access protected
+     *
+     * @param string $data file data
+     *
+     * @return string|false detected delimiter, or false if none found
+     */
+    protected function _get_delimiter_from_sep($data) {
+        $sep = false;
+        // 32 bytes should be quite enough data for our sniffing, chosen arbitrarily
+        $sepPrefix = substr($data, 0, 32);
+
+        if (preg_match('/^sep=(.)/i', $sepPrefix, $sepMatch)) {
+            // we get separator.
+            $sep = $sepMatch[1];
+        }
+        return $sep;
+    }
 }
