@@ -40,17 +40,26 @@ class parse_test extends PHPUnit\Framework\TestCase {
     }
 
     public function test_sep_row_auto_detection_UTF8_no_BOM() {
-        $this->csv->auto(__DIR__ . '/../example_files/UTF-8_sep_row_but_no_BOM.csv');
-        $this->assertEquals($this->_get_magazines_data(), $this->csv->data);
+        $this->_autoparse_magazine_file(
+            __DIR__ . '/../example_files/UTF-8_sep_row_but_no_BOM.csv');
     }
 
     public function test_sep_row_auto_detection_UTF8() {
-        $this->csv->auto(__DIR__ . '/../example_files/UTF-8_with_BOM_and_sep_row.csv');
-        $this->assertEquals($this->_get_magazines_data(), $this->csv->data);
+        $this->_autoparse_magazine_file(
+            __DIR__ . '/../example_files/UTF-8_with_BOM_and_sep_row.csv');
     }
 
     public function test_sep_row_auto_detection_UTF16() {
-        $this->csv->auto(__DIR__ . '/../example_files/UTF-16LE_with_BOM_and_sep_row.csv');
+        $this->_autoparse_magazine_file(
+            __DIR__ . '/../example_files/UTF-16LE_with_BOM_and_sep_row.csv');
+    }
+
+    protected function _autoparse_magazine_file($file) {
+        // This file (parse_test.php) is encoded in UTF-8, hence comparison will
+        // fail unless we to this:
+        $this->csv->output_encoding = 'UTF-8';
+
+        $this->csv->auto($file);
         $this->assertEquals($this->_get_magazines_data(), $this->csv->data);
     }
 
