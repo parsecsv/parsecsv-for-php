@@ -543,59 +543,8 @@ class parseCSV {
             $data = &$this->file_data;
         }
 
-        $chars = array();
-        $strlen = strlen($data);
-        $enclosed = false;
-        $n = 1;
-        $to_end = true;
+        $this->_guess_delimiter($search_depth, $preferred, $enclosure, $data);
 
-        // walk specific depth finding possible delimiter characters
-        for ($i = 0; $i < $strlen; $i++) {
-            $ch = $data{$i};
-            $nch = (isset($data{$i + 1})) ? $data{$i + 1} : false;
-            $pch = (isset($data{$i - 1})) ? $data{$i - 1} : false;
-
-            // open and closing quotes
-            if ($ch == $enclosure) {
-                if (!$enclosed || $nch != $enclosure) {
-                    $enclosed = ($enclosed) ? false : true;
-                } elseif ($enclosed) {
-                    $i++;
-                }
-
-                // end of row
-            } elseif (($ch == "\n" && $pch != "\r" || $ch == "\r") && !$enclosed) {
-                if ($n >= $search_depth) {
-                    $strlen = 0;
-                    $to_end = false;
-                } else {
-                    $n++;
-                }
-
-                // count character
-            } elseif (!$enclosed) {
-                if (!preg_match('/[' . preg_quote($this->auto_non_chars, '/') . ']/i', $ch)) {
-                    if (!isset($chars[$ch][$n])) {
-                        $chars[$ch][$n] = 1;
-                    } else {
-                        $chars[$ch][$n]++;
-                    }
-                }
-            }
-        }
-
-        // filtering
-        $depth = ($to_end) ? $n - 1 : $n;
-        $filtered = array();
-        foreach ($chars as $char => $value) {
-            if ($match = $this->_check_count($char, $value, $depth, $preferred)) {
-                $filtered[$match] = $char;
-            }
-        }
-
-        // capture most probable delimiter
-        ksort($filtered);
-        $this->delimiter = reset($filtered);
 
         // parse data
         if ($parse) {
@@ -1187,5 +1136,72 @@ class parseCSV {
             $sep = $sepMatch[1];
         }
         return $sep;
+    }
+
+    /**
+     * @param int $search_depth Number of rows to analyze
+     * @param string $preferred Preferred delimiter characters
+     * @param string $enclosure  Enclosure character, default is double quote
+     * @param string $data       The file content
+     */
+    protected function _guess_delimiter($search_depth, $preferred, $enclosure, &$data) {
+        $chars = [];
+        $strlen = strlen($data);
+        $enclosed = false;
+        $n = 1;
+        $to_end = true;
+
+        // walk specific depth finding possible delimiter characters
+        for ($i = 0; $i < $strlen; $i++) {
+            $ch = $data{$i};
+            $nch = (isset($data{$i + 1})) ? $data{$i + 1} : false;
+            $pch = (isset($data{$i - 1})) ? $data{$i - 1} : false;
+
+            // open and closing quotes
+            if ($ch == $enclosure) {
+                if (!$enclosed || $nch != $enclosure) {
+                    $enclosed = $enclosed ? false : true;
+                }
+                elseif ($enclosed) {
+                    $i++;
+                }
+
+                // end of row
+            }
+            elseif (($ch == "\n" && $pch != "\r" || $ch == "\r") && !$enclosed) {
+                if ($n >= $search_depth) {
+                    $strlen = 0;
+                    $to_end = false;
+                }
+                else {
+                    $n++;
+                }
+
+                // count character
+            }
+            elseif (!$enclosed) {
+                if (!preg_match('/[' . preg_quote($this->auto_non_chars, '/') . ']/i', $ch)) {
+                    if (!isset($chars[$ch][$n])) {
+                        $chars[$ch][$n] = 1;
+                    }
+                    else {
+                        $chars[$ch][$n]++;
+                    }
+                }
+            }
+        }
+
+        // filtering
+        $depth = $to_end ? $n - 1 : $n;
+        $filtered = [];
+        foreach ($chars as $char => $value) {
+            if ($match = $this->_check_count($char, $value, $depth, $preferred)) {
+                $filtered[$match] = $char;
+            }
+        }
+
+        // capture most probable delimiter
+        ksort($filtered);
+        $this->delimiter = reset($filtered);
     }
 }
