@@ -39,6 +39,11 @@ class parse_test extends PHPUnit_Framework_TestCase {
         $this->assertEquals($expected_data, $row);
     }
 
+    public function test_sep_row_auto_detection_UTF8_no_BOM() {
+        $this->csv->auto(__DIR__ . '/../example_files/UTF-8_sep_row_but_no_BOM.csv');
+        $this->assertEquals($this->_get_magazines_data(), $this->csv->data);
+    }
+
     public function test_single_column() {
         $this->csv->auto(__DIR__ . '/../example_files/single_column.csv');
         $expected = [
@@ -49,5 +54,25 @@ class parse_test extends PHPUnit_Framework_TestCase {
         ];
 
         $this->assertEquals($expected, $this->csv->data);
+    }
+
+    protected function _get_magazines_data() {
+        return [
+            [
+                'title' => 'Красивая кулинария',
+                'isbn' => '5454-5587-3210',
+                'publishedAt' => '21.05.2011',
+            ],
+            [
+                'title' => 'The Wine Connoisseurs',
+                'isbn' => '2547-8548-2541',
+                'publishedAt' => '12.12.2011',
+            ],
+            [
+                'title' => 'Weißwein',
+                'isbn' => '1313-4545-8875',
+                'publishedAt' => '23.02.2012',
+            ],
+        ];
     }
 }
