@@ -841,15 +841,18 @@ class parseCSV {
             if (strpos($data, "\xef\xbb\xbf") === 0) {
                 // strip off BOM (UTF-8)
                 $data = substr($data, 3);
+                $this->encoding('UTF-8');
             }
             else if (strpos($data, "\xff\xfe") === 0) {
                 // strip off BOM (UTF-16 little endian)
                 $data = substr($data, 2);
+                $this->encoding("UCS-2LE");
             }
 
             else if (strpos($data, "\xfe\xff") === 0) {
                 // strip off BOM (UTF-16 big endian)
                 $data = substr($data, 2);
+                $this->encoding("UTF-16");
             }
 
             if ($this->convert_encoding) {
