@@ -6,7 +6,7 @@ class parseCSV {
     Class: parseCSV v0.4.3 beta
     https://github.com/parsecsv/parsecsv-for-php
 
-    Fully conforms to the specifications lined out on wikipedia:
+    Fully conforms to the specifications lined out on Wikipedia:
     - http://en.wikipedia.org/wiki/Comma-separated_values
 
     Based on the concept of Ming Hong Ng's CsvFileParser class:
@@ -63,7 +63,7 @@ class parseCSV {
     $csv->save();
     ----------------
     # add row/entry to end of CSV file
-    #  - only recommended when you know the extact sctructure of the file
+    #  - only recommended when you know the exact structure of the file
     $csv = new parseCSV();
     $csv->save('data.csv', array(array('1986', 'Home', 'Nowhere', '')), true);
     ----------------
@@ -297,7 +297,7 @@ class parseCSV {
 
     /**
      * Error
-     * Contains the error code if one occured
+     * Contains the error code if one occurred
      *
      * 0 = No errors found. Everything should be fine :)
      * 1 = Hopefully correctable syntax error was found.
