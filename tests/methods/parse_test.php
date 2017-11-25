@@ -44,6 +44,16 @@ class parse_test extends PHPUnit\Framework\TestCase {
         $this->assertEquals($this->_get_magazines_data(), $this->csv->data);
     }
 
+    public function test_sep_row_auto_detection_UTF8() {
+        $this->csv->auto(__DIR__ . '/../example_files/UTF-8_with_BOM_and_sep_row.csv');
+        $this->assertEquals($this->_get_magazines_data(), $this->csv->data);
+    }
+
+    public function test_sep_row_auto_detection_UTF16() {
+        $this->csv->auto(__DIR__ . '/../example_files/UTF-16LE_with_BOM_and_sep_row.csv');
+        $this->assertEquals($this->_get_magazines_data(), $this->csv->data);
+    }
+
     public function test_single_column() {
         $this->csv->auto(__DIR__ . '/../example_files/single_column.csv');
         $expected = [
