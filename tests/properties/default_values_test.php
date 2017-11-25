@@ -1,6 +1,6 @@
 <?php
 
-class default_values_properties_Test extends PHPUnit_Framework_TestCase {
+class default_values_properties_Test extends PHPUnit\Framework\TestCase {
     /**
      * CSV
      * The parseCSV object
