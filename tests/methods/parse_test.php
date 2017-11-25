@@ -39,8 +39,8 @@ class parse_test extends PHPUnit_Framework_TestCase {
         $this->assertEquals($expected_data, $row);
     }
 
-    public function test_single_row() {
-        $this->csv->auto(__DIR__ . '/../example_files/single_row.csv');
+    public function test_single_column() {
+        $this->csv->auto(__DIR__ . '/../example_files/single_column.csv');
         $expected = [
             ['SMS' => '0444'],
             ['SMS' => '5555'],
