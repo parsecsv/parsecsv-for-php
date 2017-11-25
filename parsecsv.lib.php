@@ -549,7 +549,7 @@ class parseCSV {
         $n = 1;
         $to_end = true;
 
-        // walk specific depth finding posssible delimiter characters
+        // walk specific depth finding possible delimiter characters
         for ($i = 0; $i < $strlen; $i++) {
             $ch = $data{$i};
             $nch = (isset($data{$i + 1})) ? $data{$i + 1} : false;
@@ -1169,11 +1169,11 @@ class parseCSV {
     /**
      * Detect separator using a nonstandard hack: such file starts with the
      * first line containing only "sep=;", where the last character is the
-     * separator.
+     * separator. Microsoft Excel is able to open such files.
      *
      * @access protected
      *
-     * @param string $data file data
+     * @param string $data    file data
      *
      * @return string|false detected delimiter, or false if none found
      */
