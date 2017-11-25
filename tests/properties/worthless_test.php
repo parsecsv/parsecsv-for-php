@@ -1,6 +1,6 @@
 <?php
 
-class worthless_properties_Test extends PHPUnit_Framework_TestCase {
+class worthless_properties_Test extends PHPUnit\Framework\TestCase {
     /**
      * CSV
      * The parseCSV object
