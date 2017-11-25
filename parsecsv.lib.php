@@ -543,8 +543,9 @@ class parseCSV {
             $data = &$this->file_data;
         }
 
-        $this->_guess_delimiter($search_depth, $preferred, $enclosure, $data);
-
+        if (!$this->_detect_and_remove_sep_row_from_data($data)) {
+            $this->_guess_delimiter($search_depth, $preferred, $enclosure, $data);
+        }
 
         // parse data
         if ($parse) {
@@ -1126,16 +1127,42 @@ class parseCSV {
      *
      * @return string|false detected delimiter, or false if none found
      */
-    protected function _get_delimiter_from_sep($data) {
+    protected function _get_delimiter_from_sep_row($data) {
         $sep = false;
         // 32 bytes should be quite enough data for our sniffing, chosen arbitrarily
         $sepPrefix = substr($data, 0, 32);
-
-        if (preg_match('/^sep=(.)/i', $sepPrefix, $sepMatch)) {
+        if (preg_match('/^sep=(.)\\r?\\n/i', $sepPrefix, $sepMatch)) {
             // we get separator.
             $sep = $sepMatch[1];
         }
         return $sep;
+    }
+
+    /**
+     * @param string $data    file data
+     *
+     * @return bool TRUE if sep= line was found at the very beginning of the file
+     */
+    protected function _detect_and_remove_sep_row_from_data(&$data) {
+        $sep = $this->_get_delimiter_from_sep_row($data);
+        if ($sep === false) {
+            return false;
+        }
+
+        $this->delimiter = $sep;
+
+        // likely to be 5, but let's not assume we're always single-byte.
+        $pos = 4 + strlen($sep);
+        // the next characters should be a line-end
+        if (substr($data, $pos, 1) === "\r") {
+            $pos++;
+        }
+        if (substr($data, $pos, 1) === "\n") {
+            $pos++;
+        }
+        // remove delimiter and its line-end
+        $data = substr($data, $pos);
+        return true;
     }
 
     /**
