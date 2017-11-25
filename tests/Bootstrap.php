@@ -1,6 +1,6 @@
 <?php
 
-$dir = realpath(dirname(__FILE__));
-defined('BASE') OR define('BASE', realpath($dir.'/../').DIRECTORY_SEPARATOR);
+$dir = realpath(__DIR__);
+defined('BASE') OR define('BASE', dirname($dir) . '/');
 
-require_once BASE.'parsecsv.lib.php';
+require_once BASE . 'parsecsv.lib.php';
