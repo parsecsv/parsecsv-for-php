@@ -13,7 +13,9 @@
         }
     ],
     "autoload": {
-        "classmap": ["."]
+        "classmap": [
+            "."
+        ]
     },
     "require-dev": {
         "phpunit/phpunit": "4.1.*"
