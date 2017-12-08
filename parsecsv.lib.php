@@ -409,6 +409,7 @@ class parseCSV {
                 $this->data = $this->parse_file($input);
             } else {
                 $this->file_data = &$input;
+                $this->input_encoding = mb_detect_encoding($this->file_data);
                 $this->data = $this->parse_string();
             }
 
@@ -838,6 +839,8 @@ class parseCSV {
                 $data = ltrim($strip[1]);
             }
 
+            $this->input_encoding = mb_detect_encoding($data);
+            
             if ($this->convert_encoding) {
                 $data = iconv($this->input_encoding, $this->output_encoding, $data);
             }
