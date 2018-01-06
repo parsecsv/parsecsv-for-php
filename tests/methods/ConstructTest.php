@@ -1,6 +1,6 @@
 <?php
 
-class construct_methods_Test extends PHPUnit\Framework\TestCase {
+class ConstructTest extends PHPUnit\Framework\TestCase {
 
     /**
      * CSV

@@ -1,6 +1,6 @@
 <?php
 
-class parse_test extends PHPUnit\Framework\TestCase {
+class ParseTest extends PHPUnit\Framework\TestCase {
 
     /**
      * CSV
