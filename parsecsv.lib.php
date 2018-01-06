@@ -1160,12 +1160,12 @@ class parseCSV {
     }
 
     /**
-     * @param string $data    file data
+     * @param string $data_string    file data to be updated
      *
      * @return bool TRUE if sep= line was found at the very beginning of the file
      */
-    protected function _detect_and_remove_sep_row_from_data(&$data) {
-        $sep = $this->_get_delimiter_from_sep_row($data);
+    protected function _detect_and_remove_sep_row_from_data(&$data_string) {
+        $sep = $this->_get_delimiter_from_sep_row($data_string);
         if ($sep === false) {
             return false;
         }
@@ -1175,14 +1175,15 @@ class parseCSV {
         // likely to be 5, but let's not assume we're always single-byte.
         $pos = 4 + strlen($sep);
         // the next characters should be a line-end
-        if (substr($data, $pos, 1) === "\r") {
+        if (substr($data_string, $pos, 1) === "\r") {
             $pos++;
         }
-        if (substr($data, $pos, 1) === "\n") {
+        if (substr($data_string, $pos, 1) === "\n") {
             $pos++;
         }
-        // remove delimiter and its line-end
-        $data = substr($data, $pos);
+
+        // remove delimiter and its line-end (the data param is by-ref!)
+        $data_string = substr($data_string, $pos);
         return true;
     }
 
