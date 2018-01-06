@@ -83,7 +83,6 @@ class parseCSV {
      * Heading
      * Use first line/entry as field names
      *
-     * @access public
      * @var bool
      */
     public $heading = true;
@@ -92,7 +91,6 @@ class parseCSV {
      * Fields
      * Override field names
      *
-     * @access public
      * @var array
      */
     public $fields = array();
@@ -101,7 +99,6 @@ class parseCSV {
      * Sort By
      * Sort CSV by this field
      *
-     * @access public
      * @var string|null
      */
     public $sort_by = null;
@@ -110,7 +107,6 @@ class parseCSV {
      * Sort Reverse
      * Reverse the sort function
      *
-     * @access public
      * @var bool
      */
     public $sort_reverse = false;
@@ -123,7 +119,6 @@ class parseCSV {
      * numeric = SORT_NUMERIC
      * string  = SORT_STRING
      *
-     * @access public
      * @var string|null
      */
     public $sort_type = null;
@@ -132,7 +127,6 @@ class parseCSV {
      * Delimiter
      * Delimiter character
      *
-     * @access public
      * @var string
      */
     public $delimiter = ',';
@@ -141,7 +135,6 @@ class parseCSV {
      * Enclosure
      * Enclosure character
      *
-     * @access public
      * @var string
      */
     public $enclosure = '"';
@@ -150,7 +143,6 @@ class parseCSV {
      * Enclose All
      * Force enclosing all columns
      *
-     * @access public
      * @var bool
      */
     public $enclose_all = false;
@@ -159,7 +151,6 @@ class parseCSV {
      * Conditions
      * Basic SQL-Like conditions for row matching
      *
-     * @access public
      * @var string|null
      */
     public $conditions = null;
@@ -168,7 +159,6 @@ class parseCSV {
      * Offset
      * Number of rows to ignore from beginning of data
      *
-     * @access public
      * @var int|null
      */
     public $offset = null;
@@ -177,7 +167,6 @@ class parseCSV {
      * Limit
      * Limits the number of returned rows to the specified amount
      *
-     * @access public
      * @var int|null
      */
     public $limit = null;
@@ -186,7 +175,6 @@ class parseCSV {
      * Auto Depth
      * Number of rows to analyze when attempting to auto-detect delimiter
      *
-     * @access public
      * @var int
      */
     public $auto_depth = 15;
@@ -195,7 +183,6 @@ class parseCSV {
      * Auto Non Charts
      * Characters that should be ignored when attempting to auto-detect delimiter
      *
-     * @access public
      * @var string
      */
     public $auto_non_chars = "a-zA-Z0-9\n\r";
@@ -205,7 +192,6 @@ class parseCSV {
      * preferred delimiter characters, only used when all filtering method
      * returns multiple possible delimiters (happens very rarely)
      *
-     * @access public
      * @var string
      */
     public $auto_preferred = ",;\t.:|";
@@ -214,7 +200,6 @@ class parseCSV {
      * Convert Encoding
      * Should we convert the csv encoding?
      *
-     * @access public
      * @var bool
      */
     public $convert_encoding = false;
@@ -223,7 +208,6 @@ class parseCSV {
      * Input Encoding
      * Set the input encoding
      *
-     * @access public
      * @var string
      */
     public $input_encoding = 'ISO-8859-1';
@@ -232,7 +216,6 @@ class parseCSV {
      * Output Encoding
      * Set the output encoding
      *
-     * @access public
      * @var string
      */
     public $output_encoding = 'ISO-8859-1';
@@ -241,7 +224,6 @@ class parseCSV {
      * Linefeed
      * Line feed characters used by unparse, save, and output methods
      *
-     * @access public
      * @var string
      */
     public $linefeed = "\r";
@@ -250,7 +232,6 @@ class parseCSV {
      * Output Delimiter
      * Sets the output delimiter used by the output method
      *
-     * @access public
      * @var string
      */
     public $output_delimiter = ',';
@@ -259,7 +240,6 @@ class parseCSV {
      * Output filename
      * Sets the output filename
      *
-     * @access public
      * @var string
      */
     public $output_filename = 'data.csv';
@@ -268,7 +248,6 @@ class parseCSV {
      * Keep File Data
      * keep raw file data in memory after successful parsing (useful for debugging)
      *
-     * @access public
      * @var bool
      */
     public $keep_file_data = false;
@@ -281,7 +260,6 @@ class parseCSV {
      * File
      * Current Filename
      *
-     * @access public
      * @var string
      */
     public $file;
@@ -290,7 +268,6 @@ class parseCSV {
      * File Data
      * Current file data
      *
-     * @access public
      * @var string
      */
     public $file_data;
@@ -307,7 +284,6 @@ class parseCSV {
      *     standard CSV formatting. Please validate
      *     the parsed data yourself.
      *
-     * @access public
      * @var int
      */
     public $error = 0;
@@ -316,7 +292,6 @@ class parseCSV {
      * Error Information
      * Detailed error information
      *
-     * @access public
      * @var array
      */
     public $error_info = array();
@@ -325,7 +300,6 @@ class parseCSV {
      * Titles
      * CSV titles if they exists
      *
-     * @access public
      * @var array
      */
     public $titles = array();
@@ -334,7 +308,6 @@ class parseCSV {
      * Data
      * Two dimensional array of CSV data
      *
-     * @access public
      * @var array
      */
     public $data = array();
@@ -343,7 +316,6 @@ class parseCSV {
      * Constructor
      * Class constructor
      *
-     * @access public
      * @param  string|null  $input      The CSV string or a direct filepath
      * @param  integer|null $offset     Number of rows to ignore from the beginning of  the data
      * @param  integer|null $limit      Limits the number of returned rows to specified amount
@@ -380,7 +352,6 @@ class parseCSV {
      * Parse
      * Parse a CSV file or string
      *
-     * @access public
      * @param  string|null  input      The CSV string or a direct filepath
      * @param  [integer] offset     Number of rows to ignore from the beginning of  the data
      * @param  [integer] limit      Limits the number of returned rows to specified amount
@@ -425,7 +396,6 @@ class parseCSV {
      * Save
      * Save changes, or write a new file and/or data
      *
-     * @access public
      * @param  string $file   File location to save to
      * @param  array  $data   2D array of data
      * @param  bool   $append Append current data to end of target CSV, if file exists
@@ -448,7 +418,6 @@ class parseCSV {
      * Output
      * Generate a CSV based string for output.
      *
-     * @access public
      * @param  string|null  $filename  If a filename is specified here or in the
      *                                 object, headers and data will be output
      *                                 directly to browser as a downloadable
@@ -488,7 +457,6 @@ class parseCSV {
      * Encoding
      * Convert character encoding
      *
-     * @access public
      * @param  [string] $input  Input character encoding, uses default if left blank
      * @param  [string] $output Output character encoding, uses default if left blank
      */
@@ -508,7 +476,6 @@ class parseCSV {
      * Auto-Detect Delimiter: Find delimiter by analyzing a specific number of
      * rows to determine most probable delimiter character
      *
-     * @access public
      * @param  string|null $file         Local CSV file
      * @param  bool        $parse        True/false parse file directly
      * @param  int         $search_depth Number of rows to analyze
@@ -564,8 +531,6 @@ class parseCSV {
      * Parse File
      * Read file to string and call parse_string()
      *
-     * @access public
-     *
      * @param  string|null $file Local CSV file
      *
      * @return array|bool
@@ -585,7 +550,6 @@ class parseCSV {
     /**
      * Parse CSV strings to arrays
      *
-     * @access public
      * @param string $data CSV data
      *
      * @return array|false - 2D array with CSV data, or false on failure
@@ -753,9 +717,8 @@ class parseCSV {
     }
 
     /**
-     * Create CSV data from array
+     * Create CSV data string from array
      *
-     * @access public
      * @param array[]     $data       2D array with data
      * @param array       $fields     field names
      * @param bool        $append     if true, field names will not be output
@@ -812,7 +775,6 @@ class parseCSV {
     /**
      * Load local file or string
      *
-     * @access public
      * @param string|null  $input   local CSV file
      *
      * @return  true or false
@@ -876,7 +838,6 @@ class parseCSV {
     /**
      * Validate a row against specified conditions
      *
-     * @access protected
      * @param array       $row          array with values from a row
      * @param string|null $conditions   specified conditions that the row must match
      *
@@ -916,7 +877,6 @@ class parseCSV {
     /**
      * Validate a row against a single condition
      *
-     * @access protected
      * @param array  $row         array with values from a row
      * @param string $condition   specified condition that the row must match
      *
@@ -986,7 +946,6 @@ class parseCSV {
     /**
      * Validates if the row is within the offset or not if sorting is disabled
      *
-     * @access protected
      * @param int $current_row   the current row number being processed
      *
      * @return  true of false
@@ -1003,7 +962,6 @@ class parseCSV {
      * Enclose values if needed
      *  - only used by unparse()
      *
-     * @access protected
      * @param string      $value     Cell value to process
      * @param string|null $delimiter
      *
@@ -1029,7 +987,6 @@ class parseCSV {
     /**
      * Check file data
      *
-     * @access protected
      * @param  string|null $file   local filename
      *
      * @return bool
@@ -1050,7 +1007,6 @@ class parseCSV {
      * Check if passed info might be delimiter
      * Only used by find_delimiter
      *
-     * @access protected
      * @param  [type] $char      [description]
      * @param  array $array
      * @param  int   $depth
@@ -1092,7 +1048,6 @@ class parseCSV {
     /**
      * Read local file
      *
-     * @access protected
      * @param string|null $file   local filename
      *
      * @return string|false Data from file, or false on failure
@@ -1113,8 +1068,6 @@ class parseCSV {
 
     /**
      * Write to local file
-     *
-     * @access protected
      *
      * @param   string $file     local filename
      * @param   string $content  data to write to file
@@ -1142,8 +1095,6 @@ class parseCSV {
      * first line containing only "sep=;", where the last character is the
      * separator. Microsoft Excel is able to open such files.
      *
-     * @access protected
-     *
      * @param string $data    file data
      *
      * @return string|false detected delimiter, or false if none found
@@ -1160,6 +1111,8 @@ class parseCSV {
     }
 
     /**
+     * Support for Excel-compatible sep=? row.
+     *
      * @param string $data_string    file data to be updated
      *
      * @return bool TRUE if sep= line was found at the very beginning of the file
