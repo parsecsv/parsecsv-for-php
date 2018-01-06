@@ -316,11 +316,11 @@ class parseCSV {
      * Constructor
      * Class constructor
      *
-     * @param  string|null  $input      The CSV string or a direct filepath
-     * @param  integer|null $offset     Number of rows to ignore from the beginning of  the data
-     * @param  integer|null $limit      Limits the number of returned rows to specified amount
-     * @param  string|null  $conditions Basic SQL-like conditions for row matching
-     * @param  null|true    $keep_file_data  Keep raw file data in memory after successful parsing (useful for debugging)
+     * @param  string|null  $input          The CSV string or a direct filepath
+     * @param  integer|null $offset         Number of rows to ignore from the beginning of  the data
+     * @param  integer|null $limit          Limits the number of returned rows to specified amount
+     * @param  string|null  $conditions     Basic SQL-like conditions for row matching
+     * @param  null|true    $keep_file_data Keep raw file data in memory after successful parsing (useful for debugging)
      */
     public function __construct($input = null, $offset = null, $limit = null, $conditions = null, $keep_file_data = null) {
         if (!is_null($offset)) {
@@ -352,10 +352,10 @@ class parseCSV {
      * Parse
      * Parse a CSV file or string
      *
-     * @param  string|null  input      The CSV string or a direct filepath
-     * @param  [integer] offset     Number of rows to ignore from the beginning of  the data
-     * @param  [integer] limit      Limits the number of returned rows to specified amount
-     * @param  [string]  conditions Basic SQL-like conditions for row matching
+     * @param  string|null $input      The CSV string or a direct filepath
+     * @param  integer     $offset     Number of rows to ignore from the beginning of  the data
+     * @param  integer     $limit      Limits the number of returned rows to specified amount
+     * @param  string      $conditions Basic SQL-like conditions for row matching
      *
      * @return bool True on success
      */
@@ -418,13 +418,13 @@ class parseCSV {
      * Output
      * Generate a CSV based string for output.
      *
-     * @param  string|null  $filename  If a filename is specified here or in the
+     * @param  string|null $filename   If a filename is specified here or in the
      *                                 object, headers and data will be output
      *                                 directly to browser as a downloadable
      *                                 file.
-     * @param  array[]      $data      2D array with data
-     * @param  array        $fields    Field names
-     * @param  string|null  $delimiter character used to separate data
+     * @param  array[]     $data       2D array with data
+     * @param  array       $fields     Field names
+     * @param  string|null $delimiter  character used to separate data
      *
      * @return string  The resulting CSV string
      */
@@ -628,9 +628,9 @@ class parseCSV {
                             $this->error_info[$error_row . '-' . $error_col] = array(
                                 'type' => 1,
                                 'info' =>
-                                'Syntax error found on row ' . (count($rows) + 1) . '. ' .
-                                'A single double-quote was found within an enclosed string. ' .
-                                'Enclosed double-quotes must be escaped with a second double-quote.',
+                                    'Syntax error found on row ' . (count($rows) + 1) . '. ' .
+                                    'A single double-quote was found within an enclosed string. ' .
+                                    'Enclosed double-quotes must be escaped with a second double-quote.',
                                 'row' => count($rows) + 1,
                                 'field' => $col + 1,
                                 'field_name' => !empty($head[$col]) ? $head[$col] : null,
@@ -775,7 +775,7 @@ class parseCSV {
     /**
      * Load local file or string
      *
-     * @param string|null  $input   local CSV file
+     * @param string|null $input local CSV file
      *
      * @return  true or false
      */
@@ -804,13 +804,11 @@ class parseCSV {
                 // strip off BOM (UTF-8)
                 $data = substr($data, 3);
                 $this->encoding('UTF-8');
-            }
-            elseif (strpos($data, "\xff\xfe") === 0) {
+            } elseif (strpos($data, "\xff\xfe") === 0) {
                 // strip off BOM (UTF-16 little endian)
                 $data = substr($data, 2);
                 $this->encoding("UCS-2LE");
-            }
-            elseif (strpos($data, "\xfe\xff") === 0) {
+            } elseif (strpos($data, "\xfe\xff") === 0) {
                 // strip off BOM (UTF-16 big endian)
                 $data = substr($data, 2);
                 $this->encoding("UTF-16");
@@ -838,8 +836,8 @@ class parseCSV {
     /**
      * Validate a row against specified conditions
      *
-     * @param array       $row          array with values from a row
-     * @param string|null $conditions   specified conditions that the row must match
+     * @param array       $row        array with values from a row
+     * @param string|null $conditions specified conditions that the row must match
      *
      * @return  true of false
      */
@@ -946,7 +944,7 @@ class parseCSV {
     /**
      * Validates if the row is within the offset or not if sorting is disabled
      *
-     * @param int $current_row   the current row number being processed
+     * @param int $current_row the current row number being processed
      *
      * @return  true of false
      */
@@ -987,7 +985,7 @@ class parseCSV {
     /**
      * Check file data
      *
-     * @param  string|null $file   local filename
+     * @param  string|null $file local filename
      *
      * @return bool
      */
@@ -1048,7 +1046,7 @@ class parseCSV {
     /**
      * Read local file
      *
-     * @param string|null $file   local filename
+     * @param string|null $file local filename
      *
      * @return string|false Data from file, or false on failure
      */
@@ -1069,10 +1067,10 @@ class parseCSV {
     /**
      * Write to local file
      *
-     * @param   string $file     local filename
-     * @param   string $content  data to write to file
-     * @param   string $mode     fopen() mode
-     * @param   int    $lock     flock() mode
+     * @param   string $file    local filename
+     * @param   string $content data to write to file
+     * @param   string $mode    fopen() mode
+     * @param   int    $lock    flock() mode
      *
      * @return  true or false
      */
@@ -1141,10 +1139,10 @@ class parseCSV {
     }
 
     /**
-     * @param int $search_depth Number of rows to analyze
-     * @param string $preferred Preferred delimiter characters
-     * @param string $enclosure  Enclosure character, default is double quote
-     * @param string $data       The file content
+     * @param int    $search_depth Number of rows to analyze
+     * @param string $preferred    Preferred delimiter characters
+     * @param string $enclosure    Enclosure character, default is double quote
+     * @param string $data         The file content
      */
     protected function _guess_delimiter($search_depth, $preferred, $enclosure, &$data) {
         $chars = [];
@@ -1163,30 +1161,25 @@ class parseCSV {
             if ($ch == $enclosure) {
                 if (!$enclosed || $nch != $enclosure) {
                     $enclosed = $enclosed ? false : true;
-                }
-                elseif ($enclosed) {
+                } elseif ($enclosed) {
                     $i++;
                 }
 
                 // end of row
-            }
-            elseif (($ch == "\n" && $pch != "\r" || $ch == "\r") && !$enclosed) {
+            } elseif (($ch == "\n" && $pch != "\r" || $ch == "\r") && !$enclosed) {
                 if ($n >= $search_depth) {
                     $strlen = 0;
                     $to_end = false;
-                }
-                else {
+                } else {
                     $n++;
                 }
 
                 // count character
-            }
-            elseif (!$enclosed) {
+            } elseif (!$enclosed) {
                 if (!preg_match('/[' . preg_quote($this->auto_non_chars, '/') . ']/i', $ch)) {
                     if (!isset($chars[$ch][$n])) {
                         $chars[$ch][$n] = 1;
-                    }
-                    else {
+                    } else {
                         $chars[$ch][$n]++;
                     }
                 }
