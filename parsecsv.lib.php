@@ -1005,10 +1005,10 @@ class parseCSV {
      * Check if passed info might be delimiter
      * Only used by find_delimiter
      *
-     * @param  [type] $char      [description]
-     * @param  array $array
-     * @param  int   $depth
-     * @param  [type] $preferred [description]
+     * @param  string $char      Potential field separating character
+     * @param  array  $array     Frequency
+     * @param  int    $depth     Number of analyzed rows
+     * @param  string $preferred Preferred delimiter characters
      *
      * @return string|false      special string used for delimiter selection, or false
      */
@@ -1148,8 +1148,9 @@ class parseCSV {
         $chars = [];
         $strlen = strlen($data);
         $enclosed = false;
-        $n = 1;
+        $current_row = 1;
         $to_end = true;
+        $pattern = '/[' . preg_quote($this->auto_non_chars, '/') . ']/i';
 
         // walk specific depth finding possible delimiter characters
         for ($i = 0; $i < $strlen; $i++) {
@@ -1167,27 +1168,27 @@ class parseCSV {
 
                 // end of row
             } elseif (($ch == "\n" && $pch != "\r" || $ch == "\r") && !$enclosed) {
-                if ($n >= $search_depth) {
+                if ($current_row >= $search_depth) {
                     $strlen = 0;
                     $to_end = false;
                 } else {
-                    $n++;
+                    $current_row++;
                 }
 
                 // count character
             } elseif (!$enclosed) {
-                if (!preg_match('/[' . preg_quote($this->auto_non_chars, '/') . ']/i', $ch)) {
-                    if (!isset($chars[$ch][$n])) {
-                        $chars[$ch][$n] = 1;
+                if (!preg_match($pattern, $ch)) {
+                    if (!isset($chars[$ch][$current_row])) {
+                        $chars[$ch][$current_row] = 1;
                     } else {
-                        $chars[$ch][$n]++;
+                        $chars[$ch][$current_row]++;
                     }
                 }
             }
         }
 
         // filtering
-        $depth = $to_end ? $n - 1 : $n;
+        $depth = $to_end ? $current_row - 1 : $current_row;
         $filtered = [];
         foreach ($chars as $char => $value) {
             if ($match = $this->_check_count($char, $value, $depth, $preferred)) {
