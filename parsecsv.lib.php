@@ -747,8 +747,8 @@ class parseCSV {
 
         // create heading
         if ($this->heading && !$append && !empty($fields)) {
-            foreach ($fields as $key => $value) {
-                $entry[] = $this->_enclose_value($value, $delimiter);
+            foreach ($fields as $key => $column_name) {
+                $entry[] = $this->_enclose_value($column_name, $delimiter);
             }
 
             $string .= implode($delimiter, $entry) . $this->linefeed;
@@ -757,8 +757,8 @@ class parseCSV {
 
         // create data
         foreach ($data as $key => $row) {
-            foreach ($row as $field => $value) {
-                $entry[] = $this->_enclose_value($value, $delimiter);
+            foreach ($row as $cell_value) {
+                $entry[] = $this->_enclose_value($cell_value, $delimiter);
             }
 
             $string .= implode($delimiter, $entry) . $this->linefeed;
