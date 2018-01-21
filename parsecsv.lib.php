@@ -558,7 +558,14 @@ class parseCSV {
     }
 
     /**
-     * Parse CSV strings to arrays
+     * Parse CSV strings to arrays. If you need BOM detection or character
+     * encoding conversion, please call load_data() first, followed by a call to
+     * parse_string() with no parameters.
+     *
+     * To detect field separators, please use auto() instead.
+     *
+     * Also, while load_data() can handle a lacking new-line char at the end of
+     * the string, this function cannot.
      *
      * @param string $data CSV data
      *
