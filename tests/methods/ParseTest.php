@@ -62,6 +62,21 @@ class ParseTest extends PHPUnit\Framework\TestCase {
         $this->assertEquals($expected_data, $actual_data);
     }
 
+    public function testMissingEndingLineBreak() {
+        $this->csv->heading = false;
+        $this->csv->enclosure = '"';
+        $sInput = "86545235689,a\r\n34365587654,b\r\n13469874576,\"c\r\nd\"";
+        $expected_data = [86545235689, 34365587654, 13469874576];
+        $actual_data = $this->csv->parse_string($sInput);
+        $actual_column = array_map('reset', $actual_data);
+        $this->assertEquals($expected_data, $actual_column);
+        $this->assertEquals([
+            'a',
+            'b',
+            "c\r\nd",
+        ], array_map('next', $actual_data));
+    }
+
     public function test_sep_row_auto_detection_UTF8() {
         $this->_autoparse_magazine_file(
             __DIR__ . '/../example_files/UTF-8_with_BOM_and_sep_row.csv');
