@@ -624,7 +624,10 @@ class parseCSV {
                     $current .= $ch;
                     $i++;
                 } elseif ($nch != $this->delimiter && $nch != "\r" && $nch != "\n") {
-                    for ($x = ($i + 1);isset($data{$x}) && ltrim($data{$x}, $white_spaces) == ''; $x++) {}
+                    $x = $i + 1;
+                    while (isset($data{$x}) && ltrim($data{$x}, $white_spaces) == '') {
+                        $x++;
+                    }
                     if ($data{$x} == $this->delimiter) {
                         $enclosed = false;
                         $i = $x;
@@ -812,7 +815,7 @@ class parseCSV {
                 $this->file = $file;
             }
 
-            if (preg_match('/\.php$/i', $file) && preg_match('/<\?.*?\?>(.*)/ims', $data, $strip)) {
+            if (preg_match('/\.php$/', $file) && preg_match('/<\?.*?\?>(.*)/ms', $data, $strip)) {
                 $data = ltrim($strip[1]);
             }
 
@@ -923,12 +926,14 @@ class parseCSV {
             $op = $capture[2];
             $value = $capture[3];
 
-            if (preg_match('/^([\'\"]{1})(.*)([\'\"]{1})$/i', $value, $capture)) {
+            if (preg_match('/^([\'\"]{1})(.*)([\'\"]{1})$/', $value, $capture)) {
                 if ($capture[1] == $capture[3]) {
-                    $value = $capture[2];
-                    $value = str_replace("\\n", "\n", $value);
-                    $value = str_replace("\\r", "\r", $value);
-                    $value = str_replace("\\t", "\t", $value);
+                    $value = strtr($capture[2], array(
+                        "\\n" => "\n",
+                        "\\r" => "\r",
+                        "\\t" => "\t",
+                    ));
+
                     $value = stripslashes($value);
                 }
             }
@@ -967,11 +972,10 @@ class parseCSV {
      * @return  true of false
      */
     protected function _validate_offset($current_row) {
-        if ($this->sort_by === null && $this->offset !== null && $current_row < $this->offset) {
-            return false;
-        }
-
-        return true;
+        return
+            $this->sort_by !== null ||
+            $this->offset === null ||
+            $current_row >= $this->offset;
     }
 
     /**
@@ -1151,6 +1155,7 @@ class parseCSV {
         }
 
         // remove delimiter and its line-end (the data param is by-ref!)
+        /** @noinspection CallableParameterUseCaseInTypeContextInspection */
         $data_string = substr($data_string, $pos);
         return true;
     }
@@ -1176,6 +1181,7 @@ class parseCSV {
             $pch = isset($data{$i - 1}) ? $data{$i - 1} : false;
 
             // open and closing quotes
+            $is_newline = ($ch == "\n" && $pch != "\r") || $ch == "\r";
             if ($ch == $enclosure) {
                 if (!$enclosed || $nch != $enclosure) {
                     $enclosed = $enclosed ? false : true;
@@ -1184,7 +1190,7 @@ class parseCSV {
                 }
 
                 // end of row
-            } elseif (($ch == "\n" && $pch != "\r" || $ch == "\r") && !$enclosed) {
+            } elseif ($is_newline && !$enclosed) {
                 if ($current_row >= $search_depth) {
                     $strlen = 0;
                     $to_end = false;
