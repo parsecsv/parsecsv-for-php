@@ -44,6 +44,14 @@ class ParseTest extends PHPUnit\Framework\TestCase {
             __DIR__ . '/../example_files/UTF-8_sep_row_but_no_BOM.csv');
     }
 
+    public function testSingleColumnWithZeros() {
+        $this->csv->delimiter = null;
+        $this->csv->parse("URL\nhttp://www.amazon.com/ROX-Ice-Ball-Maker-Original/dp/B00MX59NMQ/ref=sr_1_1?ie=UTF8&qid=1435604374&sr=8-1&keywords=rox,+ice+molds");
+        $row = array_pop($this->csv->data);
+        $expected_data = ['URL' => 'http://www.amazon.com/ROX-Ice-Ball-Maker-Original/dp/B00MX59NMQ/ref=sr_1_1?ie=UTF8&qid=1435604374&sr=8-1&keywords=rox,+ice+molds'];
+        $this->assertEquals($expected_data, $row);
+    }
+
     public function test_sep_row_auto_detection_UTF8() {
         $this->_autoparse_magazine_file(
             __DIR__ . '/../example_files/UTF-8_with_BOM_and_sep_row.csv');
