@@ -71,8 +71,26 @@ class ParseTest extends PHPUnit\Framework\TestCase {
             ['SMS' => '6606'],
             ['SMS' => '7777'],
         ];
-
         $this->assertEquals($expected, $this->csv->data);
+    }
+
+    public function test_Piwik_data() {
+        $this->csv->use_mb_convert_encoding = true;
+        $this->csv->output_encoding = 'UTF-8';
+        $this->csv->auto(__DIR__ . '/../example_files/Piwik_API_download.csv');
+        $aAction27 = array_column($this->csv->data, 'url (actionDetails 27)');
+        $this->assertEquals([
+            'http://application/_Main/_GraphicMeanSTD_MDI/btnConfBandOptions',
+            '',
+            '',
+        ], $aAction27);
+
+        $aCity = array_column($this->csv->data, 'city');
+        $this->assertEquals([
+            'São Paulo',
+            'Johannesburg',
+            '',
+        ], $aCity);
     }
 
     protected function _get_magazines_data() {
