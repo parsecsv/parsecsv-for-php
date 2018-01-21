@@ -2,12 +2,12 @@
 
 parseCSV is an easy to use PHP class that reads and writes CSV data properly. It
 fully conforms to the specifications outlined on the on the
-[Wikipedia article][CSV]. It has many advanced features which help make your
+[Wikipedia article][CSV] (and thus RFC 4180). It has many advanced features which help make your
 life easier when dealing with CSV data.
 
 You may not need a library at all: before using parseCSV, please make sure if PHP's own `str_getcsv()`, ``fgetcvs()`` or `fputcsv()` meets your needs.
 
-This library was originaly created in early 2007 by [jimeh](https://github.com/jimeh) due to the lack of built-in
+This library was originally created in early 2007 by [jimeh](https://github.com/jimeh) due to the lack of built-in
 and third-party support for handling CSV data in PHP.
 
 [csv]: http://en.wikipedia.org/wiki/Comma-separated_values
