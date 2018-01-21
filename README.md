@@ -5,6 +5,8 @@ fully conforms to the specifications outlined on the on the
 [Wikipedia article][CSV]. It has many advanced features which help make your
 life easier when dealing with CSV data.
 
+You may not need a library at all: before using parseCSV, please make sure if PHP's own `str_getcsv()`, ``fgetcvs()`` or `fputcsv()` meets your needs.
+
 This library was originaly created in early 2007 by [jimeh](https://github.com/jimeh) due to the lack of built-in
 and third-party support for handling CSV data in PHP.
 
@@ -87,7 +89,7 @@ $csv->parse('data.csv');
 
 **Add row/entry to end of CSV file**
 
-_Only recommended when you know the extact structure of the file._
+_Only recommended when you know the exact structure of the file._
 
 ```php
 $csv = new parseCSV();
