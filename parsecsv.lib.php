@@ -221,6 +221,16 @@ class parseCSV {
     public $output_encoding = 'ISO-8859-1';
 
     /**
+     * Whether to use mb_convert_encoding() instead of iconv().
+     *
+     * The former is platform-independent whereas the latter is the traditional
+     * default go-to solution.
+     *
+     * @var bool (if false, iconv() is used)
+     */
+    public $use_mb_convert_encoding = false;
+
+    /**
      * Linefeed
      * Line feed characters used by unparse, save, and output methods
      *
@@ -815,7 +825,9 @@ class parseCSV {
             }
 
             if ($this->convert_encoding && $this->input_encoding !== $this->output_encoding) {
-                $data = iconv($this->input_encoding, $this->output_encoding, $data);
+                $data = $this->use_mb_convert_encoding ?
+                    mb_convert_encoding($data, $this->output_encoding, $this->input_encoding) :
+                    iconv($this->input_encoding, $this->output_encoding, $data);
             }
 
             if (substr($data, -1) != "\n") {
