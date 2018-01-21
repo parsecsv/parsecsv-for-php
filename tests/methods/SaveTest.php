@@ -32,6 +32,18 @@ class SaveTest extends PHPUnit\Framework\TestCase {
         $this->saveAndCompare($expected);
     }
 
+    public function testSaveWithDosLineEnding() {
+        $this->csv->linefeed = "\r\n";
+        $expected = "SMS\r\n0444\r\n5555\r\n";
+        $this->saveAndCompare($expected);
+    }
+
+    public function testSaveWithUnixLineEnding() {
+        $this->csv->linefeed = "\n";
+        $expected = "SMS\n0444\n5555\n";
+        $this->saveAndCompare($expected);
+    }
+
     public function testAllQuotes() {
         $this->csv->enclose_all = true;
         $expected = "\"SMS\"\r\"0444\"\r\"5555\"\r";

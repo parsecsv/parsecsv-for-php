@@ -418,7 +418,7 @@ class parseCSV {
             $file = &$this->file;
         }
 
-        $mode = $append ? 'at' : 'wt';
+        $mode = $append ? 'ab' : 'wb';
         $is_php = preg_match('/\.php$/i', $file) ? true : false;
 
         return $this->_wfile($file, $this->unparse($data, $fields, $append, $is_php), $mode);
