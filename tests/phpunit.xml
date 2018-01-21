@@ -11,8 +11,8 @@
     stopOnSkipped="false">
     <testsuites>
         <testsuite name="parseCSV Test Suite">
-            <directory suffix="test.php">properties/</directory>
-            <directory suffix="test.php">methods/</directory>
+            <directory suffix="est.php">properties/</directory>
+            <directory suffix="est.php">methods/</directory>
         </testsuite>
     </testsuites>
 </phpunit>
