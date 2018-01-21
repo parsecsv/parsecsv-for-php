@@ -596,6 +596,7 @@ class parseCSV {
         // data does not end with a line feed or carriage return character.
         $lch = $data{$strlen - 1};
         if ($lch != "\n" && $lch != "\r") {
+            $data .= "\n";
             $strlen++;
         }
 
