@@ -566,9 +566,6 @@ class parseCSV {
      *
      * To detect field separators, please use auto() instead.
      *
-     * Also, while load_data() can handle a lacking new-line char at the end of
-     * the string, this function cannot.
-     *
      * @param string $data CSV data
      *
      * @return array|false - 2D array with CSV data, or false on failure
@@ -993,7 +990,7 @@ class parseCSV {
      *  - only used by unparse()
      *
      * @param string $value     Cell value to process
-     * @param string $delimiter Character to put between fields
+     * @param string $delimiter Character to put between cells on the same row
      *
      * @return string Processed value
      */
