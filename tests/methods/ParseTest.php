@@ -52,6 +52,16 @@ class ParseTest extends PHPUnit\Framework\TestCase {
         $this->assertEquals($expected_data, $row);
     }
 
+    public function testAllNumericalCsv() {
+        $this->csv->heading = false;
+        $sInput = "86545235689\r\n34365587654\r\n13469874576";
+        $this->assertEquals(false, $this->csv->auto($sInput));
+        $this->assertEquals(null, $this->csv->delimiter);
+        $expected_data = explode("\r\n", $sInput);
+        $actual_data = array_map('reset', $this->csv->data);
+        $this->assertEquals($expected_data, $actual_data);
+    }
+
     public function test_sep_row_auto_detection_UTF8() {
         $this->_autoparse_magazine_file(
             __DIR__ . '/../example_files/UTF-8_with_BOM_and_sep_row.csv');
