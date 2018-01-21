@@ -903,8 +903,8 @@ class parseCSV {
     /**
      * Validate a row against a single condition
      *
-     * @param array  $row         array with values from a row
-     * @param string $condition   specified condition that the row must match
+     * @param array  $row       array with values from a row
+     * @param string $condition specified condition that the row must match
      *
      * @return string single 0 or 1
      */
@@ -1179,7 +1179,12 @@ class parseCSV {
         $enclosed = false;
         $current_row = 1;
         $to_end = true;
-        $pattern = '/[' . preg_quote($this->auto_non_chars, '/') . ']/i';
+
+        // The dash is the only character we don't want quoted, as it would
+        // prevent character ranges within $auto_non_chars:
+        $quoted_auto_non_chars = preg_quote($this->auto_non_chars, '/');
+        $quoted_auto_non_chars = str_replace('\-', '-', $quoted_auto_non_chars);
+        $pattern = '/[' . $quoted_auto_non_chars . ']/i';
 
         // walk specific depth finding possible delimiter characters
         for ($i = 0; $i < $strlen; $i++) {
