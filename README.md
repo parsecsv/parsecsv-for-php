@@ -104,6 +104,7 @@ $csv = new parseCSV();
 $csv->output('movies.csv', $array, array('field 1', 'field 2'), ',');
 ```
 
+For more complex examples, see the ``tests`` and `examples` directories. 
 
 ## Credits
 
