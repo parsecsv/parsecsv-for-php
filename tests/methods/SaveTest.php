@@ -44,6 +44,13 @@ class SaveTest extends PHPUnit\Framework\TestCase {
         $this->saveAndCompare($expected);
     }
 
+    public function testSaveWithoutHeader() {
+        $this->csv->linefeed = "\n";
+        $this->csv->heading = false;
+        $expected = "0444\n5555\n";
+        $this->saveAndCompare($expected);
+    }
+
     public function testAllQuotes() {
         $this->csv->enclose_all = true;
         $expected = "\"SMS\"\r\"0444\"\r\"5555\"\r";
