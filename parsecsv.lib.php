@@ -607,8 +607,9 @@ class parseCSV {
                         $this->error = 2;
                         $error_row = count($rows) + 1;
                         $error_col = $col + 1;
-                        if (!isset($this->error_info[$error_row . '-' . $error_col])) {
-                            $this->error_info[$error_row . '-' . $error_col] = array(
+                        $index = $error_row . '-' . $error_col;
+                        if (!isset($this->error_info[$index])) {
+                            $this->error_info[$index] = array(
                                 'type' => 2,
                                 'info' => 'Syntax error found on row ' . $error_row . '. Non-enclosed fields can not contain double-quotes.',
                                 'row' => $error_row,
@@ -634,8 +635,9 @@ class parseCSV {
 
                         $error_row = count($rows) + 1;
                         $error_col = $col + 1;
-                        if (!isset($this->error_info[$error_row . '-' . $error_col])) {
-                            $this->error_info[$error_row . '-' . $error_col] = array(
+                        $index = $error_row . '-' . $error_col;
+                        if (!isset($this->error_info[$index])) {
+                            $this->error_info[$index] = array(
                                 'type' => 1,
                                 'info' =>
                                     'Syntax error found on row ' . (count($rows) + 1) . '. ' .
@@ -669,13 +671,17 @@ class parseCSV {
                             $head = $row;
                         } elseif (empty($this->fields) || (!empty($this->fields) && (($this->heading && $row_count > 0) || !$this->heading))) {
                             if (!empty($this->sort_by) && !empty($row[$this->sort_by])) {
-                                if (isset($rows[$row[$this->sort_by]])) {
-                                    $rows[$row[$this->sort_by] . '_0'] = &$rows[$row[$this->sort_by]];
-                                    unset($rows[$row[$this->sort_by]]);
-                                    for ($sn = 1;isset($rows[$row[$this->sort_by] . '_' . $sn]); $sn++) {}
-                                    $rows[$row[$this->sort_by] . '_' . $sn] = $row;
+                                $sort_field = $row[$this->sort_by];
+                                if (isset($rows[$sort_field])) {
+                                    $rows[$sort_field . '_0'] = &$rows[$sort_field];
+                                    unset($rows[$sort_field]);
+                                    $sn = 1;
+                                    while (isset($rows[$sort_field . '_' . $sn])) {
+                                        $sn++;
+                                    }
+                                    $rows[$sort_field . '_' . $sn] = $row;
                                 } else {
-                                    $rows[$row[$this->sort_by]] = $row;
+                                    $rows[$sort_field] = $row;
                                 }
 
                             } else {
