@@ -1,7 +1,5 @@
 # parseCSV
 
-Note: parseCSV is now being revised to PHP 5 standards. If you have an issue or a feature request we encourage you to open an issue.
-
 parseCSV is an easy to use PHP class that reads and writes CSV data properly. It
 fully conforms to the specifications outlined on the on the
 [Wikipedia article][CSV]. It has many advanced features which help make your
@@ -38,7 +36,7 @@ require_once 'parsecsv.lib.php';
   how different programs like Excel for example outputs CSV data.
 * Support for character encoding conversion using PHP's _iconv_ function
   (requires PHP 5).
-* Supports both PHP 4 & 5.
+* Supports PHP 5.4 and higher. It certainly works with PHP 7.2
 
 
 ## Example Usage
