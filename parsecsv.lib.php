@@ -495,6 +495,8 @@ class parseCSV {
 
         if (is_null($enclosure)) {
             $enclosure = $this->enclosure;
+        } else {
+            $this->enclosure = $enclosure;
         }
 
         if (is_null($preferred)) {
