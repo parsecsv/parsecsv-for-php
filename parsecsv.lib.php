@@ -978,19 +978,18 @@ class parseCSV {
      * Enclose values if needed
      *  - only used by unparse()
      *
-     * @param string      $value     Cell value to process
-     * @param string|null $delimiter
+     * @param string $value     Cell value to process
+     * @param string $delimiter Character to put between fields
      *
      * @return string Processed value
      */
-    protected function _enclose_value($value = null, $delimiter = null) {
-        if (is_null($delimiter)) {
-            $delimiter = $this->delimiter;
-        }
+    protected function _enclose_value($value = null, $delimiter) {
         if ($value !== null && $value != '') {
-            $delimiter_quoted = preg_quote($delimiter, '/');
+            $delimiter_quoted = $delimiter ?
+                preg_quote($delimiter, '/') . "|"
+                : '';
             $enclosure_quoted = preg_quote($this->enclosure, '/');
-            $pattern = "/" . $delimiter_quoted . "|" . $enclosure_quoted . "|\n|\r/i";
+            $pattern = "/" . $delimiter_quoted . $enclosure_quoted . "|\n|\r/i";
             if ($this->enclose_all || preg_match($pattern, $value) || ($value{0} == ' ' || substr($value, -1) == ' ')) {
                 $value = str_replace($this->enclosure, $this->enclosure . $this->enclosure, $value);
                 $value = $this->enclosure . $value . $this->enclosure;
