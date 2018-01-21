@@ -75,6 +75,10 @@ class ParseTest extends PHPUnit\Framework\TestCase {
     }
 
     public function test_Piwik_data() {
+        if (!function_exists('array_column')) {
+            // function only available in PHP >= 5.5
+            return;
+        }
         $this->csv->use_mb_convert_encoding = true;
         $this->csv->output_encoding = 'UTF-8';
         $this->csv->auto(__DIR__ . '/../example_files/Piwik_API_download.csv');
