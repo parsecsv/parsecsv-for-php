@@ -65,7 +65,7 @@ class worthless_properties_Test extends PHPUnit\Framework\TestCase {
      * @access public
      */
     public function test_propertiesCount() {
-        $this->assertCount(27, $this->properties);
+        $this->assertCount(28, $this->properties);
     }
 
     /**
@@ -79,7 +79,7 @@ class worthless_properties_Test extends PHPUnit\Framework\TestCase {
      */
     public function test_property_names() {
         //set our expected properties name(s)
-        $names = array(
+        $expected_names = array(
             'heading',
             'fields',
             'sort_by',
@@ -97,6 +97,7 @@ class worthless_properties_Test extends PHPUnit\Framework\TestCase {
             'convert_encoding',
             'input_encoding',
             'output_encoding',
+            'use_mb_convert_encoding',
             'linefeed',
             'output_delimiter',
             'output_filename',
@@ -109,19 +110,13 @@ class worthless_properties_Test extends PHPUnit\Framework\TestCase {
             'data'
         );
 
-        //find our real properties
-        $real_properties = [];
-        for ($a = 0; $a < count($this->properties); $a++) {
-            $real_properties[] = $this->properties[$a]->getName();
-        }
+        // Find our real properties
+        $real_properties = array_map(function (ReflectionProperty $property) {
+            return $property->getName();
+        }, $this->properties);
 
-        //lets make sure our expected matches the number of real properties
-        $this->assertCount(count($names), $this->properties);
-
-        //lets loop through our expected to make sure they exists
-        for ($a = 0; $a < count($names); $a++) {
-            $this->assertTrue(in_array($names[$a], $real_properties));
-        }
+        // Lets make sure our expected matches the number of real properties
+        $this->assertEquals($expected_names, $real_properties);
     }
 
     /**
