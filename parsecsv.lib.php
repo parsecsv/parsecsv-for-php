@@ -825,7 +825,7 @@ class parseCSV {
                 $this->file = $file;
             }
 
-            if (preg_match('/\.php$/', $file) && preg_match('/<\?.*?\?>(.*)/ms', $data, $strip)) {
+            if (preg_match('/\.php$/i', $file) && preg_match('/<\?.*?\?>(.*)/ms', $data, $strip)) {
                 $data = ltrim($strip[1]);
             }
 
