@@ -1,11 +1,11 @@
-# parseCSV
+# ParseCsvForPhp
 
-parseCSV is an easy to use PHP class that reads and writes CSV data properly. It
+This is an easy-to-use PHP class that reads and writes CSV data properly. It
 fully conforms to the specifications outlined on the on the
 [Wikipedia article][CSV] (and thus RFC 4180). It has many advanced features which help make your
 life easier when dealing with CSV data.
 
-You may not need a library at all: before using parseCSV, please make sure if PHP's own `str_getcsv()`, ``fgetcvs()`` or `fputcsv()` meets your needs.
+You may not need a library at all: before using ParseCsvForPhp, please make sure if PHP's own `str_getcsv()`, ``fgetcvs()`` or `fputcsv()` meets your needs.
 
 This library was originally created in early 2007 by [jimeh](https://github.com/jimeh) due to the lack of built-in
 and third-party support for handling CSV data in PHP.
@@ -15,7 +15,7 @@ and third-party support for handling CSV data in PHP.
 ## Installation
 Installation is easy using Composer. Include the following in your composer.json
 ```
-"parsecsv/php-parsecsv": "0.4.5"
+"parsecsv/php-parsecsv": "1.0.0"
 ```
 
 You may also manually include the ParseCsvForPhp.php file
@@ -25,8 +25,6 @@ require_once 'ParseCsvForPhp.php';
 
 ## Features
 
-* parseCSV is the only complete and fully featured CSV solution for PHP (as
-  far as I know).
 * Supports enclosed values, enclosed commas, double quotes and new lines.
 * Automatic delimiter character detection.
 * Sort data by specific fields/columns.
@@ -36,9 +34,10 @@ require_once 'ParseCsvForPhp.php';
 * Error detection for incorrectly formatted input. It attempts to be
   intelligent, but can not be trusted 100% due to the structure of CSV, and
   how different programs like Excel for example outputs CSV data.
-* Support for character encoding conversion using PHP's _iconv_ function
-  (requires PHP 5).
-* Supports PHP 5.4 and higher. It certainly works with PHP 7.2
+* Support for character encoding conversion using PHP's 
+  `iconv()` and `mb_convert_encoding()` functions (requires PHP 5).
+* Supports PHP 5.4 and higher. 
+  It certainly works with PHP 7.2 and all versions in between.
 
 
 ## Example Usage
@@ -96,7 +95,7 @@ $csv = new ParseCsvForPhp();
 $csv->save('data.csv', array(array('1986', 'Home', 'Nowhere', '')), true);
 ```
 
-**Convert 2D array to csv data and send headers to browser to treat output as
+**Convert 2D array to CSV data and send headers to browser to treat output as
 a file and download it**
 
 ```php
@@ -108,7 +107,7 @@ For more complex examples, see the ``tests`` and `examples` directories.
 
 ## Credits
 
-* parseCSV is based on the concept of [Ming Hong Ng][ming]'s [CsvFileParser][]
+* ParseCsvForPhp is based on the concept of [Ming Hong Ng][ming]'s [CsvFileParser][]
   class.
 
 [ming]: http://minghong.blogspot.com/
