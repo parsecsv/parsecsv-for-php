@@ -7,7 +7,7 @@ class default_values_properties_Test extends PHPUnit\Framework\TestCase {
      * The parseCSV object
      *
      * @access protected
-     * @var [parseCSV]
+     * @var ParseCsvForPhp
      */
     protected $csv = null;
 
@@ -19,7 +19,7 @@ class default_values_properties_Test extends PHPUnit\Framework\TestCase {
      */
     public function setUp() {
         //setup parse CSV
-        $this->csv = new parseCSV();
+        $this->csv = new ParseCsvForPhp();
     }
 
     /**

@@ -7,7 +7,7 @@ class BaseClass extends PHPUnit\Framework\TestCase {
      * The parseCSV object
      *
      * @access protected
-     * @var parseCSV
+     * @var ParseCsvForPhp
      */
     protected $csv;
 
@@ -18,7 +18,7 @@ class BaseClass extends PHPUnit\Framework\TestCase {
      * @access public
      */
     public function setUp() {
-        $this->csv = new parseCSV();
+        $this->csv = new ParseCsvForPhp();
     }
 
     protected function _compareWithExpected($expected) {

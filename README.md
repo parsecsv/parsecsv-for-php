@@ -18,9 +18,9 @@ Installation is easy using Composer. Include the following in your composer.json
 "parsecsv/php-parsecsv": "0.4.5"
 ```
 
-You may also manually include the parsecsv.lib.php file
+You may also manually include the ParseCsvForPhp.php file
 ```php
-require_once 'parsecsv.lib.php';
+require_once 'ParseCsvForPhp.php';
 ```
 
 ## Features
@@ -46,14 +46,14 @@ require_once 'parsecsv.lib.php';
 **General**
 
 ```php
-$csv = new parseCSV('data.csv');
+$csv = new ParseCsvForPhp('data.csv');
 print_r($csv->data);
 ```
 
 **Tab delimited, and encoding conversion**
 
 ```php
-$csv = new parseCSV();
+$csv = new ParseCsvForPhp();
 $csv->encoding('UTF-16', 'UTF-8');
 $csv->delimiter = "\t";
 $csv->parse('data.tsv');
@@ -63,7 +63,7 @@ print_r($csv->data);
 **Auto-detect delimiter character**
 
 ```php
-$csv = new parseCSV();
+$csv = new ParseCsvForPhp();
 $csv->auto('data.csv');
 print_r($csv->data);
 ```
@@ -71,7 +71,7 @@ print_r($csv->data);
 **Modify data in a CSV file**
 
 ```php
-$csv = new parseCSV();
+$csv = new ParseCsvForPhp();
 $csv->sort_by = 'id';
 $csv->parse('data.csv');
 # "4" is the value of the "id" column of the CSV row
@@ -82,7 +82,7 @@ $csv->save();
 **Replace field names or set ones if missing**
 
 ```php
-$csv = new parseCSV();
+$csv = new ParseCsvForPhp();
 $csv->fields = ['id', 'name', 'category']
 $csv->parse('data.csv');
 ```
@@ -92,7 +92,7 @@ $csv->parse('data.csv');
 _Only recommended when you know the exact structure of the file._
 
 ```php
-$csv = new parseCSV();
+$csv = new ParseCsvForPhp();
 $csv->save('data.csv', array(array('1986', 'Home', 'Nowhere', '')), true);
 ```
 
@@ -100,7 +100,7 @@ $csv->save('data.csv', array(array('1986', 'Home', 'Nowhere', '')), true);
 a file and download it**
 
 ```php
-$csv = new parseCSV();
+$csv = new ParseCsvForPhp();
 $csv->output('movies.csv', $array, array('field 1', 'field 2'), ',');
 ```
 

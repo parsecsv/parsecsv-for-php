@@ -7,7 +7,7 @@ class ParseTest extends PHPUnit\Framework\TestCase {
      * The parseCSV object
      *
      * @access protected
-     * @var parseCSV
+     * @var ParseCsvForPhp
      */
     protected $csv;
 
@@ -18,7 +18,7 @@ class ParseTest extends PHPUnit\Framework\TestCase {
      * @access public
      */
     public function setUp() {
-        $this->csv = new parseCSV();
+        $this->csv = new ParseCsvForPhp();
     }
 
     public function test_parse() {
@@ -164,7 +164,7 @@ class ParseTest extends PHPUnit\Framework\TestCase {
      * @param string $enclosure
      */
     public function testAutoQuotes($file, $enclosure) {
-        $csv = new parseCSV();
+        $csv = new ParseCsvForPhp();
         $csv->auto(__DIR__ . '/../example_files/' . $file, true, null, null, $enclosure);
         $this->assertArrayHasKey('column1', $csv->data[0], 'Data parsed incorrectly with enclosure ' . $enclosure);
         $this->assertEquals('value1', $csv->data[0]['column1'], 'Data parsed incorrectly with enclosure ' . $enclosure);

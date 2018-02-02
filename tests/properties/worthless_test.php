@@ -7,7 +7,7 @@ class worthless_properties_Test extends PHPUnit\Framework\TestCase {
      * The parseCSV object
      *
      * @access protected
-     * @var [parseCSV]
+     * @var    ParseCsvForPhp
      */
     protected $csv = null;
 
@@ -16,7 +16,7 @@ class worthless_properties_Test extends PHPUnit\Framework\TestCase {
      * The reflection class object
      *
      * @access protected
-     * @var [ReflectionClass]
+     * @var    ReflectionClass
      */
     protected $reflection = null;
 
@@ -25,6 +25,7 @@ class worthless_properties_Test extends PHPUnit\Framework\TestCase {
      * The reflected class properties
      *
      * @access protected
+     * @var ReflectionProperty[]
      */
     protected $properties = null;
 
@@ -36,7 +37,7 @@ class worthless_properties_Test extends PHPUnit\Framework\TestCase {
      */
     public function setUp() {
         //setup parse CSV
-        $this->csv = new parseCSV();
+        $this->csv = new ParseCsvForPhp();
 
         //setup the reflection class
         $this->reflection = new ReflectionClass($this->csv);
@@ -107,7 +108,7 @@ class worthless_properties_Test extends PHPUnit\Framework\TestCase {
             'error',
             'error_info',
             'titles',
-            'data'
+            'data',
         );
 
         // Find our real properties
@@ -129,7 +130,7 @@ class worthless_properties_Test extends PHPUnit\Framework\TestCase {
     public function test_count_public_properties() {
         $counter = 0;
 
-        for ($a = 0; $a < count($this->properties); $a++) {
+        for ($a = count($this->properties) - 1; $a >= 0; $a--) {
             if ($this->properties[$a]->isPublic() === true) {
                 $counter++;
             }

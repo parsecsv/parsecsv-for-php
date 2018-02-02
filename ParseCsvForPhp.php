@@ -1,9 +1,9 @@
 <?php
 
-class parseCSV {
+class ParseCsvForPhp {
 
     /*
-    Class: parseCSV v0.4.3 beta
+    Class: parseCSV v1.0.0
     https://github.com/parsecsv/parsecsv-for-php
 
     Fully conforms to the specifications lined out on Wikipedia:
@@ -39,23 +39,23 @@ class parseCSV {
     Code Examples
     ----------------
     # general usage
-    $csv = new parseCSV('data.csv');
+    $csv = new ParseCsvForPhp('data.csv');
     print_r($csv->data);
     ----------------
     # tab delimited, and encoding conversion
-    $csv = new parseCSV();
+    $csv = new ParseCsvForPhp();
     $csv->encoding('UTF-16', 'UTF-8');
     $csv->delimiter = "\t";
     $csv->parse('data.tsv');
     print_r($csv->data);
     ----------------
     # auto-detect delimiter character
-    $csv = new parseCSV();
+    $csv = new ParseCsvForPhp();
     $csv->auto('data.csv');
     print_r($csv->data);
     ----------------
     # modify data in a csv file
-    $csv = new parseCSV();
+    $csv = new ParseCsvForPhp();
     $csv->sort_by = 'id';
     $csv->parse('data.csv');
     # "4" is the value of the "id" column of the CSV row
@@ -64,12 +64,12 @@ class parseCSV {
     ----------------
     # add row/entry to end of CSV file
     #  - only recommended when you know the exact structure of the file
-    $csv = new parseCSV();
+    $csv = new ParseCsvForPhp();
     $csv->save('data.csv', array(array('1986', 'Home', 'Nowhere', '')), true);
     ----------------
     # convert 2D array to csv data and send headers
     # to browser to treat output as a file and download it
-    $csv = new parseCSV();
+    $csv = new ParseCsvForPhp();
     $csv->output('movies.csv', $array, array('field 1', 'field 2'), ',');
     ----------------
      */
