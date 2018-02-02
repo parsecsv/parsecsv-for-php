@@ -1,3 +1,18 @@
+parseCSV 1.0.0 RC
+-----------------------------------
+Date: unreleased
+
+- Added support for MS Excel's "sep=" to detect the
+  delimiter (Issue #60).
+
+- Added support for mb_convert_encoding() instead of
+  iconv() - see issues #109
+
+- A number of minor bug fixes - see GitHub issues
+
+-----------------------------------
+
+
 parseCSV 0.4.3 beta
 -----------------------------------
 Date: 1-July-2008
@@ -159,7 +174,7 @@ Date: 2-Jan-2007
 
 - Added auto() function to automatically detect
   delimiter character.
-  Useful for user upload incase delimiter is
+  Useful for user upload in case delimiter is
   comma (,), tab, or semi-colon (;). Some
   versions of MS Excel for Windows use
   semi-colons instead of commas when saving to
@@ -170,7 +185,7 @@ Date: 2-Jan-2007
   almost no matter what the delimiter is.
 
 - Generally updated some of the core workings
-  to increase performance, and offer better 
+  to increase performance, and offer better
   support for large (1MB and up) files.
 
 - Added code examples to header comment.
