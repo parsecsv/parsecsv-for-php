@@ -2,11 +2,11 @@
 <?php
 
 
-# include parseCSV class.
+# include ParseCsvForPhp class.
 require_once('../ParseCsvForPhp.php');
 
 
-# create new parseCSV object.
+# create new object.
 $csv = new ParseCsvForPhp();
 
 

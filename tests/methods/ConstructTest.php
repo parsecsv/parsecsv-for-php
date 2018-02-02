@@ -3,23 +3,10 @@
 class ConstructTest extends PHPUnit\Framework\TestCase {
 
     /**
-     * CSV
-     * The parseCSV object
-     *
      * @access protected
-     * @var [parseCSV]
+     * @var ParseCsvForPhp object
      */
     protected $csv = null;
-
-    /**
-     * Tear down
-     * Tear down our test environment objects
-     *
-     * @access public
-     */
-    public function tearDown() {
-        $this->csv = null;
-    }
 
     public function test_offset_param() {
         $offset = 10;

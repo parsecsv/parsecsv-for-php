@@ -3,9 +3,6 @@
 class worthless_properties_Test extends PHPUnit\Framework\TestCase {
 
     /**
-     * CSV
-     * The parseCSV object
-     *
      * @access protected
      * @var    ParseCsvForPhp
      */
