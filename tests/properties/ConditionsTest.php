@@ -1,25 +1,6 @@
 <?php
 
-class ConditionsTest extends PHPUnit\Framework\TestCase {
-
-    /**
-     * CSV
-     * The parseCSV object
-     *
-     * @access protected
-     * @var parseCSV
-     */
-    protected $csv;
-
-    /**
-     * Setup
-     * Setup our test environment objects
-     *
-     * @access public
-     */
-    public function setUp() {
-        $this->csv = new parseCSV();
-    }
+class ConditionsTest extends BaseClass {
 
     public function testNotDanBrown() {
         $this->csv->conditions = 'author does not contain dan brown';
@@ -62,13 +43,5 @@ class ConditionsTest extends PHPUnit\Framework\TestCase {
             'The Third Secret',
             'The Da Vinci Code (Hardcover)',
         ]);
-    }
-
-    protected function _compareWithExpected($expected) {
-        $this->csv->auto(__DIR__ . '/../../examples/_books.csv');
-        $actual = array_map(function ($row) {
-            return $row['title'];
-        }, $this->csv->data);
-        $this->assertEquals($expected, $actual);
     }
 }
