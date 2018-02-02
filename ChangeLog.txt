@@ -1,12 +1,17 @@
-parseCSV 1.0.0 RC
+ParseCsvForPhp 1.0.0 RC
 -----------------------------------
 Date: unreleased
+
+- Renamed class from parseCSV to ParseCsvForPhp
 
 - Added support for MS Excel's "sep=" to detect the
   delimiter (Issue #60).
 
+- MIME: output() sends correct MIME type to browser
+  if the separator is a tab tab (Issue #79)
+
 - Added support for mb_convert_encoding() instead of
-  iconv() - see issues #109
+  iconv() (Issue #109)
 
 - A number of minor bug fixes - see GitHub issues
 
