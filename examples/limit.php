@@ -2,12 +2,12 @@
 <?php
 
 
-# include parseCSV class.
-require_once('../parsecsv.lib.php');
+# include class.
+require_once('../ParseCsvForPhp.php');
 
 
-# create new parseCSV object.
-$csv = new parseCSV();
+# create new object.
+$csv = new ParseCsvForPhp();
 
 
 # if sorting is enabled, the whole CSV file

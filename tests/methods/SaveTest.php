@@ -2,7 +2,7 @@
 
 class SaveTest extends PHPUnit\Framework\TestCase {
 
-    /** @var parseCSV */
+    /** @var ParseCsvForPhp */
     private $csv;
 
     private $temp_filename;
@@ -11,7 +11,7 @@ class SaveTest extends PHPUnit\Framework\TestCase {
      * Setup our test environment objects; will be called before each test.
      */
     public function setUp() {
-        $this->csv = new parseCSV();
+        $this->csv = new ParseCsvForPhp();
         $this->csv->auto(__DIR__ . '/../example_files/single_column.csv');
 
         // Remove last 2 lines to simplify comparison
