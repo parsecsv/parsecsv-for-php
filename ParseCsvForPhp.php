@@ -450,7 +450,10 @@ class ParseCsvForPhp {
         $flat_string = $this->unparse($data, $fields, null, null, $delimiter);
 
         if (!is_null($filename)) {
-            header('Content-type: application/csv');
+            $mime = $delimiter === "\t" ?
+                'text/tab-separated-values' :
+                'application/csv';
+            header('Content-type: ' . $mime);
             header('Content-Length: ' . strlen($flat_string));
             header('Cache-Control: no-cache, must-revalidate');
             header('Pragma: no-cache');
