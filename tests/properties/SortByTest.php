@@ -4,6 +4,7 @@ class SortByTest extends BaseClass {
 
     public function testSortByRating() {
         $this->csv->sort_by = 'rating';
+        $this->csv->conditions = 'title does not contain Blood';
         $this->_compareWithExpected([
             // Rating 0
             'The Killing Kind',
@@ -12,7 +13,6 @@ class SortByTest extends BaseClass {
             // Rating 3
             'The Last Templar',
             'The Broker (Paperback)',
-            'Without Blood (Paperback)',
 
             // Rating 4
             'Deception Point (Paperback)',
@@ -29,14 +29,17 @@ class SortByTest extends BaseClass {
 
     public function testReverseSortByRating() {
         $this->csv->sort_by = 'rating';
+        $this->csv->conditions =
+            'title does not contain Prey AND ' .
+            'title does not contain Fortress AND ' .
+            'title does not contain Blood AND ' .
+            'title does not contain Fear';
         $this->csv->sort_reverse = true;
         $this->_compareWithExpected([
 
             // Rating 5
-            'Digital Fortress : A Thriller (Mass Market Paperback)',
-            'Prey',
-            'State of Fear (Paperback)',
             'Angels & Demons (Mass Market Paperback)',
+            'The Traveller',
 
             // Rating 4
             'The Da Vinci Code (Hardcover)',
@@ -46,7 +49,6 @@ class SortByTest extends BaseClass {
             // Rating 3
             'The Broker (Paperback)',
             'The Last Templar',
-            'Without Blood (Paperback)',
 
             // Rating 0
             'The Third Secret',
