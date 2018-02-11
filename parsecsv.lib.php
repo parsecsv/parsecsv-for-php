@@ -730,9 +730,6 @@ class parseCSV {
 
             $this->sort_reverse ? krsort($rows, $sort_type) : ksort($rows, $sort_type);
 
-            // Avoid issues with mixing string and integer keys:
-            $rows = array_values($rows);
-
             if ($this->offset !== null || $this->limit !== null) {
                 $rows = array_slice($rows, ($this->offset === null ? 0 : $this->offset), $this->limit, true);
             }

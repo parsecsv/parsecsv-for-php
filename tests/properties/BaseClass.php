@@ -26,6 +26,6 @@ class BaseClass extends PHPUnit\Framework\TestCase {
         $actual = array_map(function ($row) {
             return $row['title'];
         }, $this->csv->data);
-        $this->assertEquals($expected, $actual);
+        $this->assertEquals($expected, array_values($actual));
     }
 }
