@@ -547,7 +547,7 @@ class parseCSV {
      *
      * @return array|bool
      */
-    public function parse_file($file = null) {
+    protected function parse_file($file = null) {
         if (is_null($file)) {
             $file = $this->file;
         }
@@ -570,7 +570,7 @@ class parseCSV {
      *
      * @return array|false - 2D array with CSV data, or false on failure
      */
-    public function parse_string($data = null) {
+    protected function parse_string($data = null) {
         if (empty($data)) {
             if ($this->_check_data()) {
                 $data = &$this->file_data;
@@ -805,7 +805,7 @@ class parseCSV {
      *
      * @return  true or false
      */
-    public function load_data($input = null) {
+    protected function load_data($input = null) {
         $data = null;
         $file = null;
 
