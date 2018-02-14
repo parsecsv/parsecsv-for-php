@@ -32,7 +32,7 @@ trait Parse {
      *
      * @return array|false - 2D array with CSV data, or false on failure
      */
-    protected function parse_string($data = null) {
+    public function parse_string($data = null) {
         if (empty($data)) {
             if ($this->_check_data()) {
                 $data = &$this->file_data;
