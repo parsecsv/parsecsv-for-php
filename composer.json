@@ -14,7 +14,8 @@
     ],
     "autoload": {
         "classmap": [
-            "."
+            ".",
+            "./extensions"
         ]
     },
     "require-dev": {
