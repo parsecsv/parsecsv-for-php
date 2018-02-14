@@ -322,10 +322,10 @@ class parseCSV {
      */
     public $data = array();
 
-    use Encoding;
-    use Separator;
-    use Parse;
-    use Write;
+    use EncodingTrait;
+    use SeparatorTrait;
+    use ParseTrait;
+    use WriteTrait;
 
     /**
      * Constructor

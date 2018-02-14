@@ -1,6 +1,6 @@
 <?php
 
-trait Write {
+trait WriteTrait {
     /**
      * Write to local file
      *

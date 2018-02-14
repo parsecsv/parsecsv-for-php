@@ -1,6 +1,6 @@
 <?php
 
-trait Parse {
+trait ParseTrait {
     /**
      * Parse File
      * Read file to string and call parse_string()

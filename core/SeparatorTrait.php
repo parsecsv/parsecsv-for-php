@@ -1,6 +1,6 @@
 <?php
 
-trait Separator {
+trait SeparatorTrait {
     /**
      * Detect separator using a nonstandard hack: such file starts with the
      * first line containing only "sep=;", where the last character is the
