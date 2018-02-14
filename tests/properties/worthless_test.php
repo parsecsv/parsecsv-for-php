@@ -107,7 +107,8 @@ class worthless_properties_Test extends PHPUnit\Framework\TestCase {
             'error',
             'error_info',
             'titles',
-            'data'
+            'data',
+            'data_types',
         );
 
         // Find our real properties
@@ -129,7 +130,8 @@ class worthless_properties_Test extends PHPUnit\Framework\TestCase {
     public function test_count_public_properties() {
         $counter = 0;
 
-        for ($a = 0; $a < count($this->properties); $a++) {
+        $propertiesCount = count($this->properties);
+        for ($a = 0; $a < $propertiesCount; $a++) {
             if ($this->properties[$a]->isPublic() === true) {
                 $counter++;
             }
