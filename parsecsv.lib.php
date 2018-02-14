@@ -322,7 +322,7 @@ class parseCSV {
      */
     public $data = array();
 
-    use Datatype;
+    use DatatypeTrait;
 
     /**
      * Constructor
@@ -469,8 +469,8 @@ class parseCSV {
      * Encoding
      * Convert character encoding
      *
-     * @param  [string] $input  Input character encoding, uses default if left blank
-     * @param  [string] $output Output character encoding, uses default if left blank
+     * @param  string $input  Input character encoding, uses default if left blank
+     * @param  string $output Output character encoding, uses default if left blank
      */
     public function encoding($input = null, $output = null) {
         $this->convert_encoding = true;

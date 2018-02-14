@@ -1,6 +1,6 @@
 <?php
 
-trait Datatype {
+trait DatatypeTrait {
 
     /**
      * Datatypes
@@ -53,14 +53,12 @@ trait Datatype {
      *
      * @access private
      *
-     * @param  [array] $datatypes
+     * @param  array $datatypes
      *
-     * @return [string|false]
+     * @return string|false
      */
     private function getMostFrequentDataypeForColumn($datatypes) {
-        if (isset($datatypes['unknown'])) {
-            unset($datatypes['unknown']);
-        }
+        unset($datatypes['unknown']);
 
         $typesFreq = array_count_values($datatypes);
         arsort($typesFreq);
@@ -76,7 +74,7 @@ trait Datatype {
      *
      * @access public
      *
-     * @return [array|bool]
+     * @return array|bool
      */
     public function getDatatypes() {
         if (empty($this->data)) {
@@ -93,6 +91,6 @@ trait Datatype {
 
         $this->data_types = $result;
 
-        return !empty($this->data_types) ? $this->data_types : FALSE;
+        return !empty($this->data_types) ? $this->data_types : false;
     }
 }
