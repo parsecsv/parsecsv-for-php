@@ -13,42 +13,6 @@ trait DatatypeTrait {
     public $data_types = [];
 
     /**
-     * Check data type
-     * Check for possible data types for one field value string.
-     *
-     * @access private
-     *
-     * @param string $value cell value
-     *
-     * @return string
-     */
-    private function getDatatypeFromString($value) {
-        $value = trim((string) $value);
-
-        if (empty($value)) {
-            return 'unknown';
-        }
-
-        if (preg_match('/^(?i:true|false)$/', $value)) {
-            return 'boolean';
-        }
-
-        if (preg_match('/^[-+]?[0-9]\d*$/', $value)) {
-            return 'integer';
-        }
-
-        if (preg_match('/^[+-]?([0-9]*[.])?([0-9]|[.][0-9])+$/', $value)) {
-            return 'float';
-        }
-
-        if ((bool) strtotime($value)) {
-            return 'date';
-        }
-
-        return 'string';
-    }
-
-    /**
      * Check data type for one column.
      * Check for most commonly data type for one column.
      *
@@ -59,7 +23,7 @@ trait DatatypeTrait {
      * @return string|false
      */
     private function getMostFrequentDataypeForColumn($datatypes) {
-        unset($datatypes['unknown']);
+        array_filter($datatypes);
 
         $typesFreq = array_count_values($datatypes);
         arsort($typesFreq);
@@ -85,13 +49,14 @@ trait DatatypeTrait {
         $result = [];
         foreach ($this->titles as $cName) {
             $column = array_column($this->data, $cName);
-            $cDatatypes = array_map([$this, 'getDatatypeFromString'], $column);
+
+            $cDatatypes = array_map('CSV\enums\DatatypeEnum::getValidTypeFromSample', $column);
 
             $result[$cName] = $this->getMostFrequentDataypeForColumn($cDatatypes);
         }
 
         $this->data_types = $result;
 
-        return !empty($this->data_types) ? $this->data_types : false;
+        return !empty($this->data_types) ? $this->data_types : [];
     }
 }
