@@ -128,6 +128,24 @@ class ParseTest extends PHPUnit\Framework\TestCase {
         ], $aCity);
     }
 
+    /**
+     * @depends testSepRowAutoDetection
+     */
+    public function testGetColumnDatatypes() {
+        $this->csv->auto('tests/methods/fixtures/datatype.csv');
+        $this->csv->getDatatypes();
+        $expected = [
+            'title' => 'string',
+            'isbn' => 'string',
+            'publishedAt' => 'date',
+            'published' => 'boolean',
+            'count' => 'integer',
+            'price' => 'float'
+        ];
+
+        $this->assertEquals($expected, $this->csv->data_types);
+    }
+
     protected function _get_magazines_data() {
         return [
             [
