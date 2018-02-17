@@ -39,9 +39,26 @@ class ParseTest extends PHPUnit\Framework\TestCase {
         $this->assertEquals($expected_data, $row);
     }
 
-    public function test_sep_row_auto_detection_UTF8_no_BOM() {
-        $this->_autoparse_magazine_file(
-            __DIR__ . '/../example_files/UTF-8_sep_row_but_no_BOM.csv');
+    /**
+     * @depends test_parse
+     *
+     * @dataProvider autoDetectionProvider
+     */
+    public function testSepRowAutoDetection($file) {
+        // This file (parse_test.php) is encoded in UTF-8, hence comparison will
+        // fail unless we to this:
+        $this->csv->output_encoding = 'UTF-8';
+
+        $this->csv->auto($file);
+        $this->assertEquals($this->_get_magazines_data(), $this->csv->data);
+    }
+
+    public function autoDetectionProvider(){
+        return [
+            'UTF8_no_BOM' => [__DIR__ . '/../example_files/UTF-8_sep_row_but_no_BOM.csv'],
+            'UTF8' => [__DIR__ . '/../example_files/UTF-8_with_BOM_and_sep_row.csv'],
+            'UTF16' => [__DIR__ . '/../example_files/UTF-16LE_with_BOM_and_sep_row.csv'],
+        ];
     }
 
     public function testSingleColumnWithZeros() {
@@ -75,25 +92,6 @@ class ParseTest extends PHPUnit\Framework\TestCase {
             'b',
             "c\r\nd",
         ], array_map('next', $actual_data));
-    }
-
-    public function test_sep_row_auto_detection_UTF8() {
-        $this->_autoparse_magazine_file(
-            __DIR__ . '/../example_files/UTF-8_with_BOM_and_sep_row.csv');
-    }
-
-    public function test_sep_row_auto_detection_UTF16() {
-        $this->_autoparse_magazine_file(
-            __DIR__ . '/../example_files/UTF-16LE_with_BOM_and_sep_row.csv');
-    }
-
-    protected function _autoparse_magazine_file($file) {
-        // This file (parse_test.php) is encoded in UTF-8, hence comparison will
-        // fail unless we to this:
-        $this->csv->output_encoding = 'UTF-8';
-
-        $this->csv->auto($file);
-        $this->assertEquals($this->_get_magazines_data(), $this->csv->data);
     }
 
     public function test_single_column() {
@@ -151,13 +149,15 @@ class ParseTest extends PHPUnit\Framework\TestCase {
     }
 
     public function autoQuotesDataProvider() {
-        return array(
-            array('tests/methods/fixtures/auto-double-enclosure.csv', '"'),
-            array('tests/methods/fixtures/auto-single-enclosure.csv', "'"),
-        );
+        return [
+            'double-enclosure' => ['tests/methods/fixtures/auto-double-enclosure.csv', '"'],
+            'single-enclosure' => ['tests/methods/fixtures/auto-single-enclosure.csv', "'"],
+        ];
     }
 
     /**
+     * @depends testSepRowAutoDetection
+     *
      * @dataProvider autoQuotesDataProvider
      *
      * @param string $file
