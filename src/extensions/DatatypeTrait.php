@@ -1,4 +1,5 @@
 <?php
+namespace CSV\extensions;
 
 trait DatatypeTrait {
 

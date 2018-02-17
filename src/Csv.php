@@ -1,6 +1,9 @@
 <?php
+namespace CSV;
 
-class parseCSV {
+use CSV\extensions\DatatypeTrait;
+
+class Csv {
 
     /*
     Class: parseCSV v0.4.3 beta

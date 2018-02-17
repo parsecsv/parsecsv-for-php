@@ -12,11 +12,12 @@
             "email": "will.knauss@gmail.com"
         }
     ],
-    "autoload": {
-        "classmap": [
-            ".",
-            "./extensions"
-        ]
+    "autoload":{
+        "psr-4":{
+            "CSV\\": "src",
+            "CSV\\extensions\\": "src\\extensions",
+            "CSV\\tests\\": "tests"
+        }
     },
     "require-dev": {
         "phpunit/phpunit": "4.1.*"
