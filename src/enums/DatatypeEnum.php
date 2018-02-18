@@ -1,10 +1,10 @@
 <?php
-namespace CSV\enums;
+namespace ParseCsv\enums;
 
 /**
  * Class DatatypeEnum
  *
- * @package CSV\enums
+ * @package ParseCsv\enums
  */
 class DatatypeEnum extends SplEnum {
 
