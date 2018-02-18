@@ -74,11 +74,16 @@ trait DatatypeTrait {
      *
      * @access public
      *
+     * @uses getDatatypeFromString
+     *
      * @return array|bool
      */
     public function getDatatypes() {
         if (empty($this->data)) {
             $this->data = $this->parse_string();
+        }
+        if (!is_array($this->data)) {
+            throw new \Exception('No data set yet.');
         }
 
         $result = [];
