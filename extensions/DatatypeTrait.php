@@ -36,7 +36,7 @@ trait DatatypeTrait {
             return 'integer';
         }
 
-        if (preg_match('/^[+-]?([0-9]*[.])?([0-9]|[.][0-9])+$/', $value)) {
+        if (preg_match('/(^[+-]?$)|(^[+-]?[0-9]+([,.][0-9])?[0-9]*(e[+-]?[0-9]+)?$)/', $value)) {
             return 'float';
         }
 
