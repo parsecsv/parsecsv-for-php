@@ -137,7 +137,7 @@ class ParseTest extends TestCase
      * @depends testSepRowAutoDetection
      */
     public function testGetColumnDatatypes() {
-        $this->csv->auto('tests/methods/fixtures/datatype.csv');
+        $this->csv->auto(__DIR__ . '/fixtures/datatype.csv');
         $this->csv->getDatatypes();
         $expected = [
             'title' => 'string',

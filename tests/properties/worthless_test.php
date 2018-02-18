@@ -70,7 +70,7 @@ class DefaultValuesTest extends TestCase {
      * @access public
      */
     public function test_propertiesCount() {
-        $this->assertCount(28, $this->properties);
+        $this->assertCount(29, $this->properties);
     }
 
     /**
