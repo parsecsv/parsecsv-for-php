@@ -1,7 +1,7 @@
 <?php
-namespace CSV\tests\methods;
+namespace ParseCsv\tests\methods;
 
-use CSV\Csv;
+use ParseCsv\Csv;
 use PHPUnit_Framework_TestCase as TestCase;
 
 class ParseTest extends TestCase

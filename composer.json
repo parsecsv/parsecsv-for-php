@@ -14,9 +14,9 @@
     ],
     "autoload":{
         "psr-4":{
-            "CSV\\": "src",
-            "CSV\\extensions\\": "src\\extensions",
-            "CSV\\tests\\": "tests"
+            "ParseCsv\\": "src",
+            "ParseCsv\\extensions\\": "src\\extensions",
+            "ParseCsv\\tests\\": "tests"
         }
     },
     "require-dev": {

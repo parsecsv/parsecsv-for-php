@@ -1,7 +1,7 @@
 <?php
-namespace CSV;
+namespace ParseCsv;
 
-use CSV\extensions\DatatypeTrait;
+use ParseCsv\extensions\DatatypeTrait;
 
 class Csv {
 
