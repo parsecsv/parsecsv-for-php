@@ -1,6 +1,10 @@
 <?php
+namespace ParseCsv\tests\properties;
 
-class worthless_properties_Test extends PHPUnit\Framework\TestCase {
+use ParseCsv\Csv;
+use PHPUnit_Framework_TestCase as TestCase;
+
+class DefaultValuesTest extends TestCase {
 
     /**
      * CSV
@@ -36,7 +40,7 @@ class worthless_properties_Test extends PHPUnit\Framework\TestCase {
      */
     public function setUp() {
         //setup parse CSV
-        $this->csv = new parseCSV();
+        $this->csv = new Csv();
 
         //setup the reflection class
         $this->reflection = new ReflectionClass($this->csv);

@@ -1,5 +1,5 @@
 <?php
-namespace CSV\extensions;
+namespace ParseCsv\extensions;
 
 trait DatatypeTrait {
 
