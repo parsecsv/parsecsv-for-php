@@ -11,7 +11,7 @@ class DefaultValuesTest extends TestCase {
      * The parseCSV object
      *
      * @access protected
-     * @var [parseCSV]
+     * @var Csv
      */
     protected $csv = null;
 
@@ -20,7 +20,7 @@ class DefaultValuesTest extends TestCase {
      * The reflection class object
      *
      * @access protected
-     * @var [ReflectionClass]
+     * @var \ReflectionClass
      */
     protected $reflection = null;
 
@@ -28,6 +28,7 @@ class DefaultValuesTest extends TestCase {
      * Reflection Properties
      * The reflected class properties
      *
+     * @var \ReflectionProperty[]
      * @access protected
      */
     protected $properties = null;
@@ -43,7 +44,7 @@ class DefaultValuesTest extends TestCase {
         $this->csv = new Csv();
 
         //setup the reflection class
-        $this->reflection = new ReflectionClass($this->csv);
+        $this->reflection = new \ReflectionClass($this->csv);
 
         //setup the reflected class properties
         $this->properties = $this->reflection->getProperties();
@@ -116,7 +117,7 @@ class DefaultValuesTest extends TestCase {
         );
 
         // Find our real properties
-        $real_properties = array_map(function (ReflectionProperty $property) {
+        $real_properties = array_map(function (\ReflectionProperty $property) {
             return $property->getName();
         }, $this->properties);
 
