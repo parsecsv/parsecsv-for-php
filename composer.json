@@ -14,7 +14,8 @@
     ],
     "autoload": {
         "classmap": [
-            "."
+            ".",
+            "./core"
         ]
     },
     "require-dev": {
