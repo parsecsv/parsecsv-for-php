@@ -23,11 +23,7 @@ trait DatatypeTrait {
      * @return string|false
      */
     private function getMostFrequentDataypeForColumn($datatypes) {
-        array_filter($datatypes);
-
-        foreach ($datatypes as $value) {
-            echo gettype($value), "\n";
-        }
+        array_filter($datatypes);     
 
         // workaround because array_count_values($datatypes) does not work anymore :-(
         foreach ($datatypes as $type) {
