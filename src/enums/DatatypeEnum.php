@@ -23,7 +23,7 @@ class DatatypeEnum
 
     const TYPE_DATE = 'date';
 
-    const REGEX_FLOAT = '/^[+-]?([0-9]*[.,])?([0-9]|[.,][0-9])+$/';
+    const REGEX_FLOAT = '/(^[+-]?$)|(^[+-]?[0-9]+([,.][0-9])?[0-9]*(e[+-]?[0-9]+)?$)/';
 
     const REGEX_INT = '/^[-+]?[0-9]\d*$/';
 
