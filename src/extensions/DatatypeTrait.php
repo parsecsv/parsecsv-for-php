@@ -25,7 +25,17 @@ trait DatatypeTrait {
     private function getMostFrequentDataypeForColumn($datatypes) {
         array_filter($datatypes);
 
-        $typesFreq = array_count_values($datatypes);
+        foreach ($datatypes as $value) {
+            echo gettype($value), "\n";
+        }
+
+        // workaround because array_count_values($datatypes) does not work anymore :-(
+        foreach ($datatypes as $type) {
+            $ids = array_keys($datatypes, $type);
+            $typesFreq[$type] = count($ids);
+
+            $datatypes = array_diff_key($datatypes, array_flip($ids));
+        }
         arsort($typesFreq);
         reset($typesFreq);
 
@@ -50,7 +60,7 @@ trait DatatypeTrait {
         foreach ($this->titles as $cName) {
             $column = array_column($this->data, $cName);
 
-            $cDatatypes = array_map('CSV\enums\DatatypeEnum::getValidTypeFromSample', $column);
+            $cDatatypes = array_map('ParseCsv\enums\DatatypeEnum::getValidTypeFromSample', $column);
 
             $result[$cName] = $this->getMostFrequentDataypeForColumn($cDatatypes);
         }

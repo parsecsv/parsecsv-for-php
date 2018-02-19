@@ -5,8 +5,11 @@ namespace ParseCsv\enums;
  * Class DatatypeEnum
  *
  * @package ParseCsv\enums
+ *
+ * todo: needs a basic parent enum class for error handling.
  */
-class DatatypeEnum extends SplEnum {
+class DatatypeEnum
+{
 
     const __DEFAULT = self::TYPE_STRING;
 
@@ -33,16 +36,16 @@ class DatatypeEnum extends SplEnum {
      */
     private static $validators = array(
         self::TYPE_STRING => null,
-        self::TYPE_FLOAT => 'isValidFloat',
         self::TYPE_INT => 'isValidInteger',
         self::TYPE_BOOL => 'isValidBoolean',
+        self::TYPE_FLOAT => 'isValidFloat',
         self::TYPE_DATE => 'isValidDate'
     );
 
     /**
      * Checks data type for given string.
      *
-     * @param $value
+     * @param string $value
      *
      * @return bool|string
      */
@@ -58,9 +61,10 @@ class DatatypeEnum extends SplEnum {
                 continue;
             }
 
-            if (method_exists(self, $validator)){
-                call_user_func($validator($value));
-                return $type;
+            if (method_exists(__CLASS__, $validator)){
+                if (get_class()::$validator($value)) {
+                    return $type;
+                }
             }
 
             return self::__DEFAULT;
@@ -70,42 +74,42 @@ class DatatypeEnum extends SplEnum {
     /**
      * Check if string is float value.
      *
-     * @param $value
+     * @param string $value
      *
-     * @return false|int
+     * @return bool
      */
     private static function isValidFloat($value) {
-        return preg_match(self::REGEX_FLOAT, $value);
+        return (bool) preg_match(self::REGEX_FLOAT, $value);
     }
 
     /**
      * Check if string is integer value.
      *
-     * @param $value
+     * @param string $value
      *
-     * @return false|int
+     * @return bool
      */
     private static function isValidInteger($value) {
-        return preg_match(self::REGEX_INT, $value);
+        return (bool) preg_match(self::REGEX_INT, $value);
     }
 
     /**
      * Check if string is boolean.
      *
-     * @param $value
+     * @param string $value
      *
-     * @return false|int
+     * @return bool
      */
     private static function isValidBoolean($value) {
-        return preg_match(self::REGEX_BOOL, $value);
+        return (bool) preg_match(self::REGEX_BOOL, $value);
     }
 
     /**
      * Check if string is date.
      *
-     * @param $value
+     * @param string $value
      *
-     * @return false|int
+     * @return bool
      */
     private static function isValidDate($value) {
         return (bool) strtotime($value);
