@@ -66,9 +66,9 @@ class DatatypeEnum
                     return $type;
                 }
             }
-
-            return self::__DEFAULT;
         }
+
+        return self::__DEFAULT;
     }
 
     /**
