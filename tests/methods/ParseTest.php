@@ -1,13 +1,18 @@
 <?php
+namespace ParseCsv\tests\methods;
 
-class ParseTest extends PHPUnit\Framework\TestCase {
+use ParseCsv\Csv;
+use PHPUnit_Framework_TestCase as TestCase;
+
+class ParseTest extends TestCase
+{
 
     /**
      * CSV
-     * The parseCSV object
+     * The CSV object
      *
      * @access protected
-     * @var parseCSV
+     * @var Csv
      */
     protected $csv;
 
@@ -18,7 +23,7 @@ class ParseTest extends PHPUnit\Framework\TestCase {
      * @access public
      */
     public function setUp() {
-        $this->csv = new parseCSV();
+        $this->csv = new Csv();
     }
 
     public function test_parse() {
@@ -132,7 +137,7 @@ class ParseTest extends PHPUnit\Framework\TestCase {
      * @depends testSepRowAutoDetection
      */
     public function testGetColumnDatatypes() {
-        $this->csv->auto('tests/methods/fixtures/datatype.csv');
+        $this->csv->auto(__DIR__ . '/fixtures/datatype.csv');
         $this->csv->getDatatypes();
         $expected = [
             'title' => 'string',
@@ -182,7 +187,7 @@ class ParseTest extends PHPUnit\Framework\TestCase {
      * @param string $enclosure
      */
     public function testAutoQuotes($file, $enclosure) {
-        $csv = new parseCSV();
+        $csv = new Csv();
         $csv->auto($file, true, null, null, $enclosure);
         $this->assertArrayHasKey('column1', $csv->data[0], 'Data parsed incorrectly with enclosure ' . $enclosure);
         $this->assertEquals('value1', $csv->data[0]['column1'], 'Data parsed incorrectly with enclosure ' . $enclosure);

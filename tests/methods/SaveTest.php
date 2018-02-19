@@ -1,8 +1,13 @@
 <?php
+namespace ParseCsv\tests\methods;
 
-class SaveTest extends PHPUnit\Framework\TestCase {
+use ParseCsv\Csv;
+use PHPUnit_Framework_TestCase as TestCase;
 
-    /** @var parseCSV */
+class SaveTest extends TestCase
+{
+
+    /** @var Csv */
     private $csv;
 
     private $temp_filename;
@@ -11,7 +16,7 @@ class SaveTest extends PHPUnit\Framework\TestCase {
      * Setup our test environment objects; will be called before each test.
      */
     public function setUp() {
-        $this->csv = new parseCSV();
+        $this->csv = new Csv();
         $this->csv->auto(__DIR__ . '/../example_files/single_column.csv');
 
         // Remove last 2 lines to simplify comparison

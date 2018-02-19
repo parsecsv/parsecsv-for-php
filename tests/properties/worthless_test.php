@@ -1,13 +1,17 @@
 <?php
+namespace ParseCsv\tests\properties;
 
-class worthless_properties_Test extends PHPUnit\Framework\TestCase {
+use ParseCsv\Csv;
+use PHPUnit_Framework_TestCase as TestCase;
+
+class DefaultValuesTest extends TestCase {
 
     /**
      * CSV
      * The parseCSV object
      *
      * @access protected
-     * @var [parseCSV]
+     * @var Csv
      */
     protected $csv = null;
 
@@ -16,7 +20,7 @@ class worthless_properties_Test extends PHPUnit\Framework\TestCase {
      * The reflection class object
      *
      * @access protected
-     * @var [ReflectionClass]
+     * @var \ReflectionClass
      */
     protected $reflection = null;
 
@@ -24,6 +28,7 @@ class worthless_properties_Test extends PHPUnit\Framework\TestCase {
      * Reflection Properties
      * The reflected class properties
      *
+     * @var \ReflectionProperty[]
      * @access protected
      */
     protected $properties = null;
@@ -36,10 +41,10 @@ class worthless_properties_Test extends PHPUnit\Framework\TestCase {
      */
     public function setUp() {
         //setup parse CSV
-        $this->csv = new parseCSV();
+        $this->csv = new Csv();
 
         //setup the reflection class
-        $this->reflection = new ReflectionClass($this->csv);
+        $this->reflection = new \ReflectionClass($this->csv);
 
         //setup the reflected class properties
         $this->properties = $this->reflection->getProperties();
@@ -65,7 +70,7 @@ class worthless_properties_Test extends PHPUnit\Framework\TestCase {
      * @access public
      */
     public function test_propertiesCount() {
-        $this->assertCount(28, $this->properties);
+        $this->assertCount(29, $this->properties);
     }
 
     /**
@@ -112,7 +117,7 @@ class worthless_properties_Test extends PHPUnit\Framework\TestCase {
         );
 
         // Find our real properties
-        $real_properties = array_map(function (ReflectionProperty $property) {
+        $real_properties = array_map(function (\ReflectionProperty $property) {
             return $property->getName();
         }, $this->properties);
 
