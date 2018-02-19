@@ -1,5 +1,10 @@
 <?php
-require './vendor/autoload.php';
+chdir(__DIR__ . '/..');
+if (!file_exists('vendor/autoload.php')) {
+    `composer dump-autoload`;
+}
+
+require __DIR__ . '/../vendor/autoload.php';
 
 if (!class_exists('PHPUnit\Framework\TestCase')) {
     // we run on an older PHPUnit version without namespaces.
