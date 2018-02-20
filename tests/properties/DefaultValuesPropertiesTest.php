@@ -1,10 +1,11 @@
 <?php
+
 namespace ParseCsv\tests\properties;
 
 use ParseCsv\Csv;
-use PHPUnit_Framework_TestCase as TestCase;
+use PHPUnit\Framework\TestCase;
 
-class default_values_properties_Test extends TestCase {
+class DefaultValuesPropertiesTest extends TestCase {
 
     /**
      * CSV

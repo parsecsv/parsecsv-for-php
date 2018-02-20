@@ -9,6 +9,7 @@ php:
   - 5.4
 
 script:
+  - phpunit --version
   - phpunit --configuration tests/phpunit.xml
 
 notifications:
