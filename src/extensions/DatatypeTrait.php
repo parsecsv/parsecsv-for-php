@@ -1,4 +1,5 @@
 <?php
+
 namespace ParseCsv\extensions;
 
 trait DatatypeTrait {
@@ -22,8 +23,8 @@ trait DatatypeTrait {
      *
      * @return string|false
      */
-    private function getMostFrequentDataypeForColumn($datatypes) {
         array_filter($datatypes);
+    private function getMostFrequentDatatypeForColumn($datatypes) {
 
         if (empty($datatypes)){
             return false;
@@ -64,10 +65,9 @@ trait DatatypeTrait {
         $result = [];
         foreach ($this->titles as $cName) {
             $column = array_column($this->data, $cName);
-
             $cDatatypes = array_map('ParseCsv\enums\DatatypeEnum::getValidTypeFromSample', $column);
 
-            $result[$cName] = $this->getMostFrequentDataypeForColumn($cDatatypes);
+            $result[$cName] = $this->getMostFrequentDatatypeForColumn($cDatatypes);
         }
 
         $this->data_types = $result;
