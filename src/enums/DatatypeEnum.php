@@ -33,6 +33,11 @@ class DatatypeEnum {
      * Define validator functions here.
      *
      * @var array
+     *
+     * @uses isValidFloat
+     * @uses isValidInteger
+     * @uses isValidBoolean
+     * @uses isValidDate
      */
     private static $validators = array(
         self::TYPE_STRING => null,
@@ -61,10 +66,8 @@ class DatatypeEnum {
                 continue;
             }
 
-            if (method_exists(__CLASS__, $validator)){
-                if (get_class()::$validator($value)) {
-                    return $type;
-                }
+            if (method_exists(__CLASS__, $validator) && self::$validator($value)) {
+                return $type;
             }
         }
 
