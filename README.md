@@ -1,11 +1,11 @@
-# parseCSV
+# ParseCsv
 
-parseCSV is an easy to use PHP class that reads and writes CSV data properly. It
+ParseCsv is an easy to use PHP class that reads and writes CSV data properly. It
 fully conforms to the specifications outlined on the on the
 [Wikipedia article][CSV] (and thus RFC 4180). It has many advanced features which help make your
 life easier when dealing with CSV data.
 
-You may not need a library at all: before using parseCSV, please make sure if PHP's own `str_getcsv()`, ``fgetcvs()`` or `fputcsv()` meets your needs.
+You may not need a library at all: before using ParseCsv, please make sure if PHP's own `str_getcsv()`, ``fgetcvs()`` or `fputcsv()` meets your needs.
 
 This library was originally created in early 2007 by [jimeh](https://github.com/jimeh) due to the lack of built-in
 and third-party support for handling CSV data in PHP.
@@ -25,8 +25,7 @@ require_once 'parsecsv.lib.php';
 
 ## Features
 
-* parseCSV is the only complete and fully featured CSV solution for PHP (as
-  far as I know).
+* ParseCsv is a complete and fully featured CSV solution for PHP
 * Supports enclosed values, enclosed commas, double quotes and new lines.
 * Automatic delimiter character detection.
 * Sort data by specific fields/columns.
@@ -46,14 +45,14 @@ require_once 'parsecsv.lib.php';
 **General**
 
 ```php
-$csv = new parseCSV('data.csv');
+$csv = new ParseCsv\Csv('data.csv');
 print_r($csv->data);
 ```
 
 **Tab delimited, and encoding conversion**
 
 ```php
-$csv = new parseCSV();
+$csv = new ParseCsv\Csv();
 $csv->encoding('UTF-16', 'UTF-8');
 $csv->delimiter = "\t";
 $csv->parse('data.tsv');
@@ -63,7 +62,7 @@ print_r($csv->data);
 **Auto-detect delimiter character**
 
 ```php
-$csv = new parseCSV();
+$csv = new ParseCsv\Csv();
 $csv->auto('data.csv');
 print_r($csv->data);
 ```
@@ -71,7 +70,7 @@ print_r($csv->data);
 **Modify data in a CSV file**
 
 ```php
-$csv = new parseCSV();
+$csv = new ParseCsv\Csv();
 $csv->sort_by = 'id';
 $csv->parse('data.csv');
 # "4" is the value of the "id" column of the CSV row
@@ -82,7 +81,7 @@ $csv->save();
 **Replace field names or set ones if missing**
 
 ```php
-$csv = new parseCSV();
+$csv = new ParseCsv\Csv();
 $csv->fields = ['id', 'name', 'category']
 $csv->parse('data.csv');
 ```
@@ -92,7 +91,7 @@ $csv->parse('data.csv');
 _Only recommended when you know the exact structure of the file._
 
 ```php
-$csv = new parseCSV();
+$csv = new ParseCsv\Csv();
 $csv->save('data.csv', array(array('1986', 'Home', 'Nowhere', '')), true);
 ```
 
@@ -100,7 +99,7 @@ $csv->save('data.csv', array(array('1986', 'Home', 'Nowhere', '')), true);
 a file and download it**
 
 ```php
-$csv = new parseCSV();
+$csv = new ParseCsv\Csv();
 $csv->output('movies.csv', $array, array('field 1', 'field 2'), ',');
 ```
 
@@ -108,7 +107,7 @@ For more complex examples, see the ``tests`` and `examples` directories.
 
 ## Credits
 
-* parseCSV is based on the concept of [Ming Hong Ng][ming]'s [CsvFileParser][]
+* ParseCsv is based on the concept of [Ming Hong Ng][ming]'s [CsvFileParser][]
   class.
 
 [ming]: http://minghong.blogspot.com/
