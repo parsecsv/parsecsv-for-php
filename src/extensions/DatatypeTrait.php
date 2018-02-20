@@ -43,6 +43,8 @@ trait DatatypeTrait {
      * Check data type foreach Column
      * Check data type for each column and returns the most commonly.
      *
+     * Requires PHP >= 5.5
+     *
      * @access public
      *
      * @uses   getDatatypeFromString
