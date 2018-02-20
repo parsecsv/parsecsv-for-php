@@ -1,4 +1,5 @@
 <?php
+
 namespace ParseCsv\enums;
 
 /**
@@ -8,8 +9,7 @@ namespace ParseCsv\enums;
  *
  * todo: needs a basic parent enum class for error handling.
  */
-class DatatypeEnum
-{
+class DatatypeEnum {
 
     const __DEFAULT = self::TYPE_STRING;
 
@@ -39,7 +39,7 @@ class DatatypeEnum
         self::TYPE_INT => 'isValidInteger',
         self::TYPE_BOOL => 'isValidBoolean',
         self::TYPE_FLOAT => 'isValidFloat',
-        self::TYPE_DATE => 'isValidDate'
+        self::TYPE_DATE => 'isValidDate',
     );
 
     /**
@@ -49,15 +49,15 @@ class DatatypeEnum
      *
      * @return bool|string
      */
-    public static function getValidTypeFromSample($value){
+    public static function getValidTypeFromSample($value) {
         $value = trim((string) $value);
 
-        if (empty($value)){
+        if (empty($value)) {
             return false;
         }
 
-        foreach (self::$validators as $type => $validator){
-            if ($validator === null){
+        foreach (self::$validators as $type => $validator) {
+            if ($validator === null) {
                 continue;
             }
 
