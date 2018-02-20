@@ -45,7 +45,7 @@ trait DatatypeTrait {
      *
      * @access public
      *
-     * @uses getDatatypeFromString
+     * @uses   getDatatypeFromString
      *
      * @return array|bool
      */
@@ -54,7 +54,7 @@ trait DatatypeTrait {
             $this->data = $this->parse_string();
         }
         if (!is_array($this->data)) {
-            throw new \Exception('No data set yet.');
+            throw new \UnexpectedValueException('No data set yet.');
         }
 
         $result = [];
