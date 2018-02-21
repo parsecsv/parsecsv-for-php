@@ -1,5 +1,7 @@
 <?php
 
+namespace ParseCsv\tests\properties;
+
 class SortByTest extends BaseClass {
 
     public function testSortByRating() {

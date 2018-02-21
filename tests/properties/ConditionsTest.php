@@ -1,5 +1,7 @@
 <?php
 
+namespace ParseCsv\tests\properties;
+
 class ConditionsTest extends BaseClass {
 
     public function testNotDanBrown() {
