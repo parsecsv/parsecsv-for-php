@@ -25,13 +25,13 @@ trait DatatypeTrait {
      */
     private function getMostFrequentDatatypeForColumn($datatypes) {
         // remove 'false' from array (can happen if CSV cell is empty)
-        $types_filtered = array_filter($datatypes);
+        $typesFiltered = array_filter($datatypes);
 
-        if (empty($types_filtered)) {
+        if (empty($typesFiltered)) {
             return false;
         }
 
-        $typesFreq = array_count_values($types_filtered);
+        $typesFreq = array_count_values($typesFiltered);
         arsort($typesFreq);
         reset($typesFreq);
 
