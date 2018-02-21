@@ -1,18 +1,18 @@
 <?php
+
 namespace ParseCsv\tests\methods;
 
 use ParseCsv\Csv;
 use PHPUnit\Framework\TestCase;
 
-class ConstructTest extends TestCase
-{
+class ConstructTest extends TestCase {
 
     /**
      * CSV
      * The Csv object
      *
      * @access protected
-     * @var [Csv]
+     * @var    Csv
      */
     protected $csv = null;
 
@@ -70,5 +70,17 @@ class ConstructTest extends TestCase
         $this->csv = new Csv($csv, null, null, null, true);
         $this->assertTrue(is_string($this->csv->file_data));
         $this->assertEquals($csv, $this->csv->file_data);
+    }
+
+    /**
+     * @runInSeparateProcess because download.php uses header()
+     *
+     * @see                  https://github.com/sebastianbergmann/phpunit/issues/720#issuecomment-10421092
+     */
+    public function testCodeExamples() {
+        foreach (glob('examples/*.php') as $script_file) {
+            /** @noinspection PhpIncludeInspection */
+            require $script_file;
+        }
     }
 }
