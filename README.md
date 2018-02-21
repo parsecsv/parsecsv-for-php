@@ -13,15 +13,25 @@ and third-party support for handling CSV data in PHP.
 [csv]: http://en.wikipedia.org/wiki/Comma-separated_values
 
 ## Installation
-Installation is easy using Composer. Include the following in your composer.json
+
+Installation is easy using Composer. Just run the following on the
+command line:
 ```
-"parsecsv/php-parsecsv": "0.4.5"
+composer require parsecsv/php-parsecsv
 ```
 
-You may also manually include the parsecsv.lib.php file
+If you don't use a framework such as Drupal, Laravel, Symfony, Yii etc.,
+you may have to manually include Composer's autoloader file in your PHP
+script:
 ```php
-require_once 'parsecsv.lib.php';
+require_once __DIR__ . '/vendor/autoload.php';
 ```
+
+#### Without composer
+Not recommended, but technically possible: you can also clone the
+repository or extract the
+[ZIP](https://github.com/parsecsv/parsecsv-for-php/archive/master.zip).
+To use ParseCSV, you then have to add a `require 'parsecsv.lib.php';` line.
 
 ## Features
 
@@ -145,3 +155,5 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+[![Build Status](https://travis-ci.org/parsecsv/parsecsv-for-php.svg?branch=master)](https://travis-ci.org/parsecsv/parsecsv-for-php)
