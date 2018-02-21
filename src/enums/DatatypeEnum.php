@@ -1,4 +1,5 @@
 <?php
+
 namespace ParseCsv\enums;
 
 /**
@@ -8,8 +9,7 @@ namespace ParseCsv\enums;
  *
  * todo: needs a basic parent enum class for error handling.
  */
-class DatatypeEnum
-{
+class DatatypeEnum {
 
     const __DEFAULT = self::TYPE_STRING;
 
@@ -33,13 +33,18 @@ class DatatypeEnum
      * Define validator functions here.
      *
      * @var array
+     *
+     * @uses isValidFloat
+     * @uses isValidInteger
+     * @uses isValidBoolean
+     * @uses isValidDate
      */
     private static $validators = array(
         self::TYPE_STRING => null,
         self::TYPE_INT => 'isValidInteger',
         self::TYPE_BOOL => 'isValidBoolean',
         self::TYPE_FLOAT => 'isValidFloat',
-        self::TYPE_DATE => 'isValidDate'
+        self::TYPE_DATE => 'isValidDate',
     );
 
     /**
@@ -49,22 +54,20 @@ class DatatypeEnum
      *
      * @return bool|string
      */
-    public static function getValidTypeFromSample($value){
+    public static function getValidTypeFromSample($value) {
         $value = trim((string) $value);
 
-        if (empty($value)){
+        if (empty($value)) {
             return false;
         }
 
-        foreach (self::$validators as $type => $validator){
-            if ($validator === null){
+        foreach (self::$validators as $type => $validator) {
+            if ($validator === null) {
                 continue;
             }
 
-            if (method_exists(__CLASS__, $validator)){
-                if (get_class()::$validator($value)) {
-                    return $type;
-                }
+            if (method_exists(__CLASS__, $validator) && self::$validator($value)) {
+                return $type;
             }
         }
 

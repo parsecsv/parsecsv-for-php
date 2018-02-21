@@ -1,4 +1,5 @@
 <?php
+
 namespace ParseCsv\extensions;
 
 trait DatatypeTrait {
@@ -22,20 +23,15 @@ trait DatatypeTrait {
      *
      * @return string|false
      */
-    private function getMostFrequentDataypeForColumn($datatypes) {
-        array_filter($datatypes);
+    private function getMostFrequentDatatypeForColumn($datatypes) {
+        // remove 'false' from array (can happen if CSV cell is empty)
+        $types_filtered = array_filter($datatypes);
 
-        if (empty($datatypes)){
+        if (empty($types_filtered)) {
             return false;
         }
 
-        // workaround because array_count_values($datatypes) does not work anymore :-(
-        foreach ($datatypes as $type) {
-            $ids = array_keys($datatypes, $type);
-            $typesFreq[$type] = count($ids);
-
-            $datatypes = array_diff_key($datatypes, array_flip($ids));
-        }
+        $typesFreq = array_count_values($types_filtered);
         arsort($typesFreq);
         reset($typesFreq);
 
@@ -47,9 +43,11 @@ trait DatatypeTrait {
      * Check data type foreach Column
      * Check data type for each column and returns the most commonly.
      *
+     * Requires PHP >= 5.5
+     *
      * @access public
      *
-     * @uses getDatatypeFromString
+     * @uses   getDatatypeFromString
      *
      * @return array|bool
      */
@@ -58,16 +56,15 @@ trait DatatypeTrait {
             $this->data = $this->parse_string();
         }
         if (!is_array($this->data)) {
-            throw new \Exception('No data set yet.');
+            throw new \UnexpectedValueException('No data set yet.');
         }
 
         $result = [];
         foreach ($this->titles as $cName) {
             $column = array_column($this->data, $cName);
-
             $cDatatypes = array_map('ParseCsv\enums\DatatypeEnum::getValidTypeFromSample', $column);
 
-            $result[$cName] = $this->getMostFrequentDataypeForColumn($cDatatypes);
+            $result[$cName] = $this->getMostFrequentDatatypeForColumn($cDatatypes);
         }
 
         $this->data_types = $result;

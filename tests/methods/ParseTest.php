@@ -137,6 +137,12 @@ class ParseTest extends TestCase
      * @depends testSepRowAutoDetection
      */
     public function testGetColumnDatatypes() {
+        if (!function_exists('array_column')) {
+            // getDatatypes requires array_column, but that
+            // function is only available in PHP >= 5.5
+            return;
+        }
+
         $this->csv->auto(__DIR__ . '/fixtures/datatype.csv');
         $this->csv->getDatatypes();
         $expected = [

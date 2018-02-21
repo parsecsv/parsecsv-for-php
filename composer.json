@@ -19,6 +19,11 @@
             "ParseCsv\\tests\\": "tests"
         }
     },
+    "autoload-dev":{
+        "psr-4":{
+            "ParseCsv\\tests\\": "tests"
+        }
+    },
     "require-dev": {
         "phpunit/phpunit": "4.1.*"
     }
