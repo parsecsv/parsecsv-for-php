@@ -8,11 +8,7 @@ class ParseTest extends TestCase
 {
 
     /**
-     * CSV
-     * The CSV object
-     *
-     * @access protected
-     * @var Csv
+     * @var Csv object
      */
     protected $csv;
 

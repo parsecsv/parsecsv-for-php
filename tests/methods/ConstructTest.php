@@ -8,34 +8,9 @@ use PHPUnit\Framework\TestCase;
 class ConstructTest extends TestCase {
 
     /**
-     * CSV
-     * The Csv object
-     *
-     * @access protected
-     * @var    Csv
+     * @var Csv object
      */
     protected $csv = null;
-
-    /**
-     * Setup
-     * Setup our test environment objects
-     *
-     * @access public
-     */
-    public function setUp() {
-        //setup parse CSV
-        #$this->csv = new Csv();
-    }
-
-    /**
-     * Tear down
-     * Tear down our test environment objects
-     *
-     * @access public
-     */
-    public function tearDown() {
-        $this->csv = null;
-    }
 
     public function test_offset_param() {
         $offset = 10;
