@@ -62,5 +62,6 @@ class ConstructTest extends TestCase {
                 $this->assertContains('<td>', ob_get_clean());
             }
         }
+        chdir('..');
     }
 }
