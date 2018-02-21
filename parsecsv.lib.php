@@ -1,20 +1,17 @@
 <?php
 
-// This file should not be used at all! It purely exists to reduce the
-// maintenance burden for existing code using this repo.
+// This file should not be used at all! Instead, please use Composer's autoload.
+// It purely exists to reduce the maintenance burden for existing code using
+// this repository.
 
 // Check if people used Composer to include this project in theirs
 if (!file_exists(__DIR__ . '/vendor/autoload.php')) {
-    die(
-        "Please run `composer dump-autoload` to build the autoloader.\n\n" .
-        "Actually, you should consider not including/requiring this file \n" .
-        "  " . __FILE__ . "\n" .
-        "Just run `composer require parsecsv/php-parsecsv` and look at the \n" .
-        "'examples' directory of this repository."
-    );
+    require __DIR__ . '/src/extensions/DatatypeTrait.php';
+    require __DIR__ . '/src/Csv.php';
+} else {
+    require __DIR__ . '/vendor/autoload.php';
 }
 
-require __DIR__ . '/vendor/autoload.php';
 
 // This wrapper class should not be used by new projects. Please look at the
 // examples to find the up-to-date way of using this repo.

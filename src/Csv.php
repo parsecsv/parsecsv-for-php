@@ -1,4 +1,5 @@
 <?php
+
 namespace ParseCsv;
 
 use ParseCsv\extensions\DatatypeTrait;
