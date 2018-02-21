@@ -78,9 +78,14 @@ class ConstructTest extends TestCase {
      * @see                  https://github.com/sebastianbergmann/phpunit/issues/720#issuecomment-10421092
      */
     public function testCodeExamples() {
-        foreach (glob('examples/*.php') as $script_file) {
+        chdir('examples');
+        foreach (glob('*.php') as $script_file) {
+            ob_start();
             /** @noinspection PhpIncludeInspection */
             require $script_file;
+            if ($script_file != 'download.php') {
+                $this->assertContains('<td>', ob_get_clean());
+            }
         }
     }
 }
