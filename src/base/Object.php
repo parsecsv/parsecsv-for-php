@@ -15,10 +15,7 @@ class Object {
      */
     public function __construct($config = [])
     {
-        if (!empty($config)) {
-            self::configure($this, $config);
-        }
-        $this->init();
+        $this->init($config);
     }
 
     /**
@@ -26,8 +23,11 @@ class Object {
      * This method is invoked at the end of the constructor after the object is initialized with the
      * given configuration.
      */
-    public function init()
+    public function init($config = [])
     {
+        if (!empty($config)) {
+            self::configure($this, $config);
+        }
     }
 
     /**

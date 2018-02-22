@@ -20,4 +20,28 @@ require __DIR__ . '/vendor/autoload.php';
 // examples to find the up-to-date way of using this repo.
 class parseCSV extends ParseCsv\Csv {
 
+    /**
+     * @inheritdoc
+     */
+    public function __construct($input = null, $offset = null, $limit = null, $conditions = null, $keep_file_data = null) {
+        parent::__construct($input, [
+            'offset' => $offset,
+            'limit' => $limit,
+            'conditions' => $conditions,
+            'keep_file_data' => $keep_file_data,
+        ]);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function parse($input = null, $offset = null, $limit = null, $conditions = null) {
+        $this->init([
+            'offset' => $offset,
+            'limit' => $limit,
+            'conditions' => $conditions,
+        ]);
+
+        return $this->parse($input);
+    }
 }
