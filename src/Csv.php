@@ -1,6 +1,7 @@
 <?php
 namespace ParseCsv;
 
+use ParseCsv\enums\SortEnum;
 use ParseCsv\extensions\DatatypeTrait;
 
 class Csv {
@@ -124,7 +125,7 @@ class Csv {
      *
      * @var string|null
      */
-    public $sort_type = null;
+    public $sort_type = SortEnum::SORT_TYPE_REGULAR;
 
     /**
      * Delimiter
@@ -726,14 +727,7 @@ class Csv {
 
         $this->titles = $head;
         if (!empty($this->sort_by)) {
-            $sort_type = SORT_REGULAR;
-            if ($this->sort_type == 'numeric') {
-                $sort_type = SORT_NUMERIC;
-            } elseif ($this->sort_type == 'string') {
-                $sort_type = SORT_STRING;
-            }
-
-            $this->sort_reverse ? krsort($rows, $sort_type) : ksort($rows, $sort_type);
+            $this->sort_reverse ? krsort($rows, $this->sort_type) : ksort($rows, $this->sort_type);
 
             if ($this->offset !== null || $this->limit !== null) {
                 $rows = array_slice($rows, ($this->offset === null ? 0 : $this->offset), $this->limit, true);
