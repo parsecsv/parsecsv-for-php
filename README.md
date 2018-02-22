@@ -45,10 +45,10 @@ To use ParseCSV, you then have to add a `require 'parsecsv.lib.php';` line.
 * Error detection for incorrectly formatted input. It attempts to be
   intelligent, but can not be trusted 100% due to the structure of CSV, and
   how different programs like Excel for example outputs CSV data.
-* Support for character encoding conversion using PHP's _iconv_ function
-  (requires PHP 5).
-* Supports PHP 5.4 and higher. It certainly works with PHP 7.2
-
+* Support for character encoding conversion using PHP's
+  `iconv()` and `mb_convert_encoding()` functions.
+* Supports PHP 5.4 and higher.
+  It certainly works with PHP 7.2 and all versions in between.
 
 ## Example Usage
 
@@ -105,7 +105,7 @@ $csv = new ParseCsv\Csv();
 $csv->save('data.csv', array(array('1986', 'Home', 'Nowhere', '')), true);
 ```
 
-**Convert 2D array to csv data and send headers to browser to treat output as
+**Convert 2D array to CSV data and send headers to browser to treat output as
 a file and download it**
 
 ```php
