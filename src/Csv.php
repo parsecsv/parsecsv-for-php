@@ -7,7 +7,7 @@ use ParseCsv\extensions\DatatypeTrait;
 class Csv {
 
     /*
-    Class: parseCSV v0.4.3 beta
+    Class: ParseCSV v1.0.0
     https://github.com/parsecsv/parsecsv-for-php
 
     Fully conforms to the specifications lined out on Wikipedia:
@@ -39,43 +39,7 @@ class Csv {
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
     THE SOFTWARE.
 
-
-    Code Examples
-    ----------------
-    # general usage
-    $csv = new parseCSV('data.csv');
-    print_r($csv->data);
-    ----------------
-    # tab delimited, and encoding conversion
-    $csv = new parseCSV();
-    $csv->encoding('UTF-16', 'UTF-8');
-    $csv->delimiter = "\t";
-    $csv->parse('data.tsv');
-    print_r($csv->data);
-    ----------------
-    # auto-detect delimiter character
-    $csv = new parseCSV();
-    $csv->auto('data.csv');
-    print_r($csv->data);
-    ----------------
-    # modify data in a csv file
-    $csv = new parseCSV();
-    $csv->sort_by = 'id';
-    $csv->parse('data.csv');
-    # "4" is the value of the "id" column of the CSV row
-    $csv->data[4] = array('firstname' => 'John', 'lastname' => 'Doe', 'email' => 'john@doe.com');
-    $csv->save();
-    ----------------
-    # add row/entry to end of CSV file
-    #  - only recommended when you know the exact structure of the file
-    $csv = new parseCSV();
-    $csv->save('data.csv', array(array('1986', 'Home', 'Nowhere', '')), true);
-    ----------------
-    # convert 2D array to csv data and send headers
-    # to browser to treat output as a file and download it
-    $csv = new parseCSV();
-    $csv->output('movies.csv', $array, array('field 1', 'field 2'), ',');
-    ----------------
+    For code examples, please read the files within the 'examples' dir.
      */
 
     /**
