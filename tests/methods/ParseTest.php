@@ -178,10 +178,10 @@ class ParseTest extends TestCase
     }
 
     public function autoQuotesDataProvider() {
-        return [
-            'double-enclosure' => ['tests/methods/fixtures/auto-double-enclosure.csv', '"'],
-            'single-enclosure' => ['tests/methods/fixtures/auto-single-enclosure.csv', "'"],
-        ];
+        return array(
+            array('auto-double-enclosure.csv', '"'),
+            array('auto-single-enclosure.csv', "'"),
+        );
     }
 
     /**
@@ -194,7 +194,7 @@ class ParseTest extends TestCase
      */
     public function testAutoQuotes($file, $enclosure) {
         $csv = new Csv();
-        $csv->auto($file, true, null, null, $enclosure);
+        $csv->auto(__DIR__ . '/fixtures/' . $file, true, null, null, $enclosure);
         $this->assertArrayHasKey('column1', $csv->data[0], 'Data parsed incorrectly with enclosure ' . $enclosure);
         $this->assertEquals('value1', $csv->data[0]['column1'], 'Data parsed incorrectly with enclosure ' . $enclosure);
     }
