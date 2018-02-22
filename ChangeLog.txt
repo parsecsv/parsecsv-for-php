@@ -1,12 +1,15 @@
-parseCSV 1.0.0 RC
+ParseCSV 1.0.0 RC
 -----------------------------------
 Date: unreleased
+
+- Renamed class from parseCSV to Csv and added name-
+  space "ParseCsv" for PSR compliance.
 
 - Added support for MS Excel's "sep=" to detect the
   delimiter (Issue #60).
 
 - Added support for mb_convert_encoding() instead of
-  iconv() - see issues #109
+  iconv() - see issue #109
 
 - A number of minor bug fixes - see GitHub issues
 

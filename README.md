@@ -1,6 +1,6 @@
 # ParseCsv
 
-ParseCsv is an easy to use PHP class that reads and writes CSV data properly. It
+ParseCsv is an easy-to-use PHP class that reads and writes CSV data properly. It
 fully conforms to the specifications outlined on the on the
 [Wikipedia article][CSV] (and thus RFC 4180). It has many advanced features which help make your
 life easier when dealing with CSV data.
