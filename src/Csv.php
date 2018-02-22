@@ -332,13 +332,35 @@ class Csv {
      * Constructor
      * Class constructor
      *
-     * @param  string|null  $input          The CSV string or a direct filepath
-     * @param  integer|null $offset         Number of rows to ignore from the beginning of  the data
-     * @param  integer|null $limit          Limits the number of returned rows to specified amount
-     * @param  string|null  $conditions     Basic SQL-like conditions for row matching
-     * @param  null|true    $keep_file_data Keep raw file data in memory after successful parsing (useful for debugging)
+     * @param  string|null $input The CSV string or a direct filepath
+     * @param  integer|null $offset Number of rows to ignore from the beginning
+     *   of  the data
+     * @param  integer|null $limit Limits the number of returned rows to
+     *   specified amount
+     * @param  string|null $conditions Basic SQL-like conditions for row
+     *   matching
+     * @param  null|true $keep_file_data Keep raw file data in memory after
+     *   successful parsing (useful for debugging)
      */
-    public function __construct($input = null, $offset = null, $limit = null, $conditions = null, $keep_file_data = null) {
+    public function __construct($input = NULL, $offset = NULL, $limit = NULL, $conditions = NULL, $keep_file_data = NULL) {
+        $this->init($offset, $limit, $conditions, $keep_file_data);
+
+        if (!empty($input)) {
+            $this->parse($input);
+        }
+    }
+
+    /**
+     * @param  integer|null $offset Number of rows to ignore from the beginning
+     *   of  the data
+     * @param  integer|null $limit Limits the number of returned rows to
+     *   specified amount
+     * @param  string|null $conditions Basic SQL-like conditions for row
+     *   matching
+     * @param  null|true $keep_file_data Keep raw file data in memory after
+     *   successful parsing (useful for debugging)
+     */
+    public function init($offset = NULL, $limit = NULL, $conditions = NULL, $keep_file_data = NULL) {
         if (!is_null($offset)) {
             $this->offset = $offset;
         }
@@ -353,10 +375,6 @@ class Csv {
 
         if (!is_null($keep_file_data)) {
             $this->keep_file_data = $keep_file_data;
-        }
-
-        if (!empty($input)) {
-            $this->parse($input);
         }
     }
 
@@ -375,37 +393,31 @@ class Csv {
      *
      * @return bool True on success
      */
-    public function parse($input = null, $offset = null, $limit = null, $conditions = null) {
-        if (is_null($input)) {
-            $input = $this->file;
+    public function parse($input = NULL, $offset = NULL, $limit = NULL, $conditions = NULL) {
+        if (!is_null($input)) {
+            $this->file = $input;
         }
 
-        if (!empty($input)) {
-            if (!is_null($offset)) {
-                $this->offset = $offset;
-            }
-
-            if (!is_null($limit)) {
-                $this->limit = $limit;
-            }
-
-            if (!is_null($conditions)) {
-                $this->conditions = $conditions;
-            }
-
-            if (strlen($input) <= PHP_MAXPATHLEN && is_readable($input)) {
-                $this->data = $this->parse_file($input);
-            } else {
-                $this->file_data = &$input;
-                $this->data = $this->parse_string();
-            }
-
-            if ($this->data === false) {
-                return false;
-            }
+        if (empty($this->file)) {
+            // todo: but why true?
+            return true;
         }
 
-        return true;
+        $this->init($offset, $limit, $conditions);
+
+
+        if (strlen($this->file) <= PHP_MAXPATHLEN && is_readable($this->file)) {
+            $this->data = $this->parse_file($this->file);
+        }
+        else {
+            $this->file_data = &$this->file;
+            $this->data = $this->parse_string();
+        }
+
+        if ($this->data === false) {
+            return false;
+        }
+
     }
 
     /**
