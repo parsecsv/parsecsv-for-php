@@ -1,9 +1,10 @@
 <?php
 namespace ParseCsv;
 
+use ParseCsv\base\Object;
 use ParseCsv\extensions\DatatypeTrait;
 
-class Csv {
+class Csv extends Object {
 
     /*
     Class: parseCSV v0.4.3 beta
@@ -337,22 +338,9 @@ class Csv {
      * @param  string|null  $conditions     Basic SQL-like conditions for row matching
      * @param  null|true    $keep_file_data Keep raw file data in memory after successful parsing (useful for debugging)
      */
-    public function __construct($input = null, $offset = null, $limit = null, $conditions = null, $keep_file_data = null) {
-        if (!is_null($offset)) {
-            $this->offset = $offset;
-        }
+    public function __construct($input, $config = []) {
 
-        if (!is_null($limit)) {
-            $this->limit = $limit;
-        }
-
-        if (!is_null($conditions)) {
-            $this->conditions = $conditions;
-        }
-
-        if (!is_null($keep_file_data)) {
-            $this->keep_file_data = $keep_file_data;
-        }
+        parent::__construct($config);
 
         if (!empty($input)) {
             $this->parse($input);
@@ -368,43 +356,31 @@ class Csv {
      * Parse a CSV file or string
      *
      * @param  string|null $input      The CSV string or a direct filepath
-     * @param  integer     $offset     Number of rows to ignore from the beginning of  the data
-     * @param  integer     $limit      Limits the number of returned rows to specified amount
-     * @param  string      $conditions Basic SQL-like conditions for row matching
      *
      * @return bool True on success
      */
-    public function parse($input = null, $offset = null, $limit = null, $conditions = null) {
+    public function parse($input = null) {
         if (is_null($input)) {
             $input = $this->file;
         }
 
-        if (!empty($input)) {
-            if (!is_null($offset)) {
-                $this->offset = $offset;
-            }
-
-            if (!is_null($limit)) {
-                $this->limit = $limit;
-            }
-
-            if (!is_null($conditions)) {
-                $this->conditions = $conditions;
-            }
-
-            if (strlen($input) <= PHP_MAXPATHLEN && is_readable($input)) {
-                $this->data = $this->parse_file($input);
-            } else {
-                $this->file_data = &$input;
-                $this->data = $this->parse_string();
-            }
-
-            if ($this->data === false) {
-                return false;
-            }
+        if (empty($input)){
+            // todo: true is confusing
+            return true;
         }
 
-        return true;
+        if (strlen($input) <= PHP_MAXPATHLEN && is_readable($input)) {
+            $this->data = $this->parse_file($input);
+        }
+        else {
+            $this->file_data = &$input;
+            $this->data = $this->parse_string();
+        }
+
+        if ($this->data === false) {
+            return false;
+        }
+
     }
 
     /**
