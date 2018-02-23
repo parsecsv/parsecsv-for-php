@@ -411,6 +411,7 @@ class Csv {
             $this->data = $this->parse_file($input);
         }
         else {
+            $this->file = null;
             $this->file_data = &$input;
             $this->data = $this->parse_string();
         }
