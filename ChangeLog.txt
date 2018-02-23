@@ -1,4 +1,4 @@
-ParseCSV 1.0.0 RC
+ParseCSV 1.0.0-rc.2
 -----------------------------------
 Date: unreleased
 

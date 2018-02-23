@@ -7,7 +7,7 @@ use ParseCsv\extensions\DatatypeTrait;
 class Csv {
 
     /*
-    Class: ParseCSV v1.0.0
+    Class: ParseCSV 1.0.0-rc.2
     https://github.com/parsecsv/parsecsv-for-php
 
     Fully conforms to the specifications lined out on Wikipedia:
