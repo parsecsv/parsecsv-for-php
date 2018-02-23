@@ -89,7 +89,8 @@ class ParseTest extends TestCase
         $this->csv->enclosure = '"';
         $sInput = "86545235689,a\r\n34365587654,b\r\n13469874576,\"c\r\nd\"";
         $expected_data = [86545235689, 34365587654, 13469874576];
-        $actual_data = $this->csv->parse_string($sInput);
+
+        $actual_data = $this->invokeMethod($this->csv, 'parse_string', array($sInput));
         $actual_column = array_map('reset', $actual_data);
         $this->assertEquals($expected_data, $actual_column);
         $this->assertEquals([
@@ -197,5 +198,23 @@ class ParseTest extends TestCase
         $csv->auto(__DIR__ . '/fixtures/' . $file, true, null, null, $enclosure);
         $this->assertArrayHasKey('column1', $csv->data[0], 'Data parsed incorrectly with enclosure ' . $enclosure);
         $this->assertEquals('value1', $csv->data[0]['column1'], 'Data parsed incorrectly with enclosure ' . $enclosure);
+    }
+
+    /**
+     * Call protected/private method of a class.
+     *
+     * @param object &$object    Instantiated object that we will run method on.
+     * @param string $methodName Method name to call
+     * @param array  $parameters Array of parameters to pass into method.
+     *
+     * @return mixed Method return.
+     */
+    private function invokeMethod(&$object, $methodName, array $parameters = array())
+    {
+        $reflection = new \ReflectionClass(get_class($object));
+        $method = $reflection->getMethod($methodName);
+        $method->setAccessible(true);
+
+        return $method->invokeArgs($object, $parameters);
     }
 }

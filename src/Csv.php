@@ -408,7 +408,7 @@ class Csv {
 
         if (strlen($input) <= PHP_MAXPATHLEN && is_readable($input)) {
             $this->file = $input;
-            $this->data = $this->parse_file($input);
+            $this->data = $this->parse_file();
         }
         else {
             $this->file = null;
@@ -569,7 +569,7 @@ class Csv {
      *
      * @return array|bool
      */
-    public function parse_file($file = null) {
+    protected function parse_file($file = null) {
         if (is_null($file)) {
             $file = $this->file;
         }
@@ -592,7 +592,7 @@ class Csv {
      *
      * @return array|false - 2D array with CSV data, or false on failure
      */
-    public function parse_string($data = null) {
+    protected function parse_string($data = null) {
         if (empty($data)) {
             if ($this->_check_data()) {
                 $data = &$this->file_data;
