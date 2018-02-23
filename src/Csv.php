@@ -394,11 +394,11 @@ class Csv {
      * @return bool True on success
      */
     public function parse($input = NULL, $offset = NULL, $limit = NULL, $conditions = NULL) {
-        if (!is_null($input)) {
-            $this->file = $input;
+        if (is_null($input)) {
+            $input = $this->file;
         }
 
-        if (empty($this->file)) {
+        if (empty($input)) {
             // todo: but why true?
             return true;
         }
@@ -406,17 +406,20 @@ class Csv {
         $this->init($offset, $limit, $conditions);
 
 
-        if (strlen($this->file) <= PHP_MAXPATHLEN && is_readable($this->file)) {
-            $this->data = $this->parse_file($this->file);
+        if (strlen($input) <= PHP_MAXPATHLEN && is_readable($input)) {
+            $this->file = $input;
+            $this->data = $this->parse_file($input);
         }
         else {
-            $this->file_data = &$this->file;
+            $this->file_data = &$input;
             $this->data = $this->parse_string();
         }
 
         if ($this->data === false) {
             return false;
         }
+
+        return true;
 
     }
 
