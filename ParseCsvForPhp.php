@@ -3,7 +3,7 @@
 class ParseCsvForPhp {
 
     /*
-    Class: ParseCsvForPhp v1.0.0
+    Class: ParseCsvForPhp 1.0.0-rc.1
     https://github.com/parsecsv/parsecsv-for-php
 
     Fully conforms to the specifications lined out on Wikipedia:

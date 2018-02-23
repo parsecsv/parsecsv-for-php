@@ -1,4 +1,4 @@
-ParseCsvForPhp 1.0.0 RC
+ParseCsvForPhp 1.0.0-rc.1
 -----------------------------------
 Date: unreleased
 
