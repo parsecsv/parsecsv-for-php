@@ -152,14 +152,20 @@ class PublicPropertiesTest extends TestCase {
     }
 
     public function testSetSortType(){
-        $this->csv->sort_type = SortEnum::SORT_TYPE_NUMERIC;
+        $this->csv->sort_type = 'numeric';
         $this->assertEquals(SortEnum::SORT_TYPE_NUMERIC,  $this->csv->sort_type);
 
-        $this->csv->sort_type = SortEnum::SORT_TYPE_STRING;
+        $this->csv->sort_type = 'string';
         $this->assertEquals(SortEnum::SORT_TYPE_STRING,  $this->csv->sort_type);
+    }
 
-        $this->csv->sort_type = SortEnum::SORT_TYPE_UNKNOWN;
-        // todo: how to handle this exception?
-        $this->expectException(InvalidArgumentException::class);
+    public function testGetSorting(){
+        $this->csv->sort_type = 'numeric';
+        $sorting = SortEnum::getSorting($this->csv->sort_type);
+        $this->assertEquals(SORT_NUMERIC,  $sorting);
+
+        $this->csv->sort_type = 'string';
+        $sorting = SortEnum::getSorting($this->csv->sort_type);
+        $this->assertEquals(SORT_STRING,  $sorting);
     }
 }

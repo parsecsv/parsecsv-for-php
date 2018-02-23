@@ -739,7 +739,8 @@ class Csv {
 
         $this->titles = $head;
         if (!empty($this->sort_by)) {
-            $this->sort_reverse ? krsort($rows, $this->sort_type) : ksort($rows, $this->sort_type);
+            $sort_type = SortEnum::getSorting($this->sort_type);
+            $this->sort_reverse ? krsort($rows, $sort_type) : ksort($rows, $sort_type);
 
             if ($this->offset !== null || $this->limit !== null) {
                 $rows = array_slice($rows, ($this->offset === null ? 0 : $this->offset), $this->limit, true);
