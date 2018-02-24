@@ -198,4 +198,41 @@ class ParseTest extends TestCase
         $this->assertArrayHasKey('column1', $csv->data[0], 'Data parsed incorrectly with enclosure ' . $enclosure);
         $this->assertEquals('value1', $csv->data[0]['column1'], 'Data parsed incorrectly with enclosure ' . $enclosure);
     }
+
+    public function countRowsProvider(){
+        return [
+            'auto-double-enclosure' => [
+                'auto-double-enclosure.csv',
+                2
+            ],
+            'auto-single-enclosure' => [
+                'auto-single-enclosure.csv',
+                2
+            ],
+            'UTF-8_sep_row' => [
+                'datatype.csv',
+                3
+            ]
+        ];
+    }
+
+    /**
+     * @dataProvider countRowsProvider
+     *
+     * @param string $file
+     * @param int $expectedRows
+     */
+    public function testGetTotalRowCountFromFile($file, $expectedRows){
+        $this->csv->heading = true;
+        $this->csv->load_data(__DIR__ . '/fixtures/' . $file);
+        $this->assertEquals($expectedRows, $this->csv->getTotalRowCount());
+    }
+
+    public function testGetTotalRowCountMissingEndingLineBreak(){
+        $this->csv->heading = false;
+        $this->csv->enclosure = '"';
+        $sInput = "86545235689,a\r\n34365587654,b\r\n13469874576,\"c\r\nd\"";
+        $this->csv->load_data($sInput);
+        $this->assertEquals(3, $this->csv->getTotalRowCount());
+    }
 }

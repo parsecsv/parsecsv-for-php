@@ -540,6 +540,41 @@ class Csv {
         return $this->delimiter;
     }
 
+    /**
+     * Get total number of rows in csv without parsing whole data.
+     *
+     * @return bool|int
+     */
+    public function getTotalRowCount(){
+        if (empty($this->file_data)){
+            return false;
+        }
+
+        $this->_detect_and_remove_sep_row_from_data($this->file_data);
+
+        $pattern = sprintf('/("[^%s]*")|[^%s]*/i',$this->enclosure, $this->enclosure);
+        preg_match_all($pattern,$this->file_data, $matches);
+
+        foreach ($matches[0] as $match){
+            if (empty($match) || !preg_match("/{$this->enclosure}/", $match)){
+                continue;
+            }
+
+            $replace = str_replace(["\r", "\n"], '', $match);
+            $this->file_data = str_replace($match, $replace, $this->file_data);
+        }
+
+        $headingRow = $this->heading ? 1 : 0;
+
+        $count = substr_count($this->file_data, "\r")
+            + substr_count($this->file_data, "\n")
+            - substr_count($this->file_data, "\r\n")
+            - $headingRow;
+
+
+        return $count;
+    }
+
     // ==============================================
     // ----- [ Core Functions ] ---------------------
     // ==============================================
