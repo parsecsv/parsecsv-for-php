@@ -225,7 +225,7 @@ class ParseTest extends TestCase
     public function testGetTotalRowCountFromFile($file, $expectedRows){
         $this->csv->heading = true;
         $this->csv->load_data(__DIR__ . '/fixtures/' . $file);
-        $this->assertEquals($expectedRows, $this->csv->getTotalRowCount());
+        $this->assertEquals($expectedRows, $this->csv->getTotalDataRowCount());
     }
 
     public function testGetTotalRowCountMissingEndingLineBreak(){
@@ -233,6 +233,6 @@ class ParseTest extends TestCase
         $this->csv->enclosure = '"';
         $sInput = "86545235689,a\r\n34365587654,b\r\n13469874576,\"c\r\nd\"";
         $this->csv->load_data($sInput);
-        $this->assertEquals(3, $this->csv->getTotalRowCount());
+        $this->assertEquals(3, $this->csv->getTotalDataRowCount());
     }
 }

@@ -547,7 +547,7 @@ class Csv {
      *
      * @return bool|int
      */
-    public function getTotalRowCount() {
+    public function getTotalDataRowCount() {
         if (empty($this->file_data)) {
             return false;
         }
