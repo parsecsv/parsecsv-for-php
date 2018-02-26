@@ -157,6 +157,9 @@ class ParseTest extends TestCase
         $this->assertEquals($expected, $this->csv->data_types);
     }
 
+    /**
+     * @depends testSepRowAutoDetection
+     */
     public function testAutoDetectFileHasHeading(){
         $this->csv->auto(__DIR__ . '/fixtures/datatype.csv');
         $this->assertTrue($this->csv->autoDetectFileHasHeading());
