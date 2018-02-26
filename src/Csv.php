@@ -1,4 +1,5 @@
 <?php
+
 namespace ParseCsv;
 
 use ParseCsv\extensions\DatatypeTrait;
@@ -541,22 +542,23 @@ class Csv {
     }
 
     /**
-     * Get total number of rows in csv without parsing whole data.
+     * Get total number of data rows (exclusive heading line if present) in csv
+     * without parsing whole data.
      *
      * @return bool|int
      */
-    public function getTotalRowCount(){
-        if (empty($this->file_data)){
+    public function getTotalRowCount() {
+        if (empty($this->file_data)) {
             return false;
         }
 
         $this->_detect_and_remove_sep_row_from_data($this->file_data);
 
-        $pattern = sprintf('/("[^%s]*")|[^%s]*/i',$this->enclosure, $this->enclosure);
-        preg_match_all($pattern,$this->file_data, $matches);
+        $pattern = sprintf('/("[^%s]*")|[^%s]*/i', $this->enclosure, $this->enclosure);
+        preg_match_all($pattern, $this->file_data, $matches);
 
-        foreach ($matches[0] as $match){
-            if (empty($match) || !preg_match("/{$this->enclosure}/", $match)){
+        foreach ($matches[0] as $match) {
+            if (empty($match) || !preg_match("/{$this->enclosure}/", $match)) {
                 continue;
             }
 
@@ -950,12 +952,19 @@ class Csv {
      */
     protected function _validate_row_condition($row, $condition) {
         $operators = array(
-            '=', 'equals', 'is',
-            '!=', 'is not',
-            '<', 'is less than',
-            '>', 'is greater than',
-            '<=', 'is less than or equals',
-            '>=', 'is greater than or equals',
+            '=',
+            'equals',
+            'is',
+            '!=',
+            'is not',
+            '<',
+            'is less than',
+            '>',
+            'is greater than',
+            '<=',
+            'is less than or equals',
+            '>=',
+            'is greater than or equals',
             'contains',
             'does not contain',
         );
