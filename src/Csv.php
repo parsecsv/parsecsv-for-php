@@ -1,4 +1,5 @@
 <?php
+
 namespace ParseCsv;
 
 use ParseCsv\enums\SortEnum;
@@ -332,17 +333,17 @@ class Csv {
      * Constructor
      * Class constructor
      *
-     * @param  string|null $input The CSV string or a direct filepath
-     * @param  integer|null $offset Number of rows to ignore from the beginning
-     *   of  the data
-     * @param  integer|null $limit Limits the number of returned rows to
-     *   specified amount
-     * @param  string|null $conditions Basic SQL-like conditions for row
-     *   matching
-     * @param  null|true $keep_file_data Keep raw file data in memory after
-     *   successful parsing (useful for debugging)
+     * @param  string|null  $input          The CSV string or a direct filepath
+     * @param  integer|null $offset         Number of rows to ignore from the beginning
+     *                                      of  the data
+     * @param  integer|null $limit          Limits the number of returned rows to
+     *                                      specified amount
+     * @param  string|null  $conditions     Basic SQL-like conditions for row
+     *                                      matching
+     * @param  null|true    $keep_file_data Keep raw file data in memory after
+     *                                      successful parsing (useful for debugging)
      */
-    public function __construct($input = NULL, $offset = NULL, $limit = NULL, $conditions = NULL, $keep_file_data = NULL) {
+    public function __construct($input = null, $offset = null, $limit = null, $conditions = null, $keep_file_data = null) {
         $this->init($offset, $limit, $conditions, $keep_file_data);
 
         if (!empty($input)) {
@@ -351,16 +352,16 @@ class Csv {
     }
 
     /**
-     * @param  integer|null $offset Number of rows to ignore from the beginning
-     *   of  the data
-     * @param  integer|null $limit Limits the number of returned rows to
-     *   specified amount
-     * @param  string|null $conditions Basic SQL-like conditions for row
-     *   matching
-     * @param  null|true $keep_file_data Keep raw file data in memory after
-     *   successful parsing (useful for debugging)
+     * @param  integer|null $offset         Number of rows to ignore from the beginning
+     *                                      of  the data
+     * @param  integer|null $limit          Limits the number of returned rows to
+     *                                      specified amount
+     * @param  string|null  $conditions     Basic SQL-like conditions for row
+     *                                      matching
+     * @param  null|true    $keep_file_data Keep raw file data in memory after
+     *                                      successful parsing (useful for debugging)
      */
-    public function init($offset = NULL, $limit = NULL, $conditions = NULL, $keep_file_data = NULL) {
+    public function init($offset = null, $limit = null, $conditions = null, $keep_file_data = null) {
         if (!is_null($offset)) {
             $this->offset = $offset;
         }
@@ -393,7 +394,7 @@ class Csv {
      *
      * @return bool True on success
      */
-    public function parse($input = NULL, $offset = NULL, $limit = NULL, $conditions = NULL) {
+    public function parse($input = null, $offset = null, $limit = null, $conditions = null) {
         if (is_null($input)) {
             $input = $this->file;
         }
@@ -409,8 +410,7 @@ class Csv {
         if (strlen($input) <= PHP_MAXPATHLEN && is_readable($input)) {
             $this->file = $input;
             $this->data = $this->parse_file();
-        }
-        else {
+        } else {
             $this->file = null;
             $this->file_data = &$input;
             $this->data = $this->parse_string();
@@ -926,12 +926,19 @@ class Csv {
      */
     protected function _validate_row_condition($row, $condition) {
         $operators = array(
-            '=', 'equals', 'is',
-            '!=', 'is not',
-            '<', 'is less than',
-            '>', 'is greater than',
-            '<=', 'is less than or equals',
-            '>=', 'is greater than or equals',
+            '=',
+            'equals',
+            'is',
+            '!=',
+            'is not',
+            '<',
+            'is less than',
+            '>',
+            'is greater than',
+            '<=',
+            'is less than or equals',
+            '>=',
+            'is greater than or equals',
             'contains',
             'does not contain',
         );
