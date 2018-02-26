@@ -552,10 +552,12 @@ class Csv {
             return false;
         }
 
-        $this->_detect_and_remove_sep_row_from_data($this->file_data);
+        $data = $this->file_data;
+
+        $this->_detect_and_remove_sep_row_from_data($data);
 
         $pattern = sprintf('/("[^%s]*")|[^%s]*/i', $this->enclosure, $this->enclosure);
-        preg_match_all($pattern, $this->file_data, $matches);
+        preg_match_all($pattern, $data, $matches);
 
         foreach ($matches[0] as $match) {
             if (empty($match) || (strpos($match, $this->enclosure) === false)) {
@@ -563,14 +565,14 @@ class Csv {
             }
 
             $replace = str_replace(["\r", "\n"], '', $match);
-            $this->file_data = str_replace($match, $replace, $this->file_data);
+            $data = str_replace($match, $replace, $data);
         }
 
         $headingRow = $this->heading ? 1 : 0;
 
-        $count = substr_count($this->file_data, "\r")
-            + substr_count($this->file_data, "\n")
-            - substr_count($this->file_data, "\r\n")
+        $count = substr_count($data, "\r")
+            + substr_count($data, "\n")
+            - substr_count($data, "\r\n")
             - $headingRow;
 
 
