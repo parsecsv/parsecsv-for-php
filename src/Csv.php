@@ -558,7 +558,7 @@ class Csv {
         preg_match_all($pattern, $this->file_data, $matches);
 
         foreach ($matches[0] as $match) {
-            if (empty($match) || !preg_match("/{$this->enclosure}/", $match)) {
+            if (empty($match) || (strpos($match, $this->enclosure) === false)) {
                 continue;
             }
 
