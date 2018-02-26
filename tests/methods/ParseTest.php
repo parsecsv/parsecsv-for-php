@@ -157,6 +157,26 @@ class ParseTest extends TestCase
         $this->assertEquals($expected, $this->csv->data_types);
     }
 
+    public function testAutoDetectFileHasHeading(){
+        $this->csv->auto(__DIR__ . '/fixtures/datatype.csv');
+        $this->assertTrue($this->csv->autoDetectFileHasHeading());
+
+        $this->csv->heading = false;
+        $this->csv->auto(__DIR__ . '/fixtures/datatype.csv');
+        $this->assertTrue($this->csv->autoDetectFileHasHeading());
+
+        $this->csv->heading = false;
+        $sInput = "86545235689\r\n34365587654\r\n13469874576";
+        $this->csv->auto($sInput);
+        $this->assertFalse($this->csv->autoDetectFileHasHeading());
+
+        $this->csv->heading = true;
+        $sInput = "86545235689\r\n34365587654\r\n13469874576";
+        $this->csv->auto($sInput);
+        $this->assertFalse($this->csv->autoDetectFileHasHeading());
+
+    }
+
     protected function _get_magazines_data() {
         return [
             [
