@@ -22,6 +22,14 @@ class UnparseTest extends Testcase {
         $this->unparseAndCompare($expected);
     }
 
+    public function testUnparseDefaultWithoutHeading(){
+        $this->csv->heading = false;
+        $this->csv->auto(__DIR__ . '/fixtures/auto-double-enclosure.csv');
+        $expected = "column1,column2\rvalue1,value2\rvalue3,value4\r";
+        $this->unparseAndCompare($expected);
+
+    }
+
     public function testUnparseRenameFields() {
         $expected = "C1,C2\rvalue1,value2\rvalue3,value4\r";
         $this->unparseAndCompare($expected, array("C1", "C2"));
