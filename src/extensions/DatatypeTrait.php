@@ -97,7 +97,8 @@ trait DatatypeTrait {
             $firstRow = $this->data[0];
         }
 
-        if (empty(array_filter($firstRow))){
+        $firstRow = array_filter($firstRow);
+        if (empty($firstRow)){
             return false;
         }
 
