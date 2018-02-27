@@ -1,6 +1,7 @@
 <?php
 namespace ParseCsv;
 
+use ParseCsv\enums\FileProcessingModeEnum;
 use ParseCsv\extensions\DatatypeTrait;
 
 class Csv {
@@ -414,16 +415,16 @@ class Csv {
      * @param  string $file   File location to save to
      * @param  array  $data   2D array of data
      * @param  bool   $append Append current data to end of target CSV, if file exists
-     * @param  array  $fields Field names
+     * @param  array  $fields Field names. Sets the header. If it is not set $this->titles would be used instead.
      *
      * @return bool
      */
-    public function save($file = '', $data = array(), $append = false, $fields = array()) {
+    public function save($file = '', $data = array(), $append = FileProcessingModeEnum::MODE_FILE_OVERWRITE, $fields = array()) {
         if (empty($file)) {
             $file = &$this->file;
         }
 
-        $mode = $append ? 'ab' : 'wb';
+        $mode = FileProcessingModeEnum::getAppendMode($append);
         $is_php = preg_match('/\.php$/i', $file) ? true : false;
 
         return $this->_wfile($file, $this->unparse($data, $fields, $append, $is_php), $mode);
@@ -760,7 +761,7 @@ class Csv {
      *
      * @return string CSV data
      */
-    public function unparse($data = array(), $fields = array(), $append = false, $is_php = false, $delimiter = null) {
+    public function unparse($data = array(), $fields = array(), $append = FileProcessingModeEnum::MODE_FILE_OVERWRITE, $is_php = false, $delimiter = null) {
         if (!is_array($data) || empty($data)) {
             $data = &$this->data;
         }
