@@ -987,7 +987,8 @@ class Csv {
         return
             $this->sort_by !== null ||
             $this->offset === null ||
-            $current_row >= $this->offset;
+            $current_row >= $this->offset ||
+            ($this->heading && $current_row == 0);
     }
 
     /**
