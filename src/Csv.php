@@ -125,7 +125,9 @@ class Csv {
 
     /**
      * Offset
-     * Number of rows to ignore from beginning of data
+     * Number of rows to ignore from beginning of data. If present, the heading
+     * row is also counted (if $this->heading == true). In other words,
+     * $offset == 1 and $offset == 0 have the same meaning in that situation.
      *
      * @var int|null
      */
