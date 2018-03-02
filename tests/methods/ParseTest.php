@@ -1,11 +1,11 @@
 <?php
+
 namespace ParseCsv\tests\methods;
 
 use ParseCsv\Csv;
 use PHPUnit\Framework\TestCase;
 
-class ParseTest extends TestCase
-{
+class ParseTest extends TestCase {
 
     /**
      * @var Csv object
@@ -41,7 +41,7 @@ class ParseTest extends TestCase
     }
 
     /**
-     * @depends test_parse
+     * @depends      test_parse
      *
      * @dataProvider autoDetectionProvider
      */
@@ -54,7 +54,7 @@ class ParseTest extends TestCase
         $this->assertEquals($this->_get_magazines_data(), $this->csv->data);
     }
 
-    public function autoDetectionProvider(){
+    public function autoDetectionProvider() {
         return [
             'UTF8_no_BOM' => [__DIR__ . '/../example_files/UTF-8_sep_row_but_no_BOM.csv'],
             'UTF8' => [__DIR__ . '/../example_files/UTF-8_with_BOM_and_sep_row.csv'],
@@ -147,7 +147,7 @@ class ParseTest extends TestCase
             'publishedAt' => 'date',
             'published' => 'boolean',
             'count' => 'integer',
-            'price' => 'float'
+            'price' => 'float',
         ];
 
         $this->assertEquals($expected, $this->csv->data_types);
@@ -173,8 +173,8 @@ class ParseTest extends TestCase
         $this->csv->heading = false;
         $this->csv->offset = 2;
         $this->csv->auto(__DIR__ . '/fixtures/datatype.csv');
-        $expected = range(0,5, 1);
-        
+        $expected = range(0, 5, 1);
+
         $this->assertEquals($expected, array_keys($this->csv->data[0]));
     }
 
@@ -206,7 +206,7 @@ class ParseTest extends TestCase
     }
 
     /**
-     * @depends testSepRowAutoDetection
+     * @depends      testSepRowAutoDetection
      *
      * @dataProvider autoQuotesDataProvider
      *
