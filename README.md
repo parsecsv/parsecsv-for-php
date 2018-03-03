@@ -12,6 +12,23 @@ and third-party support for handling CSV data in PHP.
 
 [csv]: http://en.wikipedia.org/wiki/Comma-separated_values
 
+## Features
+
+* ParseCsv is a complete and fully featured CSV solution for PHP
+* Supports enclosed values, enclosed commas, double quotes and new lines.
+* Automatic delimiter character detection.
+* Sort data by specific fields/columns.
+* Easy data manipulation.
+* Basic SQL-like _conditions_, _offset_ and _limit_ options for filtering
+  data.
+* Error detection for incorrectly formatted input. It attempts to be
+  intelligent, but can not be trusted 100% due to the structure of CSV, and
+  how different programs like Excel for example outputs CSV data.
+* Support for character encoding conversion using PHP's
+  `iconv()` and `mb_convert_encoding()` functions.
+* Supports PHP 5.4 and higher.
+  It certainly works with PHP 7.2 and all versions in between.
+
 ## Installation
 
 Installation is easy using Composer. Just run the following on the
@@ -32,23 +49,6 @@ Not recommended, but technically possible: you can also clone the
 repository or extract the
 [ZIP](https://github.com/parsecsv/parsecsv-for-php/archive/master.zip).
 To use ParseCSV, you then have to add a `require 'parsecsv.lib.php';` line.
-
-## Features
-
-* ParseCsv is a complete and fully featured CSV solution for PHP
-* Supports enclosed values, enclosed commas, double quotes and new lines.
-* Automatic delimiter character detection.
-* Sort data by specific fields/columns.
-* Easy data manipulation.
-* Basic SQL-like _conditions_, _offset_ and _limit_ options for filtering
-  data.
-* Error detection for incorrectly formatted input. It attempts to be
-  intelligent, but can not be trusted 100% due to the structure of CSV, and
-  how different programs like Excel for example outputs CSV data.
-* Support for character encoding conversion using PHP's
-  `iconv()` and `mb_convert_encoding()` functions.
-* Supports PHP 5.4 and higher.
-  It certainly works with PHP 7.2 and all versions in between.
 
 ## Example Usage
 
