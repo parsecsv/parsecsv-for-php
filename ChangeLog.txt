@@ -12,7 +12,7 @@ Date: 3-March-2018
   guesses the type of each column.
 
 - MIME: output() sends correct MIME type to browser
-  if the separator is a tab tab (Issue #79).
+  if the separator is a tab char (Issue #79).
 
 - Added support for mb_convert_encoding() instead of
   iconv() - see issue #109.
