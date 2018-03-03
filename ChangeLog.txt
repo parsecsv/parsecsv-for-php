@@ -1,6 +1,6 @@
-ParseCSV 1.0.0-rc.2
+ParseCSV 1.0.0
 -----------------------------------
-Date: unreleased
+Date: 3-March-2018
 
 - Renamed class from parseCSV to Csv and added name-
   space "ParseCsv" for PSR compliance.
