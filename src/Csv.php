@@ -778,9 +778,9 @@ class Csv {
 
         // create heading
         $fieldOrder = $this->_validate_fields_for_unparse($fields);
-        if (!$fieldOrder && !empty($data)){
-            $column_count = count($data[0]) - 1;
-            $columns = range(0, $column_count, 1);
+        if (!$fieldOrder && !empty($data)) {
+            $column_count = count($data[0]);
+            $columns = range(0, $column_count - 1, 1);
             $fieldOrder = array_combine($columns, $columns);
         }
 
