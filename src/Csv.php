@@ -508,6 +508,44 @@ class Csv {
         return $this->delimiter;
     }
 
+    /**
+     * Get total number of data rows (exclusive heading line if present) in csv
+     * without parsing whole data.
+     *
+     * @return bool|int
+     */
+    public function getTotalDataRowCount() {
+        if (empty($this->file_data)) {
+            return false;
+        }
+
+        $data = $this->file_data;
+
+        $this->_detect_and_remove_sep_row_from_data($data);
+
+        $pattern = sprintf('/(%1$s[^%1$s]*%1$s)/i', $this->enclosure);
+        preg_match_all($pattern, $data, $matches);
+
+        foreach ($matches[0] as $match) {
+            if (empty($match) || (strpos($match, $this->enclosure) === false)) {
+                continue;
+            }
+
+            $replace = str_replace(["\r", "\n"], '', $match);
+            $data = str_replace($match, $replace, $data);
+        }
+
+        $headingRow = $this->heading ? 1 : 0;
+
+        $count = substr_count($data, "\r")
+            + substr_count($data, "\n")
+            - substr_count($data, "\r\n")
+            - $headingRow;
+
+
+        return $count;
+    }
+
     // ==============================================
     // ----- [ Core Functions ] ---------------------
     // ==============================================
@@ -883,12 +921,19 @@ class Csv {
      */
     protected function _validate_row_condition($row, $condition) {
         $operators = array(
-            '=', 'equals', 'is',
-            '!=', 'is not',
-            '<', 'is less than',
-            '>', 'is greater than',
-            '<=', 'is less than or equals',
-            '>=', 'is greater than or equals',
+            '=',
+            'equals',
+            'is',
+            '!=',
+            'is not',
+            '<',
+            'is less than',
+            '>',
+            'is greater than',
+            '<=',
+            'is less than or equals',
+            '>=',
+            'is greater than or equals',
             'contains',
             'does not contain',
         );
