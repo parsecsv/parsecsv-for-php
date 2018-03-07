@@ -1,3 +1,13 @@
+ParseCSV dev-master
+-----------------------------------
+Date: unreleased
+
+- New function getTotalDataRowCount() - useful if
+  $limit is set - see pull request #122.
+
+-----------------------------------
+
+
 ParseCSV 1.0.0
 -----------------------------------
 Date: 3-March-2018
