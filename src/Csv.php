@@ -2,14 +2,13 @@
 
 namespace ParseCsv;
 
-use ParseCsv\enums\SortEnum;
 use ParseCsv\enums\FileProcessingModeEnum;
+use ParseCsv\enums\SortEnum;
 use ParseCsv\extensions\DatatypeTrait;
 
 class Csv {
 
     /*
-    Class: ParseCSV 1.0.0
     https://github.com/parsecsv/parsecsv-for-php
 
     Fully conforms to the specifications lined out on Wikipedia:
