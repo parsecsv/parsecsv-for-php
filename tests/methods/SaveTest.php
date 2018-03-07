@@ -49,6 +49,13 @@ class SaveTest extends TestCase
         $this->saveAndCompare($expected);
     }
 
+    public function testSaveWithNewHeader() {
+        $this->csv->linefeed = "\n";
+        $this->csv->titles = array("NewTitle");
+        $expected = "NewTitle\n0444\n5555\n";
+        $this->saveAndCompare($expected);
+    }
+
     public function testSaveWithoutHeader() {
         $this->csv->linefeed = "\n";
         $this->csv->heading = false;
