@@ -9,7 +9,7 @@ namespace ParseCsv\enums;
  *
  * todo: needs a basic parent enum class for error handling.
  */
-class DatatypeEnum {
+class DatatypeEnum extends AbstractEnum {
 
     const __DEFAULT = self::TYPE_STRING;
 

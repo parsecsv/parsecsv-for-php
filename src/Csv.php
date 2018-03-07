@@ -2,6 +2,7 @@
 
 namespace ParseCsv;
 
+use ParseCsv\enums\SortEnum;
 use ParseCsv\enums\FileProcessingModeEnum;
 use ParseCsv\extensions\DatatypeTrait;
 
@@ -90,7 +91,7 @@ class Csv {
      *
      * @var string|null
      */
-    public $sort_type = null;
+    public $sort_type = SortEnum::SORT_TYPE_REGULAR;
 
     /**
      * Delimiter
@@ -298,12 +299,34 @@ class Csv {
      * Class constructor
      *
      * @param  string|null  $input          The CSV string or a direct filepath
-     * @param  integer|null $offset         Number of rows to ignore from the beginning of  the data
-     * @param  integer|null $limit          Limits the number of returned rows to specified amount
-     * @param  string|null  $conditions     Basic SQL-like conditions for row matching
-     * @param  null|true    $keep_file_data Keep raw file data in memory after successful parsing (useful for debugging)
+     * @param  integer|null $offset         Number of rows to ignore from the beginning
+     *                                      of  the data
+     * @param  integer|null $limit          Limits the number of returned rows to
+     *                                      specified amount
+     * @param  string|null  $conditions     Basic SQL-like conditions for row
+     *                                      matching
+     * @param  null|true    $keep_file_data Keep raw file data in memory after
+     *                                      successful parsing (useful for debugging)
      */
     public function __construct($input = null, $offset = null, $limit = null, $conditions = null, $keep_file_data = null) {
+        $this->init($offset, $limit, $conditions, $keep_file_data);
+
+        if (!empty($input)) {
+            $this->parse($input);
+        }
+    }
+
+    /**
+     * @param  integer|null $offset         Number of rows to ignore from the beginning
+     *                                      of  the data
+     * @param  integer|null $limit          Limits the number of returned rows to
+     *                                      specified amount
+     * @param  string|null  $conditions     Basic SQL-like conditions for row
+     *                                      matching
+     * @param  null|true    $keep_file_data Keep raw file data in memory after
+     *                                      successful parsing (useful for debugging)
+     */
+    public function init($offset = null, $limit = null, $conditions = null, $keep_file_data = null) {
         if (!is_null($offset)) {
             $this->offset = $offset;
         }
@@ -318,10 +341,6 @@ class Csv {
 
         if (!is_null($keep_file_data)) {
             $this->keep_file_data = $keep_file_data;
-        }
-
-        if (!empty($input)) {
-            $this->parse($input);
         }
     }
 
@@ -345,32 +364,29 @@ class Csv {
             $input = $this->file;
         }
 
-        if (!empty($input)) {
-            if (!is_null($offset)) {
-                $this->offset = $offset;
-            }
+        if (empty($input)) {
+            // todo: but why true?
+            return true;
+        }
 
-            if (!is_null($limit)) {
-                $this->limit = $limit;
-            }
+        $this->init($offset, $limit, $conditions);
 
-            if (!is_null($conditions)) {
-                $this->conditions = $conditions;
-            }
 
-            if (strlen($input) <= PHP_MAXPATHLEN && is_readable($input)) {
-                $this->data = $this->parse_file($input);
-            } else {
-                $this->file_data = &$input;
-                $this->data = $this->parse_string();
-            }
+        if (strlen($input) <= PHP_MAXPATHLEN && is_readable($input)) {
+            $this->file = $input;
+            $this->data = $this->parse_file();
+        } else {
+            $this->file = null;
+            $this->file_data = &$input;
+            $this->data = $this->parse_string();
+        }
 
-            if ($this->data === false) {
-                return false;
-            }
+        if ($this->data === false) {
+            return false;
         }
 
         return true;
+
     }
 
     /**
@@ -559,7 +575,7 @@ class Csv {
      *
      * @return array|bool
      */
-    public function parse_file($file = null) {
+    protected function parse_file($file = null) {
         if (is_null($file)) {
             $file = $this->file;
         }
@@ -582,7 +598,7 @@ class Csv {
      *
      * @return array|false - 2D array with CSV data, or false on failure
      */
-    public function parse_string($data = null) {
+    protected function parse_string($data = null) {
         if (empty($data)) {
             if ($this->_check_data()) {
                 $data = &$this->file_data;
@@ -733,13 +749,7 @@ class Csv {
 
         $this->titles = $head;
         if (!empty($this->sort_by)) {
-            $sort_type = SORT_REGULAR;
-            if ($this->sort_type == 'numeric') {
-                $sort_type = SORT_NUMERIC;
-            } elseif ($this->sort_type == 'string') {
-                $sort_type = SORT_STRING;
-            }
-
+            $sort_type = SortEnum::getSorting($this->sort_type);
             $this->sort_reverse ? krsort($rows, $sort_type) : ksort($rows, $sort_type);
 
             if ($this->offset !== null || $this->limit !== null) {

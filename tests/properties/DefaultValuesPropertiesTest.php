@@ -57,7 +57,7 @@ class DefaultValuesPropertiesTest extends TestCase {
     }
 
     public function test_sort_type_default() {
-        $this->assertNull($this->csv->sort_type);
+        $this->assertEquals('regular', $this->csv->sort_type);
     }
 
     public function test_delimiter_default() {
