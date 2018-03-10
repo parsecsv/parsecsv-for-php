@@ -179,6 +179,35 @@ class ParseTest extends TestCase {
         $this->assertEquals($expected, array_keys($this->csv->data[0]));
     }
 
+    /**
+     * @depends testSepRowAutoDetection
+     */
+    public function testAutoDetectFileHasHeading(){
+        if (!function_exists('array_column')) {
+            // getDatatypes requires array_column, but that
+            // function is only available in PHP >= 5.5
+            return;
+        }
+
+        $this->csv->auto(__DIR__ . '/fixtures/datatype.csv');
+        $this->assertTrue($this->csv->autoDetectFileHasHeading());
+
+        $this->csv->heading = false;
+        $this->csv->auto(__DIR__ . '/fixtures/datatype.csv');
+        $this->assertTrue($this->csv->autoDetectFileHasHeading());
+
+        $this->csv->heading = false;
+        $sInput = "86545235689\r\n34365587654\r\n13469874576";
+        $this->csv->auto($sInput);
+        $this->assertFalse($this->csv->autoDetectFileHasHeading());
+
+        $this->csv->heading = true;
+        $sInput = "86545235689\r\n34365587654\r\n13469874576";
+        $this->csv->auto($sInput);
+        $this->assertFalse($this->csv->autoDetectFileHasHeading());
+
+    }
+
     protected function _get_magazines_data() {
         return [
             [

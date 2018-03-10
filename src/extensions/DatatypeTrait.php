@@ -2,6 +2,8 @@
 
 namespace ParseCsv\extensions;
 
+use ParseCsv\enums\DatatypeEnum;
+
 trait DatatypeTrait {
 
     /**
@@ -47,7 +49,7 @@ trait DatatypeTrait {
      *
      * @access public
      *
-     * @uses   getDatatypeFromString
+     * @uses   DatatypeEnum::getValidTypeFromSample
      *
      * @return array|bool
      */
@@ -62,7 +64,7 @@ trait DatatypeTrait {
         $result = [];
         foreach ($this->titles as $cName) {
             $column = array_column($this->data, $cName);
-            $cDatatypes = array_map('ParseCsv\enums\DatatypeEnum::getValidTypeFromSample', $column);
+            $cDatatypes = array_map(DatatypeEnum::class . '::getValidTypeFromSample', $column);
 
             $result[$cName] = $this->getMostFrequentDatatypeForColumn($cDatatypes);
         }
@@ -70,5 +72,42 @@ trait DatatypeTrait {
         $this->data_types = $result;
 
         return !empty($this->data_types) ? $this->data_types : [];
+    }
+
+    /**
+     * Check data type of titles / first row for auto detecting if this could be
+     * a heading line.
+     *
+     * Requires PHP >= 5.5
+     *
+     * @access public
+     *
+     * @uses   DatatypeEnum::getValidTypeFromSample
+     *
+     * @return bool
+     */
+    public function autoDetectFileHasHeading(){
+        if (empty($this->data)){
+            throw new \UnexpectedValueException('No data set yet.');
+        }
+
+        if ($this->heading){
+            $firstRow = $this->titles;
+        } else {
+            $firstRow = $this->data[0];
+        }
+
+        $firstRow = array_filter($firstRow);
+        if (empty($firstRow)){
+            return false;
+        }
+
+        $firstRowDatatype = array_map(DatatypeEnum::class . '::getValidTypeFromSample', $firstRow);
+
+        if ($this->getMostFrequentDatatypeForColumn($firstRowDatatype) !== DatatypeEnum::TYPE_STRING){
+            return false;
+        }
+
+        return true;
     }
 }
