@@ -793,8 +793,15 @@ class Csv {
         $entry = array();
 
         // create heading
+        $fieldOrder = $this->_validate_fields_for_unparse($fields);
+        if (!$fieldOrder && !empty($data)) {
+            $column_count = count($data[0]);
+            $columns = range(0, $column_count - 1, 1);
+            $fieldOrder = array_combine($columns, $columns);
+        }
+
         if ($this->heading && !$append && !empty($fields)) {
-            foreach ($fields as $key => $column_name) {
+            foreach ($fieldOrder as $column_name) {
                 $entry[] = $this->_enclose_value($column_name, $delimiter);
             }
 
@@ -804,7 +811,8 @@ class Csv {
 
         // create data
         foreach ($data as $key => $row) {
-            foreach ($row as $cell_value) {
+            foreach (array_keys($fieldOrder) as $index){
+                $cell_value = $row[$index];
                 $entry[] = $this->_enclose_value($cell_value, $delimiter);
             }
 
@@ -817,6 +825,36 @@ class Csv {
         }
 
         return $string;
+    }
+
+    private function _validate_fields_for_unparse($fields){
+        if (empty($fields)){
+            return [];
+        }
+
+        // both are identical, also in ordering
+        if (array_values($fields) === array_values($this->titles)){
+            return array_combine($fields, $fields);
+        }
+
+        // if renaming given by: $oldName => $newName (maybe with reorder and / or subset):
+        // todo: this will only work if titles are unique
+        $fieldOrder = array_intersect(array_flip($fields), $this->titles);
+        if (!empty($fieldOrder)) {
+            return array_flip($fieldOrder);
+        }
+
+        $fieldOrder = array_intersect($fields, $this->titles);
+        if (!empty($fieldOrder)) {
+            return array_combine($fieldOrder, $fieldOrder);
+        }
+
+        // original titles are not given in fields. that is okay if count is okay.
+        if (count($fields) != count($this->titles)) {
+            throw new \UnexpectedValueException('The specified fields do not match any titles and do not match column count.');
+        }
+
+        return array_combine($this->titles, $fields);
     }
 
     /**
