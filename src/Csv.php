@@ -828,33 +828,39 @@ class Csv {
     }
 
     private function _validate_fields_for_unparse($fields){
+        // this is needed because sometime titles property is overwritten instead of using fields parameter!
+        $titlesOnParse = !empty($this->data) ? array_keys($this->data[0]) : array();
         if (empty($fields)){
-            return [];
+            $fields = $this->titles;
+        }
+
+        if (empty($fields)){
+            return array();
         }
 
         // both are identical, also in ordering
-        if (array_values($fields) === array_values($this->titles)){
+        if (array_values($fields) === array_values($titlesOnParse)){
             return array_combine($fields, $fields);
         }
 
         // if renaming given by: $oldName => $newName (maybe with reorder and / or subset):
         // todo: this will only work if titles are unique
-        $fieldOrder = array_intersect(array_flip($fields), $this->titles);
+        $fieldOrder = array_intersect(array_flip($fields), $titlesOnParse);
         if (!empty($fieldOrder)) {
             return array_flip($fieldOrder);
         }
 
-        $fieldOrder = array_intersect($fields, $this->titles);
+        $fieldOrder = array_intersect($fields, $titlesOnParse);
         if (!empty($fieldOrder)) {
             return array_combine($fieldOrder, $fieldOrder);
         }
 
         // original titles are not given in fields. that is okay if count is okay.
-        if (count($fields) != count($this->titles)) {
+        if (count($fields) != count($titlesOnParse)) {
             throw new \UnexpectedValueException('The specified fields do not match any titles and do not match column count.');
         }
 
-        return array_combine($this->titles, $fields);
+        return array_combine($titlesOnParse, $fields);
     }
 
     /**
