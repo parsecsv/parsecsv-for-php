@@ -64,7 +64,7 @@ trait DatatypeTrait {
         $result = [];
         foreach ($this->titles as $cName) {
             $column = array_column($this->data, $cName);
-            $cDatatypes = array_map(DatatypeEnum::class . '::getValidTypeFromSample', $column);
+            $cDatatypes = array_map( 'ParseCsv\enums\DatatypeEnum::getValidTypeFromSample', $column);
 
             $result[$cName] = $this->getMostFrequentDatatypeForColumn($cDatatypes);
         }
@@ -102,7 +102,7 @@ trait DatatypeTrait {
             return false;
         }
 
-        $firstRowDatatype = array_map(DatatypeEnum::class . '::getValidTypeFromSample', $firstRow);
+        $firstRowDatatype = array_map( 'ParseCsv\enums\DatatypeEnum::getValidTypeFromSample', $firstRow);
 
         if ($this->getMostFrequentDatatypeForColumn($firstRowDatatype) !== DatatypeEnum::TYPE_STRING){
             return false;
