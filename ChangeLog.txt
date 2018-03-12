@@ -5,6 +5,8 @@ Date: unreleased
 - New function getTotalDataRowCount() - useful if
   $limit is set - see pull request #122.
 
+- Dropped support for PHP 5.4
+
 -----------------------------------
 
 

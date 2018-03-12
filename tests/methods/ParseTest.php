@@ -182,7 +182,7 @@ class ParseTest extends TestCase {
     /**
      * @depends testSepRowAutoDetection
      */
-    public function testAutoDetectFileHasHeading(){
+    public function testAutoDetectFileHasHeading() {
         if (!function_exists('array_column')) {
             // getDatatypes requires array_column, but that
             // function is only available in PHP >= 5.5

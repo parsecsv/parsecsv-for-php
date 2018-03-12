@@ -26,7 +26,7 @@ and third-party support for handling CSV data in PHP.
   how different programs like Excel for example outputs CSV data.
 * Support for character encoding conversion using PHP's
   `iconv()` and `mb_convert_encoding()` functions.
-* Supports PHP 5.4 and higher.
+* Supports PHP 5.5 and higher.
   It certainly works with PHP 7.2 and all versions in between.
 
 ## Installation
