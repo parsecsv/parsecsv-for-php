@@ -108,10 +108,6 @@ class ParseTest extends TestCase {
     }
 
     public function test_Piwik_data() {
-        if (!function_exists('array_column')) {
-            // function only available in PHP >= 5.5
-            return;
-        }
         $this->csv->use_mb_convert_encoding = true;
         $this->csv->output_encoding = 'UTF-8';
         $this->csv->auto(__DIR__ . '/../example_files/Piwik_API_download.csv');
@@ -134,12 +130,6 @@ class ParseTest extends TestCase {
      * @depends testSepRowAutoDetection
      */
     public function testGetColumnDatatypes() {
-        if (!function_exists('array_column')) {
-            // getDatatypes requires array_column, but that
-            // function is only available in PHP >= 5.5
-            return;
-        }
-
         $this->csv->auto(__DIR__ . '/fixtures/datatype.csv');
         $this->csv->getDatatypes();
         $expected = [
@@ -183,12 +173,6 @@ class ParseTest extends TestCase {
      * @depends testSepRowAutoDetection
      */
     public function testAutoDetectFileHasHeading() {
-        if (!function_exists('array_column')) {
-            // getDatatypes requires array_column, but that
-            // function is only available in PHP >= 5.5
-            return;
-        }
-
         $this->csv->auto(__DIR__ . '/fixtures/datatype.csv');
         $this->assertTrue($this->csv->autoDetectFileHasHeading());
 
