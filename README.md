@@ -77,6 +77,40 @@ $csv->auto('data.csv');
 print_r($csv->data);
 ```
 
+**Parse data with offset**
+* ignoring the first X (e.g. two) rows
+```php
+$csv = new ParseCsv\Csv();
+$csv->offset = 2;
+$csv->parse('data.csv');
+print_r($csv->data);
+```
+
+**Limit the number of returned data rows**
+```php
+$csv = new ParseCsv\Csv();
+$csv->limit = 5;
+$csv->parse('data.csv');
+print_r($csv->data);
+```
+
+**Get total number of data rows without parsing whole data**
+* Excluding heading line if present (see $csv->header property)
+```php
+$csv = new ParseCsv\Csv();
+$csv->load_data('data.csv');
+$count = $csv->getTotalRowCount();
+print_r($count);
+```
+
+**Get most common data type for each column (Requires PHP >= 5.5)**
+
+```php
+$csv = new ParseCsv\Csv('data.csv');
+$csv->getDatatypes()
+print_r($csv->data_types);
+```
+
 **Modify data in a CSV file**
 
 ```php
