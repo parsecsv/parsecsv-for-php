@@ -797,6 +797,7 @@ class Csv {
         $entry = array();
 
         // create heading
+        /** @noinspection ReferenceMismatchInspection */
         $fieldOrder = $this->_validate_fields_for_unparse($fields);
         if (!$fieldOrder && !empty($data)) {
             $column_count = count($data[0]);
