@@ -369,12 +369,10 @@ class Csv {
         }
 
         if (empty($input)) {
-            // todo: but why true?
-            return true;
+            return false;
         }
 
         $this->init($offset, $limit, $conditions);
-
 
         if (strlen($input) <= PHP_MAXPATHLEN && is_readable($input)) {
             $this->file = $input;
@@ -385,12 +383,7 @@ class Csv {
             $this->data = $this->parse_string();
         }
 
-        if ($this->data === false) {
-            return false;
-        }
-
-        return true;
-
+        return $this->data !== false;
     }
 
     /**
