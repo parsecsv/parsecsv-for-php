@@ -298,14 +298,15 @@ class Csv {
      * Class constructor
      *
      * @param  string|null  $input          The CSV string or a direct filepath
-     * @param  integer|null $offset         Number of rows to ignore from the beginning
-     *                                      of  the data
-     * @param  integer|null $limit          Limits the number of returned rows to
-     *                                      specified amount
+     * @param  integer|null $offset         Number of rows to ignore from the
+     *                                      beginning of  the data
+     * @param  integer|null $limit          Limits the number of returned rows
+     *                                      to specified amount
      * @param  string|null  $conditions     Basic SQL-like conditions for row
      *                                      matching
      * @param  null|true    $keep_file_data Keep raw file data in memory after
-     *                                      successful parsing (useful for debugging)
+     *                                      successful parsing
+     *                                      (useful for debugging)
      */
     public function __construct($input = null, $offset = null, $limit = null, $conditions = null, $keep_file_data = null) {
         $this->init($offset, $limit, $conditions, $keep_file_data);
@@ -316,14 +317,15 @@ class Csv {
     }
 
     /**
-     * @param  integer|null $offset         Number of rows to ignore from the beginning
-     *                                      of  the data
-     * @param  integer|null $limit          Limits the number of returned rows to
-     *                                      specified amount
+     * @param  integer|null $offset         Number of rows to ignore from the
+     *                                      beginning of  the data
+     * @param  integer|null $limit          Limits the number of returned rows
+     *                                      to specified amount
      * @param  string|null  $conditions     Basic SQL-like conditions for row
      *                                      matching
      * @param  null|true    $keep_file_data Keep raw file data in memory after
-     *                                      successful parsing (useful for debugging)
+     *                                      successful parsing
+     *                                      (useful for debugging)
      */
     public function init($offset = null, $limit = null, $conditions = null, $keep_file_data = null) {
         if (!is_null($offset)) {
@@ -352,9 +354,12 @@ class Csv {
      * Parse a CSV file or string
      *
      * @param  string|null $input      The CSV string or a direct filepath
-     * @param  integer     $offset     Number of rows to ignore from the beginning of  the data
-     * @param  integer     $limit      Limits the number of returned rows to specified amount
-     * @param  string      $conditions Basic SQL-like conditions for row matching
+     * @param  integer     $offset     Number of rows to ignore from the
+     *                                 beginning of  the data
+     * @param  integer     $limit      Limits the number of returned rows to
+     *                                 specified amount
+     * @param  string      $conditions Basic SQL-like conditions for row
+     *                                 matching
      *
      * @return bool True on success
      */
@@ -394,8 +399,10 @@ class Csv {
      *
      * @param  string $file   File location to save to
      * @param  array  $data   2D array of data
-     * @param  bool   $append Append current data to end of target CSV, if file exists
-     * @param  array  $fields Field names. Sets the header. If it is not set $this->titles would be used instead.
+     * @param  bool   $append Append current data to end of target CSV, if file
+     *                        exists
+     * @param  array  $fields Field names. Sets the header. If it is not set
+     *                        $this->titles would be used instead.
      *
      * @return bool
      */
@@ -417,7 +424,10 @@ class Csv {
      * @param  string|null $filename   If a filename is specified here or in the
      *                                 object, headers and data will be output
      *                                 directly to browser as a downloadable
-     *                                 file.
+     *                                 file. This file doesn't have to exist on
+     *                                 the server; the parameter only affects
+     *                                 how the download is called to the
+     *                                 browser.
      * @param  array[]     $data       2D array with data
      * @param  array       $fields     Field names
      * @param  string|null $delimiter  character used to separate data
@@ -525,8 +535,8 @@ class Csv {
     }
 
     /**
-     * Get total number of data rows (exclusive heading line if present) in csv
-     * without parsing whole data.
+     * Get total number of data rows (exclusive heading line if present) in CSV
+     * without parsing the whole data string.
      *
      * @return bool|int
      */
