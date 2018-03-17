@@ -549,9 +549,10 @@ class Csv {
 
         $this->_detect_and_remove_sep_row_from_data($data);
 
-        $pattern = sprintf('/(%1$s[^%1$s]*%1$s)/i', $this->enclosure);
+        $pattern = sprintf('/%1$s[^%1$s]*%1$s/i', $this->enclosure);
         preg_match_all($pattern, $data, $matches);
 
+        /** @var array[] $matches */
         foreach ($matches[0] as $match) {
             if (empty($match) || (strpos($match, $this->enclosure) === false)) {
                 continue;
