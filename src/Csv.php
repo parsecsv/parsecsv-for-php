@@ -1017,16 +1017,14 @@ class Csv {
             $op = $capture[2];
             $value = $capture[3];
 
-            if (preg_match('/^([\'\"]{1})(.*)([\'\"]{1})$/', $value, $capture)) {
-                if ($capture[1] == $capture[3]) {
-                    $value = strtr($capture[2], array(
-                        "\\n" => "\n",
-                        "\\r" => "\r",
-                        "\\t" => "\t",
-                    ));
+            if (preg_match('/^([\'\"]{1})(.*)([\'\"]{1})$/', $value, $capture) && $capture[1] == $capture[3]) {
+                $value = strtr($capture[2], array(
+                    "\\n" => "\n",
+                    "\\r" => "\r",
+                    "\\t" => "\t",
+                ));
 
-                    $value = stripslashes($value);
-                }
+                $value = stripslashes($value);
             }
 
             if (array_key_exists($field, $row)) {
