@@ -2,12 +2,13 @@
 
 namespace ParseCsv;
 
+use ParseCsv\enums\FileProcessingModeEnum;
+use ParseCsv\enums\SortEnum;
 use ParseCsv\extensions\DatatypeTrait;
 
 class Csv {
 
     /*
-    Class: ParseCSV 1.0.0-rc.2
     https://github.com/parsecsv/parsecsv-for-php
 
     Fully conforms to the specifications lined out on Wikipedia:
@@ -89,7 +90,7 @@ class Csv {
      *
      * @var string|null
      */
-    public $sort_type = null;
+    public $sort_type = SortEnum::SORT_TYPE_REGULAR;
 
     /**
      * Delimiter
@@ -299,12 +300,34 @@ class Csv {
      * Class constructor
      *
      * @param  string|null  $input          The CSV string or a direct filepath
-     * @param  integer|null $offset         Number of rows to ignore from the beginning of  the data
-     * @param  integer|null $limit          Limits the number of returned rows to specified amount
-     * @param  string|null  $conditions     Basic SQL-like conditions for row matching
-     * @param  null|true    $keep_file_data Keep raw file data in memory after successful parsing (useful for debugging)
+     * @param  integer|null $offset         Number of rows to ignore from the beginning
+     *                                      of  the data
+     * @param  integer|null $limit          Limits the number of returned rows to
+     *                                      specified amount
+     * @param  string|null  $conditions     Basic SQL-like conditions for row
+     *                                      matching
+     * @param  null|true    $keep_file_data Keep raw file data in memory after
+     *                                      successful parsing (useful for debugging)
      */
     public function __construct($input = null, $offset = null, $limit = null, $conditions = null, $keep_file_data = null) {
+        $this->init($offset, $limit, $conditions, $keep_file_data);
+
+        if (!empty($input)) {
+            $this->parse($input);
+        }
+    }
+
+    /**
+     * @param  integer|null $offset         Number of rows to ignore from the beginning
+     *                                      of  the data
+     * @param  integer|null $limit          Limits the number of returned rows to
+     *                                      specified amount
+     * @param  string|null  $conditions     Basic SQL-like conditions for row
+     *                                      matching
+     * @param  null|true    $keep_file_data Keep raw file data in memory after
+     *                                      successful parsing (useful for debugging)
+     */
+    public function init($offset = null, $limit = null, $conditions = null, $keep_file_data = null) {
         if (!is_null($offset)) {
             $this->offset = $offset;
         }
@@ -319,10 +342,6 @@ class Csv {
 
         if (!is_null($keep_file_data)) {
             $this->keep_file_data = $keep_file_data;
-        }
-
-        if (!empty($input)) {
-            $this->parse($input);
         }
     }
 
@@ -346,32 +365,29 @@ class Csv {
             $input = $this->file;
         }
 
-        if (!empty($input)) {
-            if (!is_null($offset)) {
-                $this->offset = $offset;
-            }
+        if (empty($input)) {
+            // todo: but why true?
+            return true;
+        }
 
-            if (!is_null($limit)) {
-                $this->limit = $limit;
-            }
+        $this->init($offset, $limit, $conditions);
 
-            if (!is_null($conditions)) {
-                $this->conditions = $conditions;
-            }
 
-            if (strlen($input) <= PHP_MAXPATHLEN && is_readable($input)) {
-                $this->data = $this->parse_file($input);
-            } else {
-                $this->file_data = &$input;
-                $this->data = $this->parse_string();
-            }
+        if (strlen($input) <= PHP_MAXPATHLEN && is_readable($input)) {
+            $this->file = $input;
+            $this->data = $this->parse_file();
+        } else {
+            $this->file = null;
+            $this->file_data = &$input;
+            $this->data = $this->parse_string();
+        }
 
-            if ($this->data === false) {
-                return false;
-            }
+        if ($this->data === false) {
+            return false;
         }
 
         return true;
+
     }
 
     /**
@@ -381,16 +397,16 @@ class Csv {
      * @param  string $file   File location to save to
      * @param  array  $data   2D array of data
      * @param  bool   $append Append current data to end of target CSV, if file exists
-     * @param  array  $fields Field names
+     * @param  array  $fields Field names. Sets the header. If it is not set $this->titles would be used instead.
      *
      * @return bool
      */
-    public function save($file = '', $data = array(), $append = false, $fields = array()) {
+    public function save($file = '', $data = array(), $append = FileProcessingModeEnum::MODE_FILE_OVERWRITE, $fields = array()) {
         if (empty($file)) {
             $file = &$this->file;
         }
 
-        $mode = $append ? 'ab' : 'wb';
+        $mode = FileProcessingModeEnum::getAppendMode($append);
         $is_php = preg_match('/\.php$/i', $file) ? true : false;
 
         return $this->_wfile($file, $this->unparse($data, $fields, $append, $is_php), $mode);
@@ -510,6 +526,44 @@ class Csv {
         return $this->delimiter;
     }
 
+    /**
+     * Get total number of data rows (exclusive heading line if present) in csv
+     * without parsing whole data.
+     *
+     * @return bool|int
+     */
+    public function getTotalDataRowCount() {
+        if (empty($this->file_data)) {
+            return false;
+        }
+
+        $data = $this->file_data;
+
+        $this->_detect_and_remove_sep_row_from_data($data);
+
+        $pattern = sprintf('/(%1$s[^%1$s]*%1$s)/i', $this->enclosure);
+        preg_match_all($pattern, $data, $matches);
+
+        foreach ($matches[0] as $match) {
+            if (empty($match) || (strpos($match, $this->enclosure) === false)) {
+                continue;
+            }
+
+            $replace = str_replace(["\r", "\n"], '', $match);
+            $data = str_replace($match, $replace, $data);
+        }
+
+        $headingRow = $this->heading ? 1 : 0;
+
+        $count = substr_count($data, "\r")
+            + substr_count($data, "\n")
+            - substr_count($data, "\r\n")
+            - $headingRow;
+
+
+        return $count;
+    }
+
     // ==============================================
     // ----- [ Core Functions ] ---------------------
     // ==============================================
@@ -522,7 +576,7 @@ class Csv {
      *
      * @return array|bool
      */
-    public function parse_file($file = null) {
+    protected function parse_file($file = null) {
         if (is_null($file)) {
             $file = $this->file;
         }
@@ -545,7 +599,7 @@ class Csv {
      *
      * @return array|false - 2D array with CSV data, or false on failure
      */
-    public function parse_string($data = null) {
+    protected function parse_string($data = null) {
         if (empty($data)) {
             if ($this->_check_data()) {
                 $data = &$this->file_data;
@@ -696,13 +750,7 @@ class Csv {
 
         $this->titles = $head;
         if (!empty($this->sort_by)) {
-            $sort_type = SORT_REGULAR;
-            if ($this->sort_type == 'numeric') {
-                $sort_type = SORT_NUMERIC;
-            } elseif ($this->sort_type == 'string') {
-                $sort_type = SORT_STRING;
-            }
-
+            $sort_type = SortEnum::getSorting($this->sort_type);
             $this->sort_reverse ? krsort($rows, $sort_type) : ksort($rows, $sort_type);
 
             if ($this->offset !== null || $this->limit !== null) {
@@ -730,7 +778,7 @@ class Csv {
      *
      * @return string CSV data
      */
-    public function unparse($data = array(), $fields = array(), $append = false, $is_php = false, $delimiter = null) {
+    public function unparse($data = array(), $fields = array(), $append = FileProcessingModeEnum::MODE_FILE_OVERWRITE, $is_php = false, $delimiter = null) {
         if (!is_array($data) || empty($data)) {
             $data = &$this->data;
         }
@@ -747,8 +795,15 @@ class Csv {
         $entry = array();
 
         // create heading
+        $fieldOrder = $this->_validate_fields_for_unparse($fields);
+        if (!$fieldOrder && !empty($data)) {
+            $column_count = count($data[0]);
+            $columns = range(0, $column_count - 1, 1);
+            $fieldOrder = array_combine($columns, $columns);
+        }
+
         if ($this->heading && !$append && !empty($fields)) {
-            foreach ($fields as $key => $column_name) {
+            foreach ($fieldOrder as $column_name) {
                 $entry[] = $this->_enclose_value($column_name, $delimiter);
             }
 
@@ -758,7 +813,8 @@ class Csv {
 
         // create data
         foreach ($data as $key => $row) {
-            foreach ($row as $cell_value) {
+            foreach (array_keys($fieldOrder) as $index){
+                $cell_value = $row[$index];
                 $entry[] = $this->_enclose_value($cell_value, $delimiter);
             }
 
@@ -771,6 +827,42 @@ class Csv {
         }
 
         return $string;
+    }
+
+    private function _validate_fields_for_unparse($fields){
+        // this is needed because sometime titles property is overwritten instead of using fields parameter!
+        $titlesOnParse = !empty($this->data) ? array_keys($this->data[0]) : array();
+        if (empty($fields)){
+            $fields = $this->titles;
+        }
+
+        if (empty($fields)){
+            return array();
+        }
+
+        // both are identical, also in ordering
+        if (array_values($fields) === array_values($titlesOnParse)){
+            return array_combine($fields, $fields);
+        }
+
+        // if renaming given by: $oldName => $newName (maybe with reorder and / or subset):
+        // todo: this will only work if titles are unique
+        $fieldOrder = array_intersect(array_flip($fields), $titlesOnParse);
+        if (!empty($fieldOrder)) {
+            return array_flip($fieldOrder);
+        }
+
+        $fieldOrder = array_intersect($fields, $titlesOnParse);
+        if (!empty($fieldOrder)) {
+            return array_combine($fieldOrder, $fieldOrder);
+        }
+
+        // original titles are not given in fields. that is okay if count is okay.
+        if (count($fields) != count($titlesOnParse)) {
+            throw new \UnexpectedValueException('The specified fields do not match any titles and do not match column count.');
+        }
+
+        return array_combine($titlesOnParse, $fields);
     }
 
     /**
@@ -885,12 +977,19 @@ class Csv {
      */
     protected function _validate_row_condition($row, $condition) {
         $operators = array(
-            '=', 'equals', 'is',
-            '!=', 'is not',
-            '<', 'is less than',
-            '>', 'is greater than',
-            '<=', 'is less than or equals',
-            '>=', 'is greater than or equals',
+            '=',
+            'equals',
+            'is',
+            '!=',
+            'is not',
+            '<',
+            'is less than',
+            '>',
+            'is greater than',
+            '<=',
+            'is less than or equals',
+            '>=',
+            'is greater than or equals',
             'contains',
             'does not contain',
         );

@@ -12,6 +12,23 @@ and third-party support for handling CSV data in PHP.
 
 [csv]: http://en.wikipedia.org/wiki/Comma-separated_values
 
+## Features
+
+* ParseCsv is a complete and fully featured CSV solution for PHP
+* Supports enclosed values, enclosed commas, double quotes and new lines.
+* Automatic delimiter character detection.
+* Sort data by specific fields/columns.
+* Easy data manipulation.
+* Basic SQL-like _conditions_, _offset_ and _limit_ options for filtering
+  data.
+* Error detection for incorrectly formatted input. It attempts to be
+  intelligent, but can not be trusted 100% due to the structure of CSV, and
+  how different programs like Excel for example outputs CSV data.
+* Support for character encoding conversion using PHP's
+  `iconv()` and `mb_convert_encoding()` functions.
+* Supports PHP 5.4 and higher.
+  It certainly works with PHP 7.2 and all versions in between.
+
 ## Installation
 
 Installation is easy using Composer. Just run the following on the
@@ -32,23 +49,6 @@ Not recommended, but technically possible: you can also clone the
 repository or extract the
 [ZIP](https://github.com/parsecsv/parsecsv-for-php/archive/master.zip).
 To use ParseCSV, you then have to add a `require 'parsecsv.lib.php';` line.
-
-## Features
-
-* ParseCsv is a complete and fully featured CSV solution for PHP
-* Supports enclosed values, enclosed commas, double quotes and new lines.
-* Automatic delimiter character detection.
-* Sort data by specific fields/columns.
-* Easy data manipulation.
-* Basic SQL-like _conditions_, _offset_ and _limit_ options for filtering
-  data.
-* Error detection for incorrectly formatted input. It attempts to be
-  intelligent, but can not be trusted 100% due to the structure of CSV, and
-  how different programs like Excel for example outputs CSV data.
-* Support for character encoding conversion using PHP's
-  `iconv()` and `mb_convert_encoding()` functions.
-* Supports PHP 5.4 and higher.
-  It certainly works with PHP 7.2 and all versions in between.
 
 ## Example Usage
 
@@ -75,6 +75,40 @@ print_r($csv->data);
 $csv = new ParseCsv\Csv();
 $csv->auto('data.csv');
 print_r($csv->data);
+```
+
+**Parse data with offset**
+* ignoring the first X (e.g. two) rows
+```php
+$csv = new ParseCsv\Csv();
+$csv->offset = 2;
+$csv->parse('data.csv');
+print_r($csv->data);
+```
+
+**Limit the number of returned data rows**
+```php
+$csv = new ParseCsv\Csv();
+$csv->limit = 5;
+$csv->parse('data.csv');
+print_r($csv->data);
+```
+
+**Get total number of data rows without parsing whole data**
+* Excluding heading line if present (see $csv->header property)
+```php
+$csv = new ParseCsv\Csv();
+$csv->load_data('data.csv');
+$count = $csv->getTotalRowCount();
+print_r($count);
+```
+
+**Get most common data type for each column (Requires PHP >= 5.5)**
+
+```php
+$csv = new ParseCsv\Csv('data.csv');
+$csv->getDatatypes()
+print_r($csv->data_types);
 ```
 
 **Modify data in a CSV file**

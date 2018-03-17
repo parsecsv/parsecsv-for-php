@@ -1,6 +1,16 @@
-ParseCSV 1.0.0-rc.2
+ParseCSV dev-master
 -----------------------------------
 Date: unreleased
+
+- New function getTotalDataRowCount() - useful if
+  $limit is set - see pull request #122.
+
+-----------------------------------
+
+
+ParseCSV 1.0.0
+-----------------------------------
+Date: 3-March-2018
 
 - Renamed class from parseCSV to Csv and added name-
   space "ParseCsv" for PSR compliance.
@@ -8,10 +18,18 @@ Date: unreleased
 - Added support for MS Excel's "sep=" to detect the
   delimiter (Issue #60).
 
-- Added support for mb_convert_encoding() instead of
-  iconv() - see issue #109
+- Added data type detection - function getDatatypes()
+  guesses the type of each column.
 
-- A number of minor bug fixes - see GitHub issues
+- MIME: output() sends correct MIME type to browser
+  if the separator is a tab tab (Issue #79).
+
+- Added support for mb_convert_encoding() instead of
+  iconv() - see issue #109.
+
+- A number of minor bug fixes - see GitHub issues.
+
+- Added many more unit tests.
 
 -----------------------------------
 
