@@ -154,31 +154,6 @@ class ParseTest extends TestCase {
         $this->assertEquals($expected, $this->csv->data_types);
     }
 
-
-    public function testDataArrayKeysWhenSettingOffsetWithHeading() {
-        $this->csv->offset = 2;
-        $this->csv->auto(__DIR__ . '/fixtures/datatype.csv');
-        $expected = [
-            'title',
-            'isbn',
-            'publishedAt',
-            'published',
-            'count',
-            'price'
-        ];
-
-        $this->assertEquals($expected, array_keys($this->csv->data[0]));
-    }
-
-    public function testDataArrayKeysWhenSettingOffsetWithoutHeading() {
-        $this->csv->heading = false;
-        $this->csv->offset = 2;
-        $this->csv->auto(__DIR__ . '/fixtures/datatype.csv');
-        $expected = range(0, 5, 1);
-
-        $this->assertEquals($expected, array_keys($this->csv->data[0]));
-    }
-
     /**
      * @depends testSepRowAutoDetection
      */
@@ -205,7 +180,6 @@ class ParseTest extends TestCase {
         $sInput = "86545235689\r\n34365587654\r\n13469874576";
         $this->csv->auto($sInput);
         $this->assertFalse($this->csv->autoDetectFileHasHeading());
-
     }
 
     protected function _get_magazines_data() {
