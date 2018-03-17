@@ -811,7 +811,7 @@ class Csv {
 
         // create data
         foreach ($data as $key => $row) {
-            foreach (array_keys($fieldOrder) as $index){
+            foreach (array_keys($fieldOrder) as $index) {
                 $cell_value = $row[$index];
                 $entry[] = $this->_enclose_value($cell_value, $delimiter);
             }
@@ -827,19 +827,19 @@ class Csv {
         return $string;
     }
 
-    private function _validate_fields_for_unparse($fields){
+    private function _validate_fields_for_unparse($fields) {
         // this is needed because sometime titles property is overwritten instead of using fields parameter!
         $titlesOnParse = !empty($this->data) ? array_keys($this->data[0]) : array();
-        if (empty($fields)){
+        if (empty($fields)) {
             $fields = $this->titles;
         }
 
-        if (empty($fields)){
+        if (empty($fields)) {
             return array();
         }
 
         // both are identical, also in ordering
-        if (array_values($fields) === array_values($titlesOnParse)){
+        if (array_values($fields) === array_values($titlesOnParse)) {
             return array_combine($fields, $fields);
         }
 
