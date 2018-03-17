@@ -857,7 +857,10 @@ class Csv {
 
         // original titles are not given in fields. that is okay if count is okay.
         if (count($fields) != count($titlesOnParse)) {
-            throw new \UnexpectedValueException('The specified fields do not match any titles and do not match column count.');
+            throw new \UnexpectedValueException(
+                "The specified fields do not match any titles and do not match column count.\n" .
+                "\$fields was " . print_r($fields, true) .
+                "\$titlesOnParse was " . print_r($titlesOnParse, true));
         }
 
         return array_combine($titlesOnParse, $fields);
