@@ -783,6 +783,9 @@ class Csv {
     public function unparse($data = array(), $fields = array(), $append = FileProcessingModeEnum::MODE_FILE_OVERWRITE, $is_php = false, $delimiter = null) {
         if (!is_array($data) || empty($data)) {
             $data = &$this->data;
+        } else {
+            /** @noinspection ReferenceMismatchInspection */
+            $this->data = $data;
         }
 
         if (!is_array($fields) || empty($fields)) {
@@ -833,8 +836,6 @@ class Csv {
     }
 
     private function _validate_fields_for_unparse($fields) {
-        // this is needed because sometime titles property is overwritten instead of using fields parameter!
-        $titlesOnParse = !empty($this->data) ? array_keys($this->data[0]) : array();
         if (empty($fields)) {
             $fields = $this->titles;
         }
@@ -842,6 +843,9 @@ class Csv {
         if (empty($fields)) {
             return array();
         }
+
+        // this is needed because sometime titles property is overwritten instead of using fields parameter!
+        $titlesOnParse = !empty($this->data) ? array_keys($this->data[0]) : array();
 
         // both are identical, also in ordering
         if (array_values($fields) === array_values($titlesOnParse)) {
