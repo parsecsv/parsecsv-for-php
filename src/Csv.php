@@ -2,6 +2,7 @@
 
 namespace ParseCsv;
 
+use Illuminate\Support\Collection;
 use ParseCsv\enums\FileProcessingModeEnum;
 use ParseCsv\enums\SortEnum;
 use ParseCsv\extensions\DatatypeTrait;
@@ -16,7 +17,6 @@ class Csv {
 
     Based on the concept of Ming Hong Ng's CsvFileParser class:
     - http://minghong.blogspot.com/2006/07/csv-parser-for-php.html
-
 
     (The MIT license)
 
@@ -372,7 +372,6 @@ class Csv {
 
         $this->init($offset, $limit, $conditions);
 
-
         if (strlen($input) <= PHP_MAXPATHLEN && is_readable($input)) {
             $this->file = $input;
             $this->data = $this->parse_file();
@@ -559,7 +558,6 @@ class Csv {
             + substr_count($data, "\n")
             - substr_count($data, "\r\n")
             - $headingRow;
-
 
         return $count;
     }
@@ -813,7 +811,7 @@ class Csv {
 
         // create data
         foreach ($data as $key => $row) {
-            foreach (array_keys($fieldOrder) as $index){
+            foreach (array_keys($fieldOrder) as $index) {
                 $cell_value = $row[$index];
                 $entry[] = $this->_enclose_value($cell_value, $delimiter);
             }
@@ -829,19 +827,19 @@ class Csv {
         return $string;
     }
 
-    private function _validate_fields_for_unparse($fields){
+    private function _validate_fields_for_unparse($fields) {
         // this is needed because sometime titles property is overwritten instead of using fields parameter!
         $titlesOnParse = !empty($this->data) ? array_keys($this->data[0]) : array();
-        if (empty($fields)){
+        if (empty($fields)) {
             $fields = $this->titles;
         }
 
-        if (empty($fields)){
+        if (empty($fields)) {
             return array();
         }
 
         // both are identical, also in ordering
-        if (array_values($fields) === array_values($titlesOnParse)){
+        if (array_values($fields) === array_values($titlesOnParse)) {
             return array_combine($fields, $fields);
         }
 
@@ -1196,7 +1194,7 @@ class Csv {
      * first line containing only "sep=;", where the last character is the
      * separator. Microsoft Excel is able to open such files.
      *
-     * @param string $data    file data
+     * @param string $data file data
      *
      * @return string|false detected delimiter, or false if none found
      */
@@ -1214,7 +1212,7 @@ class Csv {
     /**
      * Support for Excel-compatible sep=? row.
      *
-     * @param string $data_string    file data to be updated
+     * @param string $data_string file data to be updated
      *
      * @return bool TRUE if sep= line was found at the very beginning of the file
      */
@@ -1309,5 +1307,30 @@ class Csv {
         // capture most probable delimiter
         ksort($filtered);
         $this->delimiter = reset($filtered);
+    }
+
+    /**
+     * getCollection
+     * Returns a Illuminate/Collection object
+     * This may prove to be helpful to people who want to
+     * create macros, and or use map functions
+     *
+     * @access public
+     * @link   https://laravel.com/docs/5.6/collections
+     *
+     * @throws \ErrorException - If the Illuminate\Support\Collection class is not found
+     *
+     * @return Collection
+     */
+    public function getCollection() {
+        //does the Illuminate\Support\Collection class exists?
+        //this uses the autoloader to try to determine
+        //@see http://php.net/manual/en/function.class-exists.php
+        if (class_exists('Illuminate\Support\Collection', true) == false) {
+            throw new \ErrorException('It would appear you have not installed the illuminate/support package!');
+        }
+
+        //return the collection
+        return new Collection($this->data);
     }
 }
