@@ -2,6 +2,7 @@
 
 namespace ParseCsv;
 
+use Illuminate\Support\Collection;
 use ParseCsv\enums\FileProcessingModeEnum;
 use ParseCsv\enums\SortEnum;
 use ParseCsv\extensions\DatatypeTrait;
@@ -16,7 +17,6 @@ class Csv {
 
     Based on the concept of Ming Hong Ng's CsvFileParser class:
     - http://minghong.blogspot.com/2006/07/csv-parser-for-php.html
-
 
     (The MIT license)
 
@@ -563,7 +563,6 @@ class Csv {
             + substr_count($data, "\n")
             - substr_count($data, "\r\n")
             - $headingRow;
-
 
         return $count;
     }
@@ -1206,7 +1205,7 @@ class Csv {
      * first line containing only "sep=;", where the last character is the
      * separator. Microsoft Excel is able to open such files.
      *
-     * @param string $data    file data
+     * @param string $data file data
      *
      * @return string|false detected delimiter, or false if none found
      */
@@ -1224,7 +1223,7 @@ class Csv {
     /**
      * Support for Excel-compatible sep=? row.
      *
-     * @param string $data_string    file data to be updated
+     * @param string $data_string file data to be updated
      *
      * @return bool TRUE if sep= line was found at the very beginning of the file
      */
@@ -1319,5 +1318,30 @@ class Csv {
         // capture most probable delimiter
         ksort($filtered);
         $this->delimiter = reset($filtered);
+    }
+
+    /**
+     * getCollection
+     * Returns a Illuminate/Collection object
+     * This may prove to be helpful to people who want to
+     * create macros, and or use map functions
+     *
+     * @access public
+     * @link   https://laravel.com/docs/5.6/collections
+     *
+     * @throws \ErrorException - If the Illuminate\Support\Collection class is not found
+     *
+     * @return Collection
+     */
+    public function getCollection() {
+        //does the Illuminate\Support\Collection class exists?
+        //this uses the autoloader to try to determine
+        //@see http://php.net/manual/en/function.class-exists.php
+        if (class_exists('Illuminate\Support\Collection', true) == false) {
+            throw new \ErrorException('It would appear you have not installed the illuminate/support package!');
+        }
+
+        //return the collection
+        return new Collection($this->data);
     }
 }

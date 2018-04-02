@@ -58,8 +58,9 @@ class ConstructTest extends TestCase {
             ob_start();
             /** @noinspection PhpIncludeInspection */
             require $script_file;
+            $ob_get_clean = ob_get_clean();
             if ($script_file != 'download.php') {
-                $this->assertContains('<td>', ob_get_clean());
+                $this->assertContains('<td>', $ob_get_clean);
             }
         }
         chdir('..');
