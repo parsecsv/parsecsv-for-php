@@ -7,6 +7,10 @@ Date: unreleased
 
 - Dropped support for PHP 5.4
 
+- Added support for Laravel-style collections via the
+  new getCollection() function - see
+  https://github.com/parsecsv/parsecsv-for-php/pull/134
+
 -----------------------------------
 
 
