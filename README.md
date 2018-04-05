@@ -99,7 +99,7 @@ print_r($csv->data);
 ```php
 $csv = new ParseCsv\Csv();
 $csv->load_data('data.csv');
-$count = $csv->getTotalRowCount();
+$count = $csv->getTotalDataRowCount();
 print_r($count);
 ```
 
