@@ -1,4 +1,5 @@
 <?php
+
 namespace ParseCsv\tests\methods;
 
 use ParseCsv\Csv;
@@ -6,6 +7,7 @@ use PHPUnit\Framework\TestCase;
 
 
 class UnparseTest extends Testcase {
+
     /** @var Csv */
     private $csv;
 
@@ -17,12 +19,31 @@ class UnparseTest extends Testcase {
         $this->csv->auto(__DIR__ . '/fixtures/auto-double-enclosure.csv');
     }
 
+    public function testUnparseWithParameters() {
+        $fields = array('a' => 'AA', 'b' => 'BB');
+        $data = [['a' => 'value1', 'b' => 'value2']];
+        $csv_object = new Csv();
+        $csv_string = $csv_object->unparse($data, $fields);
+        $this->assertEquals("AA,BB\rvalue1,value2\r", $csv_string);
+
+        $csv_object = new Csv();
+        $csv_object->linefeed = "\n";
+        $csv_string = $csv_object->unparse([[55, 66]]);
+        $this->assertEquals("55,66\n", $csv_string);
+
+        $csv_object = new Csv();
+        $data2 = [['a' => "multi\rline", 'b' => 'value2']];
+        $csv_object->enclosure = "'";
+        $csv_string = $csv_object->unparse($data2, $fields);
+        $this->assertEquals("AA,BB\r'multi\rline',value2\r", $csv_string);
+    }
+
     public function testUnparseDefault() {
         $expected = "column1,column2\rvalue1,value2\rvalue3,value4\r";
         $this->unparseAndCompare($expected);
     }
 
-    public function testUnparseDefaultWithoutHeading(){
+    public function testUnparseDefaultWithoutHeading() {
         $this->csv->heading = false;
         $this->csv->auto(__DIR__ . '/fixtures/auto-double-enclosure.csv');
         $expected = "column1,column2\rvalue1,value2\rvalue3,value4\r";
