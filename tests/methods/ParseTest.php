@@ -22,13 +22,13 @@ class ParseTest extends TestCase {
         $this->csv = new Csv();
     }
 
-    public function test_parse() {
+    public function testParse() {
         // can we trick 'is_readable' into whining? See #67.
-        $this->parse_repetitive_string('c:/looks/like/a/path');
-        $this->parse_repetitive_string('http://looks/like/an/url');
+        $this->parseRepetitiveString('c:/looks/like/a/path');
+        $this->parseRepetitiveString('http://looks/like/an/url');
     }
 
-    private function parse_repetitive_string($content) {
+    private function parseRepetitiveString($content) {
         $this->csv->delimiter = ';';
         $this->csv->heading = false;
         $success = $this->csv->parse(str_repeat($content . ';', 500));
@@ -41,9 +41,11 @@ class ParseTest extends TestCase {
     }
 
     /**
-     * @depends      test_parse
+     * @depends      testParse
      *
      * @dataProvider autoDetectionProvider
+     *
+     * @param string $file
      */
     public function testSepRowAutoDetection($file) {
         // This file (parse_test.php) is encoded in UTF-8, hence comparison will
@@ -96,7 +98,7 @@ class ParseTest extends TestCase {
         ], array_map('next', $actual_data));
     }
 
-    public function test_single_column() {
+    public function testSingleColumn() {
         $this->csv->auto(__DIR__ . '/../example_files/single_column.csv');
         $expected = [
             ['SMS' => '0444'],
@@ -107,7 +109,8 @@ class ParseTest extends TestCase {
         $this->assertEquals($expected, $this->csv->data);
     }
 
-    public function test_Piwik_data() {
+    public function testMatomoData() {
+        // Matomo (Piwik) export cannot be read with
         $this->csv->use_mb_convert_encoding = true;
         $this->csv->output_encoding = 'UTF-8';
         $this->csv->auto(__DIR__ . '/../example_files/Piwik_API_download.csv');
