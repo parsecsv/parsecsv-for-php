@@ -126,6 +126,25 @@ class ParseTest extends TestCase {
         ], $aCity);
     }
 
+    public function testWithMultipleNewlines() {
+        $this->csv->auto(__DIR__ . '/../example_files/multiple_empty_lines.csv');
+        $aElse9 = array_column($this->csv->data, 'else9');
+
+        /** @noinspection SpellCheckingInspection */
+        $this->assertEquals([
+            'Abweichung',
+            'Abweichung',
+            'Abweichung',
+            'Alt',
+            'Fehlt',
+            'Neu',
+            'OK',
+            'Fehlt',
+            'Fehlt',
+            'Fehlt',
+        ], $aElse9);
+    }
+
     /**
      * @depends testSepRowAutoDetection
      */
@@ -217,8 +236,7 @@ class ParseTest extends TestCase {
      *
      * @return mixed Method return.
      */
-    private function invokeMethod(&$object, $methodName, array $parameters = array())
-    {
+    private function invokeMethod(&$object, $methodName, array $parameters = array()) {
         $reflection = new \ReflectionClass(get_class($object));
         $method = $reflection->getMethod($methodName);
         $method->setAccessible(true);

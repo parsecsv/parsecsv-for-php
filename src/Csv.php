@@ -1170,7 +1170,7 @@ class Csv {
 
             $data = fread($fh, filesize($file));
             fclose($fh);
-            return $data;
+            return rtrim($data, "\r\n");
         }
 
         return false;
