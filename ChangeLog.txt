@@ -5,6 +5,12 @@ Date: unreleased
 - New function getTotalDataRowCount() - useful if
   $limit is set - see pull request #122.
 
+- Dropped support for PHP 5.4
+
+- Added support for Laravel-style collections via the
+  new getCollection() function - see
+  https://github.com/parsecsv/parsecsv-for-php/pull/134
+
 -----------------------------------
 
 
@@ -22,7 +28,7 @@ Date: 3-March-2018
   guesses the type of each column.
 
 - MIME: output() sends correct MIME type to browser
-  if the separator is a tab tab (Issue #79).
+  if the separator is a tab char (Issue #79).
 
 - Added support for mb_convert_encoding() instead of
   iconv() - see issue #109.

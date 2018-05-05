@@ -64,7 +64,6 @@ class DataRowCountTest extends TestCase {
         $this->assertEquals(3, $this->csv->getTotalDataRowCount());
     }
 
-
     public function testGetTotalRowCountSingleEnclosure() {
         $this->csv->heading = false;
         $this->csv->enclosure = "'";
@@ -73,4 +72,11 @@ class DataRowCountTest extends TestCase {
         $this->assertEquals(3, $this->csv->getTotalDataRowCount());
     }
 
+    public function testGetTotalRowCountSingleRow() {
+        $this->csv->heading = false;
+        $this->csv->enclosure = "'";
+        $sInput = "86545235689";
+        $this->csv->load_data($sInput);
+        $this->assertEquals(1, $this->csv->getTotalDataRowCount());
+    }
 }

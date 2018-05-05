@@ -15,8 +15,7 @@
     "autoload":{
         "psr-4":{
             "ParseCsv\\": "src",
-            "ParseCsv\\extensions\\": "src\\extensions",
-            "ParseCsv\\tests\\": "tests"
+            "ParseCsv\\extensions\\": "src\\extensions"
         }
     },
     "autoload-dev":{
@@ -24,7 +23,13 @@
             "ParseCsv\\tests\\": "tests"
         }
     },
+    "require": {
+        "php": ">=5.5"
+    },
     "require-dev": {
         "phpunit/phpunit": "4.1.*"
+    },
+    "suggest": {
+        "illuminate/support": "Fluent array interface for map functions"
     }
 }

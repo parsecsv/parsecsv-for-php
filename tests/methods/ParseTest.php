@@ -108,10 +108,6 @@ class ParseTest extends TestCase {
     }
 
     public function test_Piwik_data() {
-        if (!function_exists('array_column')) {
-            // function only available in PHP >= 5.5
-            return;
-        }
         $this->csv->use_mb_convert_encoding = true;
         $this->csv->output_encoding = 'UTF-8';
         $this->csv->auto(__DIR__ . '/../example_files/Piwik_API_download.csv');
@@ -134,12 +130,6 @@ class ParseTest extends TestCase {
      * @depends testSepRowAutoDetection
      */
     public function testGetColumnDatatypes() {
-        if (!function_exists('array_column')) {
-            // getDatatypes requires array_column, but that
-            // function is only available in PHP >= 5.5
-            return;
-        }
-
         $this->csv->auto(__DIR__ . '/fixtures/datatype.csv');
         $this->csv->getDatatypes();
         $expected = [
@@ -154,41 +144,10 @@ class ParseTest extends TestCase {
         $this->assertEquals($expected, $this->csv->data_types);
     }
 
-
-    public function testDataArrayKeysWhenSettingOffsetWithHeading() {
-        $this->csv->offset = 2;
-        $this->csv->auto(__DIR__ . '/fixtures/datatype.csv');
-        $expected = [
-            'title',
-            'isbn',
-            'publishedAt',
-            'published',
-            'count',
-            'price'
-        ];
-
-        $this->assertEquals($expected, array_keys($this->csv->data[0]));
-    }
-
-    public function testDataArrayKeysWhenSettingOffsetWithoutHeading() {
-        $this->csv->heading = false;
-        $this->csv->offset = 2;
-        $this->csv->auto(__DIR__ . '/fixtures/datatype.csv');
-        $expected = range(0, 5, 1);
-
-        $this->assertEquals($expected, array_keys($this->csv->data[0]));
-    }
-
     /**
      * @depends testSepRowAutoDetection
      */
-    public function testAutoDetectFileHasHeading(){
-        if (!function_exists('array_column')) {
-            // getDatatypes requires array_column, but that
-            // function is only available in PHP >= 5.5
-            return;
-        }
-
+    public function testAutoDetectFileHasHeading() {
         $this->csv->auto(__DIR__ . '/fixtures/datatype.csv');
         $this->assertTrue($this->csv->autoDetectFileHasHeading());
 
@@ -205,7 +164,6 @@ class ParseTest extends TestCase {
         $sInput = "86545235689\r\n34365587654\r\n13469874576";
         $this->csv->auto($sInput);
         $this->assertFalse($this->csv->autoDetectFileHasHeading());
-
     }
 
     protected function _get_magazines_data() {

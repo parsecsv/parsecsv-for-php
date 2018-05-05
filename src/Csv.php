@@ -2,6 +2,7 @@
 
 namespace ParseCsv;
 
+use Illuminate\Support\Collection;
 use ParseCsv\enums\FileProcessingModeEnum;
 use ParseCsv\enums\SortEnum;
 use ParseCsv\extensions\DatatypeTrait;
@@ -16,7 +17,6 @@ class Csv {
 
     Based on the concept of Ming Hong Ng's CsvFileParser class:
     - http://minghong.blogspot.com/2006/07/csv-parser-for-php.html
-
 
     (The MIT license)
 
@@ -126,7 +126,9 @@ class Csv {
 
     /**
      * Offset
-     * Number of rows to ignore from beginning of data
+     * Number of rows to ignore from beginning of data. If present, the heading
+     * row is also counted (if $this->heading == true). In other words,
+     * $offset == 1 and $offset == 0 have the same meaning in that situation.
      *
      * @var int|null
      */
@@ -298,14 +300,15 @@ class Csv {
      * Class constructor
      *
      * @param  string|null  $input          The CSV string or a direct filepath
-     * @param  integer|null $offset         Number of rows to ignore from the beginning
-     *                                      of  the data
-     * @param  integer|null $limit          Limits the number of returned rows to
-     *                                      specified amount
+     * @param  integer|null $offset         Number of rows to ignore from the
+     *                                      beginning of  the data
+     * @param  integer|null $limit          Limits the number of returned rows
+     *                                      to specified amount
      * @param  string|null  $conditions     Basic SQL-like conditions for row
      *                                      matching
      * @param  null|true    $keep_file_data Keep raw file data in memory after
-     *                                      successful parsing (useful for debugging)
+     *                                      successful parsing
+     *                                      (useful for debugging)
      */
     public function __construct($input = null, $offset = null, $limit = null, $conditions = null, $keep_file_data = null) {
         $this->init($offset, $limit, $conditions, $keep_file_data);
@@ -316,14 +319,15 @@ class Csv {
     }
 
     /**
-     * @param  integer|null $offset         Number of rows to ignore from the beginning
-     *                                      of  the data
-     * @param  integer|null $limit          Limits the number of returned rows to
-     *                                      specified amount
+     * @param  integer|null $offset         Number of rows to ignore from the
+     *                                      beginning of  the data
+     * @param  integer|null $limit          Limits the number of returned rows
+     *                                      to specified amount
      * @param  string|null  $conditions     Basic SQL-like conditions for row
      *                                      matching
      * @param  null|true    $keep_file_data Keep raw file data in memory after
-     *                                      successful parsing (useful for debugging)
+     *                                      successful parsing
+     *                                      (useful for debugging)
      */
     public function init($offset = null, $limit = null, $conditions = null, $keep_file_data = null) {
         if (!is_null($offset)) {
@@ -352,9 +356,12 @@ class Csv {
      * Parse a CSV file or string
      *
      * @param  string|null $input      The CSV string or a direct filepath
-     * @param  integer     $offset     Number of rows to ignore from the beginning of  the data
-     * @param  integer     $limit      Limits the number of returned rows to specified amount
-     * @param  string      $conditions Basic SQL-like conditions for row matching
+     * @param  integer     $offset     Number of rows to ignore from the
+     *                                 beginning of  the data
+     * @param  integer     $limit      Limits the number of returned rows to
+     *                                 specified amount
+     * @param  string      $conditions Basic SQL-like conditions for row
+     *                                 matching
      *
      * @return bool True on success
      */
@@ -364,12 +371,10 @@ class Csv {
         }
 
         if (empty($input)) {
-            // todo: but why true?
-            return true;
+            return false;
         }
 
         $this->init($offset, $limit, $conditions);
-
 
         if (strlen($input) <= PHP_MAXPATHLEN && is_readable($input)) {
             $this->file = $input;
@@ -380,12 +385,7 @@ class Csv {
             $this->data = $this->parse_string();
         }
 
-        if ($this->data === false) {
-            return false;
-        }
-
-        return true;
-
+        return $this->data !== false;
     }
 
     /**
@@ -394,8 +394,10 @@ class Csv {
      *
      * @param  string $file   File location to save to
      * @param  array  $data   2D array of data
-     * @param  bool   $append Append current data to end of target CSV, if file exists
-     * @param  array  $fields Field names. Sets the header. If it is not set $this->titles would be used instead.
+     * @param  bool   $append Append current data to end of target CSV, if file
+     *                        exists
+     * @param  array  $fields Field names. Sets the header. If it is not set
+     *                        $this->titles would be used instead.
      *
      * @return bool
      */
@@ -417,7 +419,10 @@ class Csv {
      * @param  string|null $filename   If a filename is specified here or in the
      *                                 object, headers and data will be output
      *                                 directly to browser as a downloadable
-     *                                 file.
+     *                                 file. This file doesn't have to exist on
+     *                                 the server; the parameter only affects
+     *                                 how the download is called to the
+     *                                 browser.
      * @param  array[]     $data       2D array with data
      * @param  array       $fields     Field names
      * @param  string|null $delimiter  character used to separate data
@@ -525,8 +530,8 @@ class Csv {
     }
 
     /**
-     * Get total number of data rows (exclusive heading line if present) in csv
-     * without parsing whole data.
+     * Get total number of data rows (exclusive heading line if present) in CSV
+     * without parsing the whole data string.
      *
      * @return bool|int
      */
@@ -539,9 +544,10 @@ class Csv {
 
         $this->_detect_and_remove_sep_row_from_data($data);
 
-        $pattern = sprintf('/(%1$s[^%1$s]*%1$s)/i', $this->enclosure);
+        $pattern = sprintf('/%1$s[^%1$s]*%1$s/i', $this->enclosure);
         preg_match_all($pattern, $data, $matches);
 
+        /** @var array[] $matches */
         foreach ($matches[0] as $match) {
             if (empty($match) || (strpos($match, $this->enclosure) === false)) {
                 continue;
@@ -557,7 +563,6 @@ class Csv {
             + substr_count($data, "\n")
             - substr_count($data, "\r\n")
             - $headingRow;
-
 
         return $count;
     }
@@ -779,6 +784,9 @@ class Csv {
     public function unparse($data = array(), $fields = array(), $append = FileProcessingModeEnum::MODE_FILE_OVERWRITE, $is_php = false, $delimiter = null) {
         if (!is_array($data) || empty($data)) {
             $data = &$this->data;
+        } else {
+            /** @noinspection ReferenceMismatchInspection */
+            $this->data = $data;
         }
 
         if (!is_array($fields) || empty($fields)) {
@@ -793,8 +801,16 @@ class Csv {
         $entry = array();
 
         // create heading
+        /** @noinspection ReferenceMismatchInspection */
+        $fieldOrder = $this->_validate_fields_for_unparse($fields);
+        if (!$fieldOrder && !empty($data)) {
+            $column_count = count($data[0]);
+            $columns = range(0, $column_count - 1, 1);
+            $fieldOrder = array_combine($columns, $columns);
+        }
+
         if ($this->heading && !$append && !empty($fields)) {
-            foreach ($fields as $key => $column_name) {
+            foreach ($fieldOrder as $column_name) {
                 $entry[] = $this->_enclose_value($column_name, $delimiter);
             }
 
@@ -804,7 +820,8 @@ class Csv {
 
         // create data
         foreach ($data as $key => $row) {
-            foreach ($row as $cell_value) {
+            foreach (array_keys($fieldOrder) as $index) {
+                $cell_value = $row[$index];
                 $entry[] = $this->_enclose_value($cell_value, $delimiter);
             }
 
@@ -817,6 +834,46 @@ class Csv {
         }
 
         return $string;
+    }
+
+    private function _validate_fields_for_unparse($fields) {
+        if (empty($fields)) {
+            $fields = $this->titles;
+        }
+
+        if (empty($fields)) {
+            return array();
+        }
+
+        // this is needed because sometime titles property is overwritten instead of using fields parameter!
+        $titlesOnParse = !empty($this->data) ? array_keys($this->data[0]) : array();
+
+        // both are identical, also in ordering
+        if (array_values($fields) === array_values($titlesOnParse)) {
+            return array_combine($fields, $fields);
+        }
+
+        // if renaming given by: $oldName => $newName (maybe with reorder and / or subset):
+        // todo: this will only work if titles are unique
+        $fieldOrder = array_intersect(array_flip($fields), $titlesOnParse);
+        if (!empty($fieldOrder)) {
+            return array_flip($fieldOrder);
+        }
+
+        $fieldOrder = array_intersect($fields, $titlesOnParse);
+        if (!empty($fieldOrder)) {
+            return array_combine($fieldOrder, $fieldOrder);
+        }
+
+        // original titles are not given in fields. that is okay if count is okay.
+        if (count($fields) != count($titlesOnParse)) {
+            throw new \UnexpectedValueException(
+                "The specified fields do not match any titles and do not match column count.\n" .
+                "\$fields was " . print_r($fields, true) .
+                "\$titlesOnParse was " . print_r($titlesOnParse, true));
+        }
+
+        return array_combine($titlesOnParse, $fields);
     }
 
     /**
@@ -961,16 +1018,14 @@ class Csv {
             $op = $capture[2];
             $value = $capture[3];
 
-            if (preg_match('/^([\'\"]{1})(.*)([\'\"]{1})$/', $value, $capture)) {
-                if ($capture[1] == $capture[3]) {
-                    $value = strtr($capture[2], array(
-                        "\\n" => "\n",
-                        "\\r" => "\r",
-                        "\\t" => "\t",
-                    ));
+            if (preg_match('/^([\'\"]{1})(.*)([\'\"]{1})$/', $value, $capture) && $capture[1] == $capture[3]) {
+                $value = strtr($capture[2], array(
+                    "\\n" => "\n",
+                    "\\r" => "\r",
+                    "\\t" => "\t",
+                ));
 
-                    $value = stripslashes($value);
-                }
+                $value = stripslashes($value);
             }
 
             if (array_key_exists($field, $row)) {
@@ -1150,7 +1205,7 @@ class Csv {
      * first line containing only "sep=;", where the last character is the
      * separator. Microsoft Excel is able to open such files.
      *
-     * @param string $data    file data
+     * @param string $data file data
      *
      * @return string|false detected delimiter, or false if none found
      */
@@ -1168,7 +1223,7 @@ class Csv {
     /**
      * Support for Excel-compatible sep=? row.
      *
-     * @param string $data_string    file data to be updated
+     * @param string $data_string file data to be updated
      *
      * @return bool TRUE if sep= line was found at the very beginning of the file
      */
@@ -1263,5 +1318,30 @@ class Csv {
         // capture most probable delimiter
         ksort($filtered);
         $this->delimiter = reset($filtered);
+    }
+
+    /**
+     * getCollection
+     * Returns a Illuminate/Collection object
+     * This may prove to be helpful to people who want to
+     * create macros, and or use map functions
+     *
+     * @access public
+     * @link   https://laravel.com/docs/5.6/collections
+     *
+     * @throws \ErrorException - If the Illuminate\Support\Collection class is not found
+     *
+     * @return Collection
+     */
+    public function getCollection() {
+        //does the Illuminate\Support\Collection class exists?
+        //this uses the autoloader to try to determine
+        //@see http://php.net/manual/en/function.class-exists.php
+        if (class_exists('Illuminate\Support\Collection', true) == false) {
+            throw new \ErrorException('It would appear you have not installed the illuminate/support package!');
+        }
+
+        //return the collection
+        return new Collection($this->data);
     }
 }
