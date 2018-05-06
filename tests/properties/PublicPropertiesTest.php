@@ -49,7 +49,7 @@ class PublicPropertiesTest extends TestCase {
         $this->reflection = new \ReflectionClass($this->csv);
 
         //setup the reflected class properties
-        $this->properties = $this->reflection->getProperties();
+        $this->properties = $this->reflection->getProperties(\ReflectionProperty::IS_PUBLIC);
     }
 
     /**
