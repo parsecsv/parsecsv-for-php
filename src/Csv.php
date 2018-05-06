@@ -425,7 +425,7 @@ class Csv {
         if (is_null($chunkSize)){
             $chunkSize = filesize($input);
         }
-        
+
         $success = $this->_rfileChunked($input, $chunkSize, function($chunk,&$handle,$iteration){
             $this->load_data($chunk);
             $this->parse_string();
@@ -536,6 +536,9 @@ class Csv {
      * @return string The detected field delimiter
      */
     public function auto($file = null, $parse = true, $search_depth = null, $preferred = null, $enclosure = null) {
+        $this->current_data_row = array();
+        $this->current_data_rows = array();
+
         if (is_null($file)) {
             $file = $this->file;
         }
