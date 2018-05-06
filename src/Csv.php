@@ -293,6 +293,20 @@ class Csv {
      */
     public $data = array();
 
+    /**
+     * Currently processed data rows.
+     *
+     * @var array
+     */
+    private $current_data_rows = array();
+
+    /**
+     * Currently processed data row.
+     *
+     * @var array
+     */
+    private $current_data_row = array();
+
     use DatatypeTrait;
 
     /**
@@ -345,6 +359,9 @@ class Csv {
         if (!is_null($keep_file_data)) {
             $this->keep_file_data = $keep_file_data;
         }
+
+        $this->current_data_rows = array();
+        $this->current_data_row = array();
     }
 
     // ==============================================
@@ -387,6 +404,36 @@ class Csv {
 
         return $this->data !== false;
     }
+
+    /**
+     * Parse File Content Chunked
+     * Read part of the file to string and call parse_string()
+     *
+     * @param  string|null $file Local CSV file
+     * @param  integer $chunkSize
+     * @return array|bool
+     */
+    public function parseFileContentChunked($input = null, $chunkSize = null) {
+        if (is_null($input)) {
+            $input = $this->file;
+        }
+
+        if (empty($input)) {
+            return false;
+        }
+
+        if (is_null($chunkSize)){
+            $chunkSize = filesize($input);
+        }
+        
+        $success = $this->_rfileChunked($input, $chunkSize, function($chunk,&$handle,$iteration){
+            $this->load_data($chunk);
+            $this->parse_string();
+        });
+
+        return $success ? $this->data = $this->current_data_rows : false;
+    }
+
 
     /**
      * Save
@@ -613,12 +660,12 @@ class Csv {
 
         $white_spaces = str_replace($this->delimiter, '', " \t\x0B\0");
 
-        $rows = array();
-        $row = array();
-        $row_count = 0;
+        $rows = $this->current_data_rows;
+        $row = $this->current_data_row;
+        $row_count = max(count($rows) - empty($this->heading), 0);
         $current = '';
         $head = !empty($this->fields) ? $this->fields : array();
-        $col = 0;
+        $col = count($row);
         $enclosed = false;
         $was_enclosed = false;
         $strlen = strlen($data);
@@ -732,6 +779,7 @@ class Csv {
                         }
                     }
 
+                    $this->current_data_row = $row;
                     $row = array();
                     $col = 0;
                     $row_count++;
@@ -764,6 +812,8 @@ class Csv {
         if (!$this->keep_file_data) {
             $this->file_data = null;
         }
+
+        $this->current_data_rows = $rows;
 
         return $rows;
     }
@@ -1174,6 +1224,32 @@ class Csv {
         }
 
         return false;
+    }
+
+    /**
+     * Read local file.
+     *
+     * @param null      $file
+     * @param int       $chunk_size
+     * @param function  $callback
+     *
+     * @return bool
+     */
+    protected function _rfileChunked($file = null, $chunk_size, $callback)
+    {
+        $handle = fopen($file, "r");
+        $i = 0;
+        while (!feof($handle))
+        {
+            call_user_func(
+                $callback, fread($handle, $chunk_size), $handle, $i
+            );
+            $i++;
+        }
+
+        fclose($handle);
+
+        return true;
     }
 
     /**
