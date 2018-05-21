@@ -246,4 +246,17 @@ class ParseTest extends TestCase {
 
         return $method->invokeArgs($object, $parameters);
     }
+
+    public function testWaiverFieldSeparator() {
+        $this->assertSame(false, $this->csv->auto(__DIR__ . '/../example_files/waiver_field_separator.csv'));
+        $expected = [
+            'liability waiver',
+            'release of liability form',
+            'release of liability',
+            'sample waiver',
+            'sample waiver form',
+        ];
+        $actual = array_column($this->csv->data, 'keyword');
+        $this->assertSame($expected, $actual);
+    }
 }
