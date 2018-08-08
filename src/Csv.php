@@ -1156,20 +1156,18 @@ class Csv {
     }
 
     /**
-     * Read local file
+     * Read local file.
      *
-     * @param string|null $file local filename
+     * @param string $file local filename
      *
      * @return string|false Data from file, or false on failure
      */
-    protected function _rfile($file = null) {
+    protected function _rfile($file) {
         if (is_readable($file)) {
-            if (!($fh = fopen($file, 'r'))) {
+            $data = file_get_contents($file);
+            if ($data === false) {
                 return false;
             }
-
-            $data = fread($fh, filesize($file));
-            fclose($fh);
             return rtrim($data, "\r\n");
         }
 
