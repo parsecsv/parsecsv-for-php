@@ -10,6 +10,14 @@
         {
             "name": "William Knauss",
             "email": "will.knauss@gmail.com"
+        },
+        {
+            "name": "Susann Sgorzaly",
+            "homepage": "https://github.com/susgo"
+        },
+        {
+            "name": "Christian Bläul",
+            "homepage": "https://github.com/Fonata"
         }
     ],
     "autoload":{
@@ -31,5 +39,9 @@
     },
     "suggest": {
         "illuminate/support": "Fluent array interface for map functions"
+    },
+    "support": {
+        "issues": "https://github.com/parsecsv/parsecsv-for-php/issues",
+        "source": "https://github.com/parsecsv/parsecsv-for-php"
     }
 }
