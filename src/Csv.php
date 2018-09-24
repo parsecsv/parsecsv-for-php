@@ -889,7 +889,7 @@ class Csv {
 
         if (is_null($input)) {
             $file = $this->file;
-        } elseif (file_exists($input)) {
+        } elseif (\strlen($input) <= PHP_MAXPATHLEN && file_exists($input)) {
             $file = $input;
         } else {
             $data = $input;
