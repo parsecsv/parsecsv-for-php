@@ -889,10 +889,30 @@ class Csv {
 
         if (is_null($input)) {
             $file = $this->file;
-        } elseif (file_exists($input)) {
-            $file = $input;
         } else {
-            $data = $input;
+            $inputLengthCondition = mb_strlen($input) > PHP_MAXPATHLEN;
+            if ($inputLengthCondition) {
+                $baseString = mb_split(DIRECTORY_SEPARATOR,
+                    mb_substr($input, 0, PHP_MAXPATHLEN));
+
+                end($baseString);
+                unset($baseString[key($baseString)]);
+                $baseString = implode(DIRECTORY_SEPARATOR, $baseString);;
+                if (file_exists($baseString)) {
+                    Throw new FileNotFoundException(
+                        sprintf(
+                            'file \'%s\' is not reachable.',
+                            $input
+                        )
+                    );
+                }
+            }
+
+            if (!$inputLengthCondition && file_exists($input)) {
+                $file = $input;
+            } else {
+                $data = $input;
+            }
         }
 
         if (!empty($data) || $data = $this->_rfile($file)) {
