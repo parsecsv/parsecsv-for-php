@@ -188,6 +188,11 @@ class ParseTest extends TestCase {
         $this->assertFalse($this->csv->autoDetectFileHasHeading());
     }
 
+    public function testVeryLongNonExistingFile() {
+        $this->csv->parse(str_repeat('long_string', PHP_MAXPATHLEN));
+        $this->csv->auto(str_repeat('long_string', PHP_MAXPATHLEN));
+    }
+
     protected function _get_magazines_data() {
         return [
             [
