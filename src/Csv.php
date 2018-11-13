@@ -846,7 +846,7 @@ class Csv {
         }
 
         // this is needed because sometime titles property is overwritten instead of using fields parameter!
-        $titlesOnParse = !empty($this->data) ? array_keys($this->data[0]) : array();
+        $titlesOnParse = !empty($this->data) ? array_keys(reset($this->data)) : array();
 
         // both are identical, also in ordering
         if (array_values($fields) === array_values($titlesOnParse)) {
