@@ -848,8 +848,8 @@ class Csv {
         // this is needed because sometime titles property is overwritten instead of using fields parameter!
         $titlesOnParse = !empty($this->data) ? array_keys(reset($this->data)) : array();
 
-        // both are identical, also in ordering
-        if (array_values($fields) === array_values($titlesOnParse)) {
+        // both are identical, also in ordering OR we have no data (only titles)
+        if (empty($titlesOnParse) || array_values($fields) === array_values($titlesOnParse)) {
             return array_combine($fields, $fields);
         }
 
