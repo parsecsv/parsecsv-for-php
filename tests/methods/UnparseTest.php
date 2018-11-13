@@ -81,6 +81,13 @@ class UnparseTest extends Testcase {
         $this->unparseAndCompare($expected);
     }
 
+    public function testUnparseDefaultWithoutData(){
+        unset($this->csv->data[0]);
+        unset($this->csv->data[1]);
+        $expected = "column1,column2\r";
+        $this->unparseAndCompare($expected);
+    }
+
     private function unparseAndCompare($expected, $fields = array()) {
         $str = $this->csv->unparse($this->csv->data, $fields);
         $this->assertEquals($expected, $str);
