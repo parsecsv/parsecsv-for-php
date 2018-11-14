@@ -113,12 +113,21 @@ print_r($csv->data_types);
 
 **Modify data in a CSV file**
 
+Change data values:
 ```php
 $csv = new ParseCsv\Csv();
 $csv->sort_by = 'id';
 $csv->parse('data.csv');
 # "4" is the value of the "id" column of the CSV row
 $csv->data[4] = array('firstname' => 'John', 'lastname' => 'Doe', 'email' => 'john@doe.com');
+$csv->save();
+```
+
+Enclose each data value by quotes:
+```php
+$csv = new ParseCsv\Csv();
+$csv->parse('data.csv');
+$csv->enclose_all = true;
 $csv->save();
 ```
 
