@@ -80,19 +80,19 @@ trait DatatypeTrait {
      *
      * @return bool
      */
-    public function autoDetectFileHasHeading(){
-        if (empty($this->data)){
+    public function autoDetectFileHasHeading() {
+        if (empty($this->data)) {
             throw new \UnexpectedValueException('No data set yet.');
         }
 
-        if ($this->heading){
+        if ($this->heading) {
             $firstRow = $this->titles;
         } else {
             $firstRow = $this->data[0];
         }
 
         $firstRow = array_filter($firstRow);
-        if (empty($firstRow)){
+        if (empty($firstRow)) {
             return false;
         }
 

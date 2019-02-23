@@ -1,11 +1,11 @@
 <?php
+
 namespace ParseCsv\tests\methods;
 
 use ParseCsv\Csv;
 use PHPUnit\Framework\TestCase;
 
-class SaveTest extends TestCase
-{
+class SaveTest extends TestCase {
 
     /** @var Csv */
     private $csv;
