@@ -7,8 +7,9 @@ use ParseCsv\enums\DatatypeEnum;
 trait DatatypeTrait {
 
     /**
-     * Datatypes
-     * Datatypes of CSV data-columns
+     * Data Types
+     * Data types of CSV data-columns, keyed by the column name. Possible values
+     * are string, float, integer, boolean, date. See DatatypeEnum.
      *
      * @access public
      * @var array
