@@ -8,6 +8,7 @@ php:
   - 5.5
 
 script:
+  - composer validate
   - phpunit --version
   - phpunit --configuration tests/phpunit.xml
 

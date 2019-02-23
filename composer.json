@@ -40,6 +40,11 @@
     "suggest": {
         "illuminate/support": "Fluent array interface for map functions"
     },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
+        }
+    },
     "support": {
         "issues": "https://github.com/parsecsv/parsecsv-for-php/issues",
         "source": "https://github.com/parsecsv/parsecsv-for-php"
