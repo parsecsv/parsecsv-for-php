@@ -11,7 +11,6 @@ trait DatatypeTrait {
      * Data types of CSV data-columns, keyed by the column name. Possible values
      * are string, float, integer, boolean, date. See DatatypeEnum.
      *
-     * @access public
      * @var array
      */
     public $data_types = [];
@@ -19,8 +18,6 @@ trait DatatypeTrait {
     /**
      * Check data type for one column.
      * Check for most commonly data type for one column.
-     *
-     * @access private
      *
      * @param  array $datatypes
      *
@@ -47,8 +44,6 @@ trait DatatypeTrait {
      * Check data type for each column and returns the most commonly.
      *
      * Requires PHP >= 5.5
-     *
-     * @access public
      *
      * @uses   DatatypeEnum::getValidTypeFromSample
      *
@@ -80,8 +75,6 @@ trait DatatypeTrait {
      * a heading line.
      *
      * Requires PHP >= 5.5
-     *
-     * @access public
      *
      * @uses   DatatypeEnum::getValidTypeFromSample
      *
