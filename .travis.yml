@@ -8,10 +8,13 @@ php:
   - 5.6
   - 5.5
 
+before_install:
+  - composer update
+
 script:
   - composer validate
-  - phpunit --version
-  - phpunit --configuration tests/phpunit.xml
+  - vendor/bin/phpunit --version
+  - vendor/bin/phpunit --configuration tests/phpunit.xml
 
 notifications:
   email:
