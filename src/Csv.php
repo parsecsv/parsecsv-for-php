@@ -151,7 +151,7 @@ class Csv {
     public $auto_depth = 15;
 
     /**
-     * Auto Non Charts
+     * Auto Non Chars
      * Characters that should be ignored when attempting to auto-detect delimiter
      *
      * @var string
@@ -287,7 +287,7 @@ class Csv {
 
     /**
      * Data
-     * Two dimensional array of CSV data
+     * Two-dimensional array of CSV data
      *
      * @var array
      */
@@ -299,7 +299,7 @@ class Csv {
      * Constructor
      * Class constructor
      *
-     * @param  string|null  $input          The CSV string or a direct filepath
+     * @param  string|null  $input          The CSV string or a direct file path
      * @param  integer|null $offset         Number of rows to ignore from the
      *                                      beginning of  the data
      * @param  integer|null $limit          Limits the number of returned rows
@@ -355,7 +355,7 @@ class Csv {
      * Parse
      * Parse a CSV file or string
      *
-     * @param  string|null $input      The CSV string or a direct filepath
+     * @param  string|null $input      The CSV string or a direct file path
      * @param  integer     $offset     Number of rows to ignore from the
      *                                 beginning of  the data
      * @param  integer     $limit      Limits the number of returned rows to
