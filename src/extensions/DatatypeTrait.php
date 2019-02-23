@@ -98,10 +98,6 @@ trait DatatypeTrait {
 
         $firstRowDatatype = array_map(DatatypeEnum::class . '::getValidTypeFromSample', $firstRow);
 
-        if ($this->getMostFrequentDatatypeForColumn($firstRowDatatype) !== DatatypeEnum::TYPE_STRING){
-            return false;
-        }
-
-        return true;
+        return $this->getMostFrequentDatatypeForColumn($firstRowDatatype) === DatatypeEnum::TYPE_STRING;
     }
 }
