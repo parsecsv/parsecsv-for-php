@@ -6,6 +6,7 @@ namespace ParseCsv\tests\properties;
  * Tests related to the $offset property
  */
 class OffsetTest extends BaseClass {
+
     public function testOffsetOfOne() {
         $this->csv->offset = 1;
         $this->csv->auto(__DIR__ . '/../methods/fixtures/datatype.csv');

@@ -7,10 +7,10 @@ use ParseCsv\enums\DatatypeEnum;
 trait DatatypeTrait {
 
     /**
-     * Datatypes
-     * Datatypes of CSV data-columns
+     * Data Types
+     * Data types of CSV data-columns, keyed by the column name. Possible values
+     * are string, float, integer, boolean, date. See DatatypeEnum.
      *
-     * @access public
      * @var array
      */
     public $data_types = [];
@@ -18,8 +18,6 @@ trait DatatypeTrait {
     /**
      * Check data type for one column.
      * Check for most commonly data type for one column.
-     *
-     * @access private
      *
      * @param  array $datatypes
      *
@@ -46,8 +44,6 @@ trait DatatypeTrait {
      * Check data type for each column and returns the most commonly.
      *
      * Requires PHP >= 5.5
-     *
-     * @access public
      *
      * @uses   DatatypeEnum::getValidTypeFromSample
      *
@@ -80,34 +76,28 @@ trait DatatypeTrait {
      *
      * Requires PHP >= 5.5
      *
-     * @access public
-     *
      * @uses   DatatypeEnum::getValidTypeFromSample
      *
      * @return bool
      */
-    public function autoDetectFileHasHeading(){
-        if (empty($this->data)){
+    public function autoDetectFileHasHeading() {
+        if (empty($this->data)) {
             throw new \UnexpectedValueException('No data set yet.');
         }
 
-        if ($this->heading){
+        if ($this->heading) {
             $firstRow = $this->titles;
         } else {
             $firstRow = $this->data[0];
         }
 
         $firstRow = array_filter($firstRow);
-        if (empty($firstRow)){
+        if (empty($firstRow)) {
             return false;
         }
 
         $firstRowDatatype = array_map(DatatypeEnum::class . '::getValidTypeFromSample', $firstRow);
 
-        if ($this->getMostFrequentDatatypeForColumn($firstRowDatatype) !== DatatypeEnum::TYPE_STRING){
-            return false;
-        }
-
-        return true;
+        return $this->getMostFrequentDatatypeForColumn($firstRowDatatype) === DatatypeEnum::TYPE_STRING;
     }
 }

@@ -11,7 +11,6 @@ class BaseClass extends TestCase {
      * CSV
      * The parseCSV object
      *
-     * @access protected
      * @var Csv
      */
     protected $csv;
@@ -19,10 +18,8 @@ class BaseClass extends TestCase {
     /**
      * Setup
      * Setup our test environment objects
-     *
-     * @access public
      */
-    public function setUp() {
+    protected function setUp() {
         $this->csv = new Csv();
     }
 

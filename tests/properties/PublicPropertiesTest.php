@@ -147,25 +147,25 @@ class PublicPropertiesTest extends TestCase {
         $this->assertCount($counter, $this->properties);
     }
 
-    public function testDefaultSortTypeIsRegular(){
-        $this->assertEquals(SortEnum::SORT_TYPE_REGULAR,  $this->csv->sort_type);
+    public function testDefaultSortTypeIsRegular() {
+        $this->assertEquals(SortEnum::SORT_TYPE_REGULAR, $this->csv->sort_type);
     }
 
-    public function testSetSortType(){
+    public function testSetSortType() {
         $this->csv->sort_type = 'numeric';
-        $this->assertEquals(SortEnum::SORT_TYPE_NUMERIC,  $this->csv->sort_type);
+        $this->assertEquals(SortEnum::SORT_TYPE_NUMERIC, $this->csv->sort_type);
 
         $this->csv->sort_type = 'string';
-        $this->assertEquals(SortEnum::SORT_TYPE_STRING,  $this->csv->sort_type);
+        $this->assertEquals(SortEnum::SORT_TYPE_STRING, $this->csv->sort_type);
     }
 
-    public function testGetSorting(){
+    public function testGetSorting() {
         $this->csv->sort_type = 'numeric';
         $sorting = SortEnum::getSorting($this->csv->sort_type);
-        $this->assertEquals(SORT_NUMERIC,  $sorting);
+        $this->assertEquals(SORT_NUMERIC, $sorting);
 
         $this->csv->sort_type = 'string';
         $sorting = SortEnum::getSorting($this->csv->sort_type);
-        $this->assertEquals(SORT_STRING,  $sorting);
+        $this->assertEquals(SORT_STRING, $sorting);
     }
 }

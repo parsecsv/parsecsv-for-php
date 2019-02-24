@@ -19,7 +19,7 @@ class FileProcessingModeEnum {
     const MODE_FILE_OVERWRITE = false;
 
     public static function getAppendMode($mode) {
-        if ($mode == self::MODE_FILE_APPEND){
+        if ($mode == self::MODE_FILE_APPEND) {
             return 'ab';
         }
 
