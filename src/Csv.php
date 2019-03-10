@@ -879,11 +879,16 @@ class Csv {
     }
 
     /**
-     * Load local file or string
+     * Load local file or string.
      *
-     * @param string|null $input local CSV file
+     * Only use this function if auto() and parse() don't handle your data well.
      *
-     * @return  true or false
+     * This function load_data() is able to handle BOMs and encodings. The data
+     * is stored within the $this->file_data class field.
+     *
+     * @param string|null $input local CSV file or CSV data as a string
+     *
+     * @return bool  True on success
      */
     public function load_data($input = null) {
         $data = null;
@@ -894,6 +899,7 @@ class Csv {
         } elseif (\strlen($input) <= PHP_MAXPATHLEN && file_exists($input)) {
             $file = $input;
         } else {
+            // It is CSV data as a string.
             $data = $input;
         }
 
@@ -1075,12 +1081,12 @@ class Csv {
      * Enclose values if needed
      *  - only used by unparse()
      *
-     * @param string $value     Cell value to process
-     * @param string $delimiter Character to put between cells on the same row
+     * @param string|null $value     Cell value to process
+     * @param string      $delimiter Character to put between cells on the same row
      *
      * @return string Processed value
      */
-    protected function _enclose_value($value = null, $delimiter) {
+    protected function _enclose_value($value, $delimiter) {
         if ($value !== null && $value != '') {
             $delimiter_quoted = $delimiter ?
                 preg_quote($delimiter, '/') . "|"
