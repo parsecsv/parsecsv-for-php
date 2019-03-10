@@ -88,7 +88,7 @@ class ParseTest extends TestCase {
         $sInput = "86545235689,a\r\n34365587654,b\r\n13469874576,\"c\r\nd\"";
         $expected_data = [86545235689, 34365587654, 13469874576];
 
-        $actual_data = $this->invokeMethod($this->csv, 'parse_string', array($sInput));
+        $actual_data = $this->invokeMethod($this->csv, '_parse_string', array($sInput));
         $actual_column = array_map('reset', $actual_data);
         $this->assertEquals($expected_data, $actual_column);
         $this->assertEquals([
