@@ -129,6 +129,38 @@ class ParseTest extends TestCase {
         ], $aCity);
     }
 
+    /**
+     * Tests if we can handle BOMs in string data, in contrast to loading files.
+     */
+    public function testStringWithLeadingBOM() {
+        $string_with_bom = strtr(
+            file_get_contents(__DIR__ . '/../example_files/UTF-8_with_BOM_and_sep_row.csv'),
+            ["sep=;\n" => '']);
+
+        // Is the BOM still there?
+        self::assertSame(0xEF, ord($string_with_bom));
+
+        $this->csv->output_encoding = 'UTF-8';
+        $this->csv->delimiter = ';';
+        self::assertTrue($this->csv->load_data($string_with_bom));
+        self::assertTrue($this->csv->parse($this->csv->file_data));
+
+        // This also tests if ::load_data removed the BOM from the data;
+        // otherwise the 'title' column would have 3 extra bytes.
+        $this->assertEquals([
+            'title',
+            'isbn',
+            'publishedAt',
+        ], array_keys(reset($this->csv->data)));
+
+        $titles = array_column($this->csv->data, 'title');
+        $this->assertEquals([
+            'Красивая кулинария',
+            'The Wine Connoisseurs',
+            'Weißwein',
+        ], $titles);
+    }
+
     public function testWithMultipleNewlines() {
         $this->csv->auto(__DIR__ . '/../example_files/multiple_empty_lines.csv');
         $aElse9 = array_column($this->csv->data, 'else9');
