@@ -20,14 +20,14 @@
             "homepage": "https://github.com/Fonata"
         }
     ],
-    "autoload":{
-        "psr-4":{
+    "autoload": {
+        "psr-4": {
             "ParseCsv\\": "src",
             "ParseCsv\\extensions\\": "src\\extensions"
         }
     },
-    "autoload-dev":{
-        "psr-4":{
+    "autoload-dev": {
+        "psr-4": {
             "ParseCsv\\tests\\": "tests"
         }
     },
@@ -39,6 +39,11 @@
     },
     "suggest": {
         "illuminate/support": "Fluent array interface for map functions"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
+        }
     },
     "support": {
         "issues": "https://github.com/parsecsv/parsecsv-for-php/issues",

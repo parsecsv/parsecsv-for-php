@@ -1,9 +1,9 @@
 <?php
+
 namespace ParseCsv\enums;
 
-use ReflectionClass;
-
 abstract class AbstractEnum {
+
     /**
      * Creates a new value of some type
      *
@@ -11,15 +11,14 @@ abstract class AbstractEnum {
      *
      * @throws \UnexpectedValueException if incompatible type is given.
      */
-    public function __construct($value)
-    {
+    public function __construct($value) {
         if (!$this->isValid($value)) {
             throw new \UnexpectedValueException("Value '$value' is not part of the enum " . get_called_class());
         }
         $this->value = $value;
     }
 
-    public static function getConstants(){
+    public static function getConstants() {
         $class = get_called_class();
         $reflection = new \ReflectionClass($class);
 
@@ -33,8 +32,7 @@ abstract class AbstractEnum {
      *
      * @return bool
      */
-    public static function isValid($value)
-    {
+    public static function isValid($value) {
         return in_array($value, static::getConstants(), true);
     }
 }

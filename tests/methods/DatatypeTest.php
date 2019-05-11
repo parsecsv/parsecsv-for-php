@@ -8,12 +8,12 @@
 
 namespace ParseCsv\tests\methods;
 
-use PHPUnit\Framework\TestCase;
 use ParseCsv\enums\DatatypeEnum;
+use PHPUnit\Framework\TestCase;
 
-class DatatypeTest extends TestCase
-{
-    public function testSampleIsValidInteger(){
+class DatatypeTest extends TestCase {
+
+    public function testSampleIsValidInteger() {
         $this->assertEquals(DatatypeEnum::TYPE_INT, DatatypeEnum::getValidTypeFromSample('1'));
         $this->assertEquals(DatatypeEnum::TYPE_INT, DatatypeEnum::getValidTypeFromSample('+1'));
         $this->assertEquals(DatatypeEnum::TYPE_INT, DatatypeEnum::getValidTypeFromSample('-1'));
@@ -27,7 +27,7 @@ class DatatypeTest extends TestCase
         $this->assertNotEquals(DatatypeEnum::TYPE_INT, DatatypeEnum::getValidTypeFromSample('2018-02-19'));
     }
 
-    public function testSampleIsValidBool(){
+    public function testSampleIsValidBool() {
         $this->assertEquals(DatatypeEnum::TYPE_BOOL, DatatypeEnum::getValidTypeFromSample('true'));
         $this->assertEquals(DatatypeEnum::TYPE_BOOL, DatatypeEnum::getValidTypeFromSample('TRUE'));
         $this->assertEquals(DatatypeEnum::TYPE_BOOL, DatatypeEnum::getValidTypeFromSample('false'));
@@ -39,7 +39,7 @@ class DatatypeTest extends TestCase
         $this->assertNotEquals(DatatypeEnum::TYPE_BOOL, DatatypeEnum::getValidTypeFromSample('0.1'));
     }
 
-    public function testSampleIsValidFloat(){
+    public function testSampleIsValidFloat() {
         $this->assertEquals(DatatypeEnum::TYPE_FLOAT, DatatypeEnum::getValidTypeFromSample('1.0'));
         $this->assertEquals(DatatypeEnum::TYPE_FLOAT, DatatypeEnum::getValidTypeFromSample('-1.1'));
         $this->assertEquals(DatatypeEnum::TYPE_FLOAT, DatatypeEnum::getValidTypeFromSample('+1,1'));
@@ -54,7 +54,7 @@ class DatatypeTest extends TestCase
         $this->assertNotEquals(DatatypeEnum::TYPE_FLOAT, DatatypeEnum::getValidTypeFromSample('2018-02-19'));
     }
 
-    public function testSampleIsValidDate(){
+    public function testSampleIsValidDate() {
         $this->assertEquals(DatatypeEnum::TYPE_DATE, DatatypeEnum::getValidTypeFromSample('2018-02-19'));
         $this->assertEquals(DatatypeEnum::TYPE_DATE, DatatypeEnum::getValidTypeFromSample('18-2-19'));
         $this->assertEquals(DatatypeEnum::TYPE_DATE, DatatypeEnum::getValidTypeFromSample('01.02.2018'));
