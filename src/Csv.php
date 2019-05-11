@@ -378,11 +378,11 @@ class Csv {
 
         if (strlen($input) <= PHP_MAXPATHLEN && is_readable($input)) {
             $this->file = $input;
-            $this->data = $this->parse_file();
+            $this->data = $this->_parse_file();
         } else {
             $this->file = null;
             $this->file_data = &$input;
-            $this->data = $this->parse_string();
+            $this->data = $this->_parse_string();
         }
 
         return $this->data !== false;
@@ -523,7 +523,7 @@ class Csv {
 
         // parse data
         if ($parse) {
-            $this->data = $this->parse_string();
+            $this->data = $this->_parse_string();
         }
 
         return $this->delimiter;
@@ -573,13 +573,13 @@ class Csv {
 
     /**
      * Parse File
-     * Read file to string and call parse_string()
+     * Read file to string and call _parse_string()
      *
      * @param  string|null $file Local CSV file
      *
      * @return array|bool
      */
-    protected function parse_file($file = null) {
+    protected function _parse_file($file = null) {
         if (is_null($file)) {
             $file = $this->file;
         }
@@ -588,13 +588,15 @@ class Csv {
             $this->load_data($file);
         }
 
-        return !empty($this->file_data) ? $this->parse_string() : false;
+        return !empty($this->file_data) ? $this->_parse_string() : false;
     }
 
     /**
-     * Parse CSV strings to arrays. If you need BOM detection or character
-     * encoding conversion, please call load_data() first, followed by a call to
-     * parse_string() with no parameters.
+     * Internal function to parse CSV strings to arrays.
+     *
+     * If you need BOM detection or character encoding conversion, please call
+     * $csv->load_data($your_data_string) first, followed by a call to
+     * $csv->parse($csv->file_data).
      *
      * To detect field separators, please use auto() instead.
      *
@@ -602,7 +604,7 @@ class Csv {
      *
      * @return array|false - 2D array with CSV data, or false on failure
      */
-    protected function parse_string($data = null) {
+    protected function _parse_string($data = null) {
         if (empty($data)) {
             if ($this->_check_data()) {
                 $data = &$this->file_data;
@@ -877,11 +879,16 @@ class Csv {
     }
 
     /**
-     * Load local file or string
+     * Load local file or string.
      *
-     * @param string|null $input local CSV file
+     * Only use this function if auto() and parse() don't handle your data well.
      *
-     * @return  true or false
+     * This function load_data() is able to handle BOMs and encodings. The data
+     * is stored within the $this->file_data class field.
+     *
+     * @param string|null $input local CSV file or CSV data as a string
+     *
+     * @return bool  True on success
      */
     public function load_data($input = null) {
         $data = null;
@@ -892,6 +899,7 @@ class Csv {
         } elseif (\strlen($input) <= PHP_MAXPATHLEN && file_exists($input)) {
             $file = $input;
         } else {
+            // It is CSV data as a string.
             $data = $input;
         }
 
@@ -1073,12 +1081,12 @@ class Csv {
      * Enclose values if needed
      *  - only used by unparse()
      *
-     * @param string $value     Cell value to process
-     * @param string $delimiter Character to put between cells on the same row
+     * @param string|null $value     Cell value to process
+     * @param string      $delimiter Character to put between cells on the same row
      *
      * @return string Processed value
      */
-    protected function _enclose_value($value = null, $delimiter) {
+    protected function _enclose_value($value, $delimiter) {
         if ($value !== null && $value != '') {
             $delimiter_quoted = $delimiter ?
                 preg_quote($delimiter, '/') . "|"

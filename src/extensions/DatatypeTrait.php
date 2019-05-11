@@ -51,7 +51,7 @@ trait DatatypeTrait {
      */
     public function getDatatypes() {
         if (empty($this->data)) {
-            $this->data = $this->parse_string();
+            $this->data = $this->_parse_string();
         }
         if (!is_array($this->data)) {
             throw new \UnexpectedValueException('No data set yet.');
