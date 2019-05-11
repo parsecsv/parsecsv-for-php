@@ -444,14 +444,27 @@ class Csv {
             $mime = $delimiter === "\t" ?
                 'text/tab-separated-values' :
                 'application/csv';
+
+            // Buffer output:
+            ob_start();
             header('Content-type: ' . $mime);
-            header('Content-Length: ' . strlen($flat_string));
             header('Cache-Control: no-cache, must-revalidate');
             header('Pragma: no-cache');
             header('Expires: 0');
             header('Content-Disposition: attachment; filename="' . $filename . '"; modification-date="' . date('r') . '";');
 
-            echo $flat_string;
+            // gzip enabled?
+            if (stripos($_SERVER['HTTP_ACCEPT_ENCODING'], "gzip") !== false) {
+                ob_start("ob_gzhandler");
+                echo $flat_string;
+                ob_end_flush();
+            } else {
+                echo $flat_string;
+            }
+
+            // Write the content length
+            header('Content-Length: '.ob_get_length());
+            ob_end_flush();
         }
 
         return $flat_string;
