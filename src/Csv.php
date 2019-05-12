@@ -454,7 +454,8 @@ class Csv {
             header('Content-Disposition: attachment; filename="' . $filename . '"; modification-date="' . date('r') . '";');
 
             // gzip enabled?
-            if (stripos($_SERVER['HTTP_ACCEPT_ENCODING'], "gzip") !== false) {
+            if (isset($_SERVER['HTTP_ACCEPT_ENCODING']) 
+                && stripos($_SERVER['HTTP_ACCEPT_ENCODING'], "gzip") !== false) {
                 ob_start("ob_gzhandler");
                 echo $flat_string;
                 ob_end_flush();
