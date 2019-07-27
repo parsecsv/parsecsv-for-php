@@ -13,3 +13,6 @@ insert_final_newline = true
 
 [composer.json]
 indent_size = 4
+
+[.travis.yml]
+indent_size = 2
