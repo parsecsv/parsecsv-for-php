@@ -1036,7 +1036,7 @@ class Csv {
             $op = $capture[2];
             $value = $capture[3];
 
-            if (preg_match('/^([\'\"]{1})(.*)([\'\"]{1})$/', $value, $capture) && $capture[1] == $capture[3]) {
+            if (preg_match('/^([\'"])(.*)([\'"])$/', $value, $capture) && $capture[1] == $capture[3]) {
                 $value = strtr($capture[2], array(
                     "\\n" => "\n",
                     "\\r" => "\r",
