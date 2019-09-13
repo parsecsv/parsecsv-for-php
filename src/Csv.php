@@ -299,14 +299,14 @@ class Csv {
      * Constructor
      * Class constructor
      *
-     * @param  string|null  $input          The CSV string or a direct file path
-     * @param  integer|null $offset         Number of rows to ignore from the
+     * @param string|null  $input           The CSV string or a direct file path
+     * @param integer|null $offset          Number of rows to ignore from the
      *                                      beginning of  the data
-     * @param  integer|null $limit          Limits the number of returned rows
+     * @param integer|null $limit           Limits the number of returned rows
      *                                      to specified amount
-     * @param  string|null  $conditions     Basic SQL-like conditions for row
+     * @param string|null  $conditions      Basic SQL-like conditions for row
      *                                      matching
-     * @param  null|true    $keep_file_data Keep raw file data in memory after
+     * @param null|true    $keep_file_data  Keep raw file data in memory after
      *                                      successful parsing
      *                                      (useful for debugging)
      */
@@ -319,13 +319,13 @@ class Csv {
     }
 
     /**
-     * @param  integer|null $offset         Number of rows to ignore from the
+     * @param integer|null $offset          Number of rows to ignore from the
      *                                      beginning of  the data
-     * @param  integer|null $limit          Limits the number of returned rows
+     * @param integer|null $limit           Limits the number of returned rows
      *                                      to specified amount
-     * @param  string|null  $conditions     Basic SQL-like conditions for row
+     * @param string|null  $conditions      Basic SQL-like conditions for row
      *                                      matching
-     * @param  null|true    $keep_file_data Keep raw file data in memory after
+     * @param null|true    $keep_file_data  Keep raw file data in memory after
      *                                      successful parsing
      *                                      (useful for debugging)
      */
@@ -355,12 +355,12 @@ class Csv {
      * Parse
      * Parse a CSV file or string
      *
-     * @param  string|null $input      The CSV string or a direct file path
-     * @param  integer     $offset     Number of rows to ignore from the
+     * @param string|null $input       The CSV string or a direct file path
+     * @param integer     $offset      Number of rows to ignore from the
      *                                 beginning of  the data
-     * @param  integer     $limit      Limits the number of returned rows to
+     * @param integer     $limit       Limits the number of returned rows to
      *                                 specified amount
-     * @param  string      $conditions Basic SQL-like conditions for row
+     * @param string      $conditions  Basic SQL-like conditions for row
      *                                 matching
      *
      * @return bool True on success
@@ -392,11 +392,11 @@ class Csv {
      * Save
      * Save changes, or write a new file and/or data
      *
-     * @param  string $file   File location to save to
-     * @param  array  $data   2D array of data
-     * @param  bool   $append Append current data to end of target CSV, if file
+     * @param string $file    File location to save to
+     * @param array  $data    2D array of data
+     * @param bool   $append  Append current data to end of target CSV, if file
      *                        exists
-     * @param  array  $fields Field names. Sets the header. If it is not set
+     * @param array  $fields  Field names. Sets the header. If it is not set
      *                        $this->titles would be used instead.
      *
      * @return bool
@@ -416,16 +416,16 @@ class Csv {
      * Output
      * Generate a CSV based string for output.
      *
-     * @param  string|null $filename   If a filename is specified here or in the
+     * @param string|null $filename    If a filename is specified here or in the
      *                                 object, headers and data will be output
      *                                 directly to browser as a downloadable
      *                                 file. This file doesn't have to exist on
      *                                 the server; the parameter only affects
      *                                 how the download is called to the
      *                                 browser.
-     * @param  array[]     $data       2D array with data
-     * @param  array       $fields     Field names
-     * @param  string|null $delimiter  character used to separate data
+     * @param array[]     $data        2D array with data
+     * @param array       $fields      Field names
+     * @param string|null $delimiter   character used to separate data
      *
      * @return string  The resulting CSV string
      */
@@ -461,8 +461,8 @@ class Csv {
      * Encoding
      * Convert character encoding
      *
-     * @param  string $input  Input character encoding, uses default if left blank
-     * @param  string $output Output character encoding, uses default if left blank
+     * @param string $input  Input character encoding, uses default if left blank
+     * @param string $output Output character encoding, uses default if left blank
      */
     public function encoding($input = null, $output = null) {
         $this->convert_encoding = true;
@@ -480,11 +480,11 @@ class Csv {
      * Auto-Detect Delimiter: Find delimiter by analyzing a specific number of
      * rows to determine most probable delimiter character
      *
-     * @param  string|null $file         Local CSV file
-     * @param  bool        $parse        True/false parse file directly
-     * @param  int         $search_depth Number of rows to analyze
-     * @param  string      $preferred    Preferred delimiter characters
-     * @param  string|null $enclosure    Enclosure character, default is double quote (").
+     * @param string|null $file         Local CSV file
+     * @param bool        $parse        True/false parse file directly
+     * @param int         $search_depth Number of rows to analyze
+     * @param string      $preferred    Preferred delimiter characters
+     * @param string|null $enclosure    Enclosure character, default is double quote (").
      *
      * @return string The detected field delimiter
      */
@@ -575,7 +575,7 @@ class Csv {
      * Parse File
      * Read file to string and call _parse_string()
      *
-     * @param  string|null $file Local CSV file
+     * @param string|null $file Local CSV file
      *
      * @return array|bool
      */
@@ -1105,7 +1105,7 @@ class Csv {
     /**
      * Check file data
      *
-     * @param  string|null $file local filename
+     * @param string|null $file local filename
      *
      * @return bool
      */
@@ -1125,10 +1125,10 @@ class Csv {
      * Check if passed info might be delimiter
      * Only used by find_delimiter
      *
-     * @param  string $char      Potential field separating character
-     * @param  array  $array     Frequency
-     * @param  int    $depth     Number of analyzed rows
-     * @param  string $preferred Preferred delimiter characters
+     * @param string $char      Potential field separating character
+     * @param array  $array     Frequency
+     * @param int    $depth     Number of analyzed rows
+     * @param string $preferred Preferred delimiter characters
      *
      * @return string|false      special string used for delimiter selection, or false
      */
@@ -1185,10 +1185,10 @@ class Csv {
     /**
      * Write to local file
      *
-     * @param   string $file    local filename
-     * @param   string $content data to write to file
-     * @param   string $mode    fopen() mode
-     * @param   int    $lock    flock() mode
+     * @param string $file    local filename
+     * @param string $content data to write to file
+     * @param string $mode    fopen() mode
+     * @param int    $lock    flock() mode
      *
      * @return  true or false
      */
