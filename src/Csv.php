@@ -832,7 +832,17 @@ class Csv {
         }
 
         if ($this->convert_encoding) {
-            $string = iconv($this->input_encoding, $this->output_encoding, $string);
+            /** @noinspection PhpComposerExtensionStubsInspection
+             *
+             * If you receive an error at the following 3 lines, you must enable
+             * the following PHP extension:
+             *
+             *  - if $use_mb_convert_encoding is true: mbstring
+             *  - if $use_mb_convert_encoding is false: iconv
+             */
+            $string = $this->use_mb_convert_encoding ?
+                mb_convert_encoding($string, $this->output_encoding, $this->input_encoding) :
+                iconv($this->input_encoding, $this->output_encoding, $string);
         }
 
         return $string;
