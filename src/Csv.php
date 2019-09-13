@@ -1103,7 +1103,7 @@ class Csv {
                 : '';
             $enclosure_quoted = preg_quote($this->enclosure, '/');
             $pattern = "/" . $delimiter_quoted . $enclosure_quoted . "|\n|\r/i";
-            if ($this->enclose_all || preg_match($pattern, $value) || ($value{0} == ' ' || substr($value, -1) == ' ')) {
+            if ($this->enclose_all || preg_match($pattern, $value) || (strpos($value, ' ') === 0 || substr($value, -1) == ' ')) {
                 $value = str_replace($this->enclosure, $this->enclosure . $this->enclosure, $value);
                 $value = $this->enclosure . $value . $this->enclosure;
             }
