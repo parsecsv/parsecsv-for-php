@@ -169,7 +169,7 @@ class Csv {
 
     /**
      * Convert Encoding
-     * Should we convert the csv encoding?
+     * Should we convert the CSV character encoding?
      *
      * @var bool
      */
@@ -278,8 +278,20 @@ class Csv {
     public $error_info = array();
 
     /**
-     * Titles
-     * CSV titles if they exists
+     * $titles has 4 distinct tasks:
+     * 1. After reading in CSV data, $titles will contain the column headers
+     *    present in the data.
+     *
+     * 2. It defines which fields from the $data array to write e.g. when
+     *    calling unparse(), and in which order. This lets you skip columns you
+     *    don't want in your output, but are present in $data.
+     *    See examples/save_to_file_without_header_row.php.
+     *
+     * 3. It lets you rename columns. See StreamTest::testWriteStream for an
+     *    example.
+     *
+     * 4. When writing data and $header is true, then $titles is also used for
+     *    the first row.
      *
      * @var array
      */
@@ -400,6 +412,7 @@ class Csv {
      *                        $this->titles would be used instead.
      *
      * @return bool
+     *   True on success
      */
     public function save($file = '', $data = array(), $append = FileProcessingModeEnum::MODE_FILE_OVERWRITE, $fields = array()) {
         if (empty($file)) {
@@ -937,6 +950,14 @@ class Csv {
             }
 
             if ($this->convert_encoding && $this->input_encoding !== $this->output_encoding) {
+                /** @noinspection PhpComposerExtensionStubsInspection
+                 *
+                 * If you receive an error at the following 3 lines, you must enable
+                 * the following PHP extension:
+                 *
+                 *  - if $use_mb_convert_encoding is true: mbstring
+                 *  - if $use_mb_convert_encoding is false: iconv
+                 */
                 $data = $this->use_mb_convert_encoding ?
                     mb_convert_encoding($data, $this->output_encoding, $this->input_encoding) :
                     iconv($this->input_encoding, $this->output_encoding, $data);
@@ -1201,7 +1222,9 @@ class Csv {
      * @param string $mode    fopen() mode
      * @param int    $lock    flock() mode
      *
-     * @return  true or false
+     * @return bool
+     *   True on success
+     *
      */
     protected function _wfile($file, $content = '', $mode = 'wb', $lock = LOCK_EX) {
         if ($fp = fopen($file, $mode)) {
