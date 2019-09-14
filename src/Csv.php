@@ -709,7 +709,7 @@ class Csv {
                 $col++;
 
                 // end of row
-                if ($ch == "\n" || $ch == "\r" || $ch === false) {
+                if (in_array($ch, ["\n", "\r", false], true)) {
                     if ($this->_validate_offset($row_count) && $this->_validate_row_conditions($row, $this->conditions)) {
                         if ($this->heading && empty($head)) {
                             $head = $row;
@@ -1047,7 +1047,8 @@ class Csv {
             }
 
             if (array_key_exists($field, $row)) {
-                if (($op == '=' || $op == 'equals' || $op == 'is') && $row[$field] == $value) {
+                $op_equals = in_array($op, ['=', 'equals', 'is'], true);
+                if ($op_equals && $row[$field] == $value) {
                     return '1';
                 } elseif (($op == '!=' || $op == 'is not') && $row[$field] != $value) {
                     return '1';
