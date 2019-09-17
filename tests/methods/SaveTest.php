@@ -93,7 +93,7 @@ class SaveTest extends TestCase {
 
     public function testEncloseAllWithQuotes() {
         $this->csv->enclose_all = true;
-        $expected = "\"SMS\"\r\"0444\"\r\"5555\"\r";
+        $expected = '"SMS"\r"0444"\r"5555"\r';
         $this->saveAndCompare($expected);
     }
 
