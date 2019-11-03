@@ -1023,7 +1023,7 @@ class Csv {
 
         if (preg_match('/^(.+) (' . $operators_regex . ') (.+)$/i', trim($condition), $capture)) {
             $field = $capture[1];
-            $op = $capture[2];
+            $op = strtolower($capture[2]);
             $value = $capture[3];
 
             if (preg_match('/^([\'\"]{1})(.*)([\'\"]{1})$/', $value, $capture) && $capture[1] == $capture[3]) {
