@@ -1025,6 +1025,18 @@ class Csv {
             $field = $capture[1];
             $op = strtolower($capture[2]);
             $value = $capture[3];
+            if ($op == 'equals' && preg_match('/^(.+) is (less|greater) than or$/i', $field, $m)) {
+                $field = $m[1];
+                $op = $m[2] == 'less' ? '<=' : '>=';
+            }
+            if ($op == 'is' && preg_match('/^(less|greater) than (.+)$/i', $value, $m)) {
+                $value = $m[2];
+                $op = $m[1] == 'less' ? '<' : '>';
+            }
+            if ($op == 'is' && preg_match('/^not (.+)$/i', $value, $m)) {
+                $value = $m[1];
+                $op = '!=';
+            }
 
             if (preg_match('/^([\'\"]{1})(.*)([\'\"]{1})$/', $value, $capture) && $capture[1] == $capture[3]) {
                 $value = strtr($capture[2], array(
