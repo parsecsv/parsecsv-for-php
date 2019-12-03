@@ -640,7 +640,7 @@ class Csv {
 
         // force the parser to process end of data as a character (false) when
         // data does not end with a line feed or carriage return character.
-        $lch = $data{$strlen - 1};
+        $lch = $data[$strlen - 1];
         if ($lch != "\n" && $lch != "\r") {
             $data .= "\n";
             $strlen++;
@@ -648,8 +648,8 @@ class Csv {
 
         // walk through each character
         for ($i = 0; $i < $strlen; $i++) {
-            $ch = isset($data{$i}) ? $data{$i} : false;
-            $nch = isset($data{$i + 1}) ? $data{$i + 1} : false;
+            $ch = isset($data[$i]) ? $data[$i] : false;
+            $nch = isset($data[$i + 1]) ? $data[$i + 1] : false;
 
             // open/close quotes, and inline quotes
             if ($ch == $this->enclosure) {
@@ -679,10 +679,10 @@ class Csv {
                     $i++;
                 } elseif ($nch != $this->delimiter && $nch != "\r" && $nch != "\n") {
                     $x = $i + 1;
-                    while (isset($data{$x}) && ltrim($data{$x}, $white_spaces) == '') {
+                    while (isset($data[$x]) && ltrim($data[$x], $white_spaces) == '') {
                         $x++;
                     }
-                    if ($data{$x} == $this->delimiter) {
+                    if ($data[$x] == $this->delimiter) {
                         $enclosed = false;
                         $i = $x;
                     } else {
@@ -1324,9 +1324,9 @@ class Csv {
 
         // walk specific depth finding possible delimiter characters
         for ($i = 0; $i < $strlen; $i++) {
-            $ch = $data{$i};
-            $nch = isset($data{$i + 1}) ? $data{$i + 1} : false;
-            $pch = isset($data{$i - 1}) ? $data{$i - 1} : false;
+            $ch = $data[$i];
+            $nch = isset($data[$i + 1]) ? $data[$i + 1] : false;
+            $pch = isset($data[$i - 1]) ? $data[$i - 1] : false;
 
             // open and closing quotes
             $is_newline = ($ch == "\n" && $pch != "\r") || $ch == "\r";
