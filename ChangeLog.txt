@@ -1,16 +1,76 @@
-ParseCSV dev-master
+ParseCSV 1.2.0
 -----------------------------------
 Date: unreleased
 
-- New function getTotalDataRowCount() - useful if
-  $limit is set - see pull request #122.
+Breaking changes: none
 
-- Dropped support for PHP 5.4
+New features:
+- Compatible with PHP 7.4. Thanks to @andreybolonin
+  @morrislaptop @martijnengler and @fjf2002.
+- unparse() now also understands $use_mb_convert_encoding.
+- Verbal condition operators are now allowed to contain
+  upper case letters, for example:
+  $csv->conditions = 'rating IS GREATER THAN 4';
 
+Bug fixes:
+-  All filter condition operators containing "is" or "equals"
+   were broken.
+
+Code quality:
+- Improved test coverage.
+-----------------------------------
+
+
+ParseCSV 1.1.1
+-----------------------------------
+Date: 2-Feb-2019
+
+Breaking changes: none
+
+New features: none
+
+Bug fixes:
+- Function load_data: check length of input, prevents E_NOTICE
+  if too long.
+- Fixed bugs in unparse().
+
+Code quality:
+- Improved test coverage.
+-----------------------------------
+
+
+ParseCSV 1.1.0
+-----------------------------------
+Date: 9-Aug-2018
+
+Breaking changes:
+- Ignore entirely empty lines at the end of files
+  See https://github.com/parsecsv/parsecsv-for-php/pull/142
+- Dropped support for PHP 5.4. Now, you need at leas PHP 5.5.
+- Fixed parse()'s return value: return true only if $data is useful.
+
+New features:
 - Added support for Laravel-style collections via the
   new getCollection() function - see
   https://github.com/parsecsv/parsecsv-for-php/pull/134
+- New function getTotalDataRowCount() - useful if
+  $limit is set - see pull request #122.
+- Added requires to keep Composer-free environments working.
 
+Bug fixes:
+- Better support for streams.
+  See https://github.com/parsecsv/parsecsv-for-php/pull/147
+- Fixed output() with custom header.
+  See https://github.com/parsecsv/parsecsv-for-php/issues/132
+- Fixed bug on _validate_fields_for_unparse() if titles property
+  is used instead of fields parameter for changing the titles for
+  unparsing.
+- Fixed bug in unparse() that caused incorrect column order
+  (Issue #41).
+
+
+Code quality:
+- Improved test coverage.
 -----------------------------------
 
 
