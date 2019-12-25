@@ -55,7 +55,7 @@ $csv->auto('_books.csv');
         background-color: #FFF;
     }
 </style>
-<table border="0" cellspacing="1" cellpadding="3">
+<table>
     <tr>
         <?php foreach ($csv->titles as $value): ?>
             <th><?php echo $value; ?></th>
