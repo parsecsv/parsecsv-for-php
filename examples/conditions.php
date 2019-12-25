@@ -17,6 +17,7 @@ $csv = new Csv();
 $csv->conditions = 'author does not contain dan brown';
 // $csv->conditions = 'rating < 4 OR author is John Twelve Hawks';
 // $csv->conditions = 'rating > 4 AND author is Dan Brown';
+// $csv->conditions = 'rating is greater than 4';
 
 
 # Parse '_books.csv' using automatic delimiter detection.
