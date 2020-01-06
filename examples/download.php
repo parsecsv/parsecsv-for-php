@@ -32,5 +32,3 @@ $csv->output('books.csv');
 # data to download the output as a CSV file. if it's not set
 # or is set to null, output will only return the generated CSV
 # output data, and will not output to the browser itself.
-
-?>

@@ -1058,11 +1058,11 @@ class Csv {
             $value = $capture[3];
             if ($op == 'equals' && preg_match('/^(.+) is (less|greater) than or$/i', $field, $m)) {
                 $field = $m[1];
-                $op = $m[2] == 'less' ? '<=' : '>=';
+                $op = strtolower($m[2]) == 'less' ? '<=' : '>=';
             }
             if ($op == 'is' && preg_match('/^(less|greater) than (.+)$/i', $value, $m)) {
                 $value = $m[2];
-                $op = $m[1] == 'less' ? '<' : '>';
+                $op = strtolower($m[1]) == 'less' ? '<' : '>';
             }
             if ($op == 'is' && preg_match('/^not (.+)$/i', $value, $m)) {
                 $value = $m[1];
