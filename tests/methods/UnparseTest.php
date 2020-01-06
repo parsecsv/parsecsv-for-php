@@ -88,6 +88,18 @@ class UnparseTest extends Testcase {
         $this->unparseAndCompare($expected);
     }
 
+    public function testObjectCells() {
+        $this->csv->data = [
+            [
+                'column1' => new ObjectThatHasToStringMethod(),
+                'column2' => 'boring',
+            ],
+        ];
+        $this->csv->linefeed = "\n";
+        $expected = "column1,column2\nsome value,boring\n";
+        $this->unparseAndCompare($expected);
+    }
+
     private function unparseAndCompare($expected, $fields = array()) {
         $str = $this->csv->unparse($this->csv->data, $fields);
         $this->assertEquals($expected, $str);
