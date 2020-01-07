@@ -1,6 +1,6 @@
 ParseCSV 1.2.0
 -----------------------------------
-Date: unreleased
+Date: 07-Jan-2020
 
 Breaking changes: none
 
