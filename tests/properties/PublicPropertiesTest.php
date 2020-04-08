@@ -41,7 +41,8 @@ class PublicPropertiesTest extends TestCase {
      *
      * @access public
      */
-    public function setUp() {
+    public function setUp(): void
+    {
         //setup parse CSV
         $this->csv = new Csv();
 
@@ -58,7 +59,8 @@ class PublicPropertiesTest extends TestCase {
      *
      * @access public
      */
-    public function tearDown() {
+    public function tearDown(): void
+    {
         $this->csv = null;
         $this->reflection = null;
         $this->properties = null;
