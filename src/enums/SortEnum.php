@@ -26,5 +26,4 @@ class SortEnum extends AbstractEnum {
 
         return self::$sorting[self::__DEFAULT];
     }
-
 }
