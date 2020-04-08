@@ -311,16 +311,16 @@ class Csv {
      * Constructor
      * Class constructor
      *
-     * @param string|null  $input           The CSV string or a direct file path
-     * @param integer|null $offset          Number of rows to ignore from the
-     *                                      beginning of  the data
-     * @param integer|null $limit           Limits the number of returned rows
-     *                                      to specified amount
-     * @param string|null  $conditions      Basic SQL-like conditions for row
-     *                                      matching
-     * @param null|true    $keep_file_data  Keep raw file data in memory after
-     *                                      successful parsing
-     *                                      (useful for debugging)
+     * @param string|null $input           The CSV string or a direct file path
+     * @param int|null    $offset          Number of rows to ignore from the
+     *                                     beginning of  the data
+     * @param int|null    $limit           Limits the number of returned rows
+     *                                     to specified amount
+     * @param string|null $conditions      Basic SQL-like conditions for row
+     *                                     matching
+     * @param null|true   $keep_file_data  Keep raw file data in memory after
+     *                                     successful parsing
+     *                                     (useful for debugging)
      */
     public function __construct($input = null, $offset = null, $limit = null, $conditions = null, $keep_file_data = null) {
         $this->init($offset, $limit, $conditions, $keep_file_data);
@@ -331,13 +331,13 @@ class Csv {
     }
 
     /**
-     * @param integer|null $offset          Number of rows to ignore from the
+     * @param int|null    $offset           Number of rows to ignore from the
      *                                      beginning of  the data
-     * @param integer|null $limit           Limits the number of returned rows
+     * @param int|null    $limit            Limits the number of returned rows
      *                                      to specified amount
-     * @param string|null  $conditions      Basic SQL-like conditions for row
+     * @param string|null $conditions       Basic SQL-like conditions for row
      *                                      matching
-     * @param null|true    $keep_file_data  Keep raw file data in memory after
+     * @param null|true   $keep_file_data   Keep raw file data in memory after
      *                                      successful parsing
      *                                      (useful for debugging)
      */
@@ -368,11 +368,11 @@ class Csv {
      * Parse a CSV file or string
      *
      * @param string|null $input       The CSV string or a direct file path
-     * @param integer     $offset      Number of rows to ignore from the
+     * @param int|null    $offset      Number of rows to ignore from the
      *                                 beginning of  the data
-     * @param integer     $limit       Limits the number of returned rows to
+     * @param int|null    $limit       Limits the number of returned rows to
      *                                 specified amount
-     * @param string      $conditions  Basic SQL-like conditions for row
+     * @param string|null $conditions  Basic SQL-like conditions for row
      *                                 matching
      *
      * @return bool True on success
@@ -474,8 +474,10 @@ class Csv {
      * Encoding
      * Convert character encoding
      *
-     * @param string $input  Input character encoding, uses default if left blank
-     * @param string $output Output character encoding, uses default if left blank
+     * @param string|null $input  Input character encoding, uses default if left blank
+     * @param string|null $output Output character encoding, uses default if left blank
+     *
+     * @return void
      */
     public function encoding($input = null, $output = null) {
         $this->convert_encoding = true;
@@ -495,11 +497,11 @@ class Csv {
      *
      * @param string|null $file         Local CSV file
      * @param bool        $parse        True/false parse file directly
-     * @param int         $search_depth Number of rows to analyze
-     * @param string      $preferred    Preferred delimiter characters
+     * @param int|null    $search_depth Number of rows to analyze
+     * @param string|null $preferred    Preferred delimiter characters
      * @param string|null $enclosure    Enclosure character, default is double quote (").
      *
-     * @return string The detected field delimiter
+     * @return string|false The detected field delimiter
      */
     public function auto($file = null, $parse = true, $search_depth = null, $preferred = null, $enclosure = null) {
         if (is_null($file)) {
@@ -572,12 +574,10 @@ class Csv {
 
         $headingRow = $this->heading ? 1 : 0;
 
-        $count = substr_count($data, "\r")
+        return substr_count($data, "\r")
             + substr_count($data, "\n")
             - substr_count($data, "\r\n")
             - $headingRow;
-
-        return $count;
     }
 
     // ==============================================
@@ -613,7 +613,7 @@ class Csv {
      *
      * To detect field separators, please use auto() instead.
      *
-     * @param string $data CSV data
+     * @param string|null $data CSV data
      *
      * @return array|false - 2D array with CSV data, or false on failure
      */
@@ -861,7 +861,12 @@ class Csv {
         return $string;
     }
 
-    private function _validate_fields_for_unparse($fields) {
+    /**
+     * @param array $fields
+     *
+     * @return array|false
+     */
+    private function _validate_fields_for_unparse(array $fields) {
         if (empty($fields)) {
             $fields = $this->titles;
         }
@@ -1298,7 +1303,6 @@ class Csv {
         }
 
         // remove delimiter and its line-end (the data param is by-ref!)
-        /** @noinspection CallableParameterUseCaseInTypeContextInspection */
         $data_string = substr($data_string, $pos);
         return true;
     }
@@ -1309,7 +1313,7 @@ class Csv {
      * @param string $enclosure    Enclosure character, default is double quote
      * @param string $data         The file content
      */
-    protected function _guess_delimiter($search_depth, $preferred, $enclosure, &$data) {
+    protected function _guess_delimiter($search_depth, $preferred, $enclosure, $data) {
         $chars = [];
         $strlen = strlen($data);
         $enclosed = false;
