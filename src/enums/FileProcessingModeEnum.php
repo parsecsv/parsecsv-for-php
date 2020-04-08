@@ -2,7 +2,6 @@
 
 namespace ParseCsv\enums;
 
-
 /**
  * Class FileProcessingEnum
  *
@@ -10,16 +9,19 @@ namespace ParseCsv\enums;
  *
  * todo extends a basic enum class after merging #121
  */
-class FileProcessingModeEnum {
+class FileProcessingModeEnum
+{
+    public const MODE_FILE_APPEND    = true;
+    public const MODE_FILE_OVERWRITE = false;
 
-    const __default = self::MODE_FILE_OVERWRITE;
-
-    const MODE_FILE_APPEND = true;
-
-    const MODE_FILE_OVERWRITE = false;
-
-    public static function getAppendMode($mode) {
-        if ($mode == self::MODE_FILE_APPEND) {
+    /**
+     * @param bool $mode
+     *
+     * @return string
+     */
+    public static function getAppendMode(bool $mode): string
+    {
+        if ($mode === self::MODE_FILE_APPEND) {
             return 'ab';
         }
 

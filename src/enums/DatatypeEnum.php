@@ -9,25 +9,25 @@ namespace ParseCsv\enums;
  *
  * todo: needs a basic parent enum class for error handling.
  */
-class DatatypeEnum extends AbstractEnum {
+class DatatypeEnum extends AbstractEnum
+{
+    private const __DEFAULT = self::TYPE_STRING;
 
-    const __DEFAULT = self::TYPE_STRING;
+    public const TYPE_STRING = 'string';
 
-    const TYPE_STRING = 'string';
+    public const TYPE_FLOAT = 'float';
 
-    const TYPE_FLOAT = 'float';
+    public const TYPE_INT = 'integer';
 
-    const TYPE_INT = 'integer';
+    public const TYPE_BOOL = 'boolean';
 
-    const TYPE_BOOL = 'boolean';
+    public const TYPE_DATE = 'date';
 
-    const TYPE_DATE = 'date';
+    private const REGEX_FLOAT = '/(^[+-]?$)|(^[+-]?[0-9]+([,.][0-9])?[0-9]*(e[+-]?[0-9]+)?$)/';
 
-    const REGEX_FLOAT = '/(^[+-]?$)|(^[+-]?[0-9]+([,.][0-9])?[0-9]*(e[+-]?[0-9]+)?$)/';
+    private const REGEX_INT = '/^[-+]?\d\d*$/';
 
-    const REGEX_INT = '/^[-+]?[0-9]\d*$/';
-
-    const REGEX_BOOL = '/^(?i:true|false)$/';
+    private const REGEX_BOOL = '/^(?i:true|false)$/';
 
     /**
      * Define validator functions here.
@@ -39,13 +39,13 @@ class DatatypeEnum extends AbstractEnum {
      * @uses isValidBoolean
      * @uses isValidDate
      */
-    private static $validators = array(
+    private static $validators = [
         self::TYPE_STRING => null,
         self::TYPE_INT => 'isValidInteger',
         self::TYPE_BOOL => 'isValidBoolean',
         self::TYPE_FLOAT => 'isValidFloat',
         self::TYPE_DATE => 'isValidDate',
-    );
+    ];
 
     /**
      * Checks data type for given string.
@@ -54,8 +54,9 @@ class DatatypeEnum extends AbstractEnum {
      *
      * @return bool|string
      */
-    public static function getValidTypeFromSample($value) {
-        $value = trim((string) $value);
+    public static function getValidTypeFromSample(string $value)
+    {
+        $value = trim($value);
 
         if (empty($value)) {
             return false;
@@ -81,7 +82,8 @@ class DatatypeEnum extends AbstractEnum {
      *
      * @return bool
      */
-    private static function isValidFloat($value) {
+    private static function isValidFloat(string $value): bool
+    {
         return (bool) preg_match(self::REGEX_FLOAT, $value);
     }
 
@@ -92,7 +94,8 @@ class DatatypeEnum extends AbstractEnum {
      *
      * @return bool
      */
-    private static function isValidInteger($value) {
+    private static function isValidInteger(string $value): bool
+    {
         return (bool) preg_match(self::REGEX_INT, $value);
     }
 
@@ -103,7 +106,8 @@ class DatatypeEnum extends AbstractEnum {
      *
      * @return bool
      */
-    private static function isValidBoolean($value) {
+    private static function isValidBoolean(string $value): bool
+    {
         return (bool) preg_match(self::REGEX_BOOL, $value);
     }
 
@@ -114,7 +118,8 @@ class DatatypeEnum extends AbstractEnum {
      *
      * @return bool
      */
-    private static function isValidDate($value) {
+    private static function isValidDate(string $value): bool
+    {
         return (bool) strtotime($value);
     }
 }

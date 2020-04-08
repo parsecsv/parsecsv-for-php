@@ -4,6 +4,7 @@ namespace ParseCsv\tests\methods;
 
 use ParseCsv\Csv;
 use PHPUnit\Framework\TestCase;
+use ReflectionClass;
 
 class ParseTest extends TestCase {
 
@@ -18,17 +19,23 @@ class ParseTest extends TestCase {
      *
      * @access public
      */
-    public function setUp() {
+    public function setUp(): void
+    {
         $this->csv = new Csv();
     }
 
-    public function testParse() {
+    public function testParse(): void
+    {
         // can we trick 'is_readable' into whining? See #67.
         $this->parseRepetitiveString('c:/looks/like/a/path');
         $this->parseRepetitiveString('http://looks/like/an/url');
     }
 
-    private function parseRepetitiveString($content) {
+    /**
+     * @param string $content
+     */
+    private function parseRepetitiveString(string $content): void
+    {
         $this->csv->delimiter = ';';
         $this->csv->heading = false;
         $success = $this->csv->parse(str_repeat($content . ';', 500));
@@ -47,7 +54,8 @@ class ParseTest extends TestCase {
      *
      * @param string $file
      */
-    public function testSepRowAutoDetection($file) {
+    public function testSepRowAutoDetection(string $file): void
+    {
         // This file (parse_test.php) is encoded in UTF-8, hence comparison will
         // fail unless we to this:
         $this->csv->output_encoding = 'UTF-8';
@@ -56,7 +64,11 @@ class ParseTest extends TestCase {
         $this->assertEquals($this->_get_magazines_data(), $this->csv->data);
     }
 
-    public function autoDetectionProvider() {
+    /**
+     * @return array
+     */
+    public function autoDetectionProvider(): array
+    {
         return [
             'UTF8_no_BOM' => [__DIR__ . '/../example_files/UTF-8_sep_row_but_no_BOM.csv'],
             'UTF8' => [__DIR__ . '/../example_files/UTF-8_with_BOM_and_sep_row.csv'],
@@ -64,7 +76,8 @@ class ParseTest extends TestCase {
         ];
     }
 
-    public function testSingleColumnWithZeros() {
+    public function testSingleColumnWithZeros(): void
+    {
         $this->csv->delimiter = null;
         $this->csv->parse("URL\nhttp://www.amazon.com/ROX-Ice-Ball-Maker-Original/dp/B00MX59NMQ/ref=sr_1_1?ie=UTF8&qid=1435604374&sr=8-1&keywords=rox,+ice+molds");
         $row = array_pop($this->csv->data);
@@ -72,7 +85,8 @@ class ParseTest extends TestCase {
         $this->assertEquals($expected_data, $row);
     }
 
-    public function testAllNumericalCsv() {
+    public function testAllNumericalCsv(): void
+    {
         $this->csv->heading = false;
         $sInput = "86545235689\r\n34365587654\r\n13469874576";
         $this->assertEquals(false, $this->csv->auto($sInput));
@@ -82,13 +96,14 @@ class ParseTest extends TestCase {
         $this->assertEquals($expected_data, $actual_data);
     }
 
-    public function testMissingEndingLineBreak() {
+    public function testMissingEndingLineBreak(): void
+    {
         $this->csv->heading = false;
         $this->csv->enclosure = '"';
         $sInput = "86545235689,a\r\n34365587654,b\r\n13469874576,\"c\r\nd\"";
         $expected_data = [86545235689, 34365587654, 13469874576];
 
-        $actual_data = $this->invokeMethod($this->csv, '_parse_string', array($sInput));
+        $actual_data = $this->invokeMethod($this->csv, '_parse_string', [$sInput]);
         $actual_column = array_map('reset', $actual_data);
         $this->assertEquals($expected_data, $actual_column);
         $this->assertEquals([
@@ -98,7 +113,8 @@ class ParseTest extends TestCase {
         ], array_map('next', $actual_data));
     }
 
-    public function testSingleColumn() {
+    public function testSingleColumn(): void
+    {
         $this->csv->auto(__DIR__ . '/../example_files/single_column.csv');
         $expected = [
             ['SMS' => '0444'],
@@ -109,7 +125,8 @@ class ParseTest extends TestCase {
         $this->assertEquals($expected, $this->csv->data);
     }
 
-    public function testMatomoData() {
+    public function testMatomoData(): void
+    {
         // Matomo (Piwik) export cannot be read with
         $this->csv->use_mb_convert_encoding = true;
         $this->csv->output_encoding = 'UTF-8';
@@ -132,10 +149,12 @@ class ParseTest extends TestCase {
     /**
      * Tests if we can handle BOMs in string data, in contrast to loading files.
      */
-    public function testStringWithLeadingBOM() {
+    public function testStringWithLeadingBOM(): void
+    {
         $string_with_bom = strtr(
             file_get_contents(__DIR__ . '/../example_files/UTF-8_with_BOM_and_sep_row.csv'),
-            ["sep=;\n" => '']);
+            ["sep=;\n" => '']
+        );
 
         // Is the BOM still there?
         self::assertSame(0xEF, ord($string_with_bom));
@@ -161,7 +180,8 @@ class ParseTest extends TestCase {
         ], $titles);
     }
 
-    public function testWithMultipleNewlines() {
+    public function testWithMultipleNewlines(): void
+    {
         $this->csv->auto(__DIR__ . '/../example_files/multiple_empty_lines.csv');
         $aElse9 = array_column($this->csv->data, 'else9');
 
@@ -183,7 +203,8 @@ class ParseTest extends TestCase {
     /**
      * @depends testSepRowAutoDetection
      */
-    public function testGetColumnDatatypes() {
+    public function testGetColumnDatatypes(): void
+    {
         $this->csv->auto(__DIR__ . '/fixtures/datatype.csv');
         $this->csv->getDatatypes();
         $expected = [
@@ -201,7 +222,8 @@ class ParseTest extends TestCase {
     /**
      * @depends testSepRowAutoDetection
      */
-    public function testAutoDetectFileHasHeading() {
+    public function testAutoDetectFileHasHeading(): void
+    {
         $this->csv->auto(__DIR__ . '/fixtures/datatype.csv');
         $this->assertTrue($this->csv->autoDetectFileHasHeading());
 
@@ -220,12 +242,20 @@ class ParseTest extends TestCase {
         $this->assertFalse($this->csv->autoDetectFileHasHeading());
     }
 
-    public function testVeryLongNonExistingFile() {
+    /**
+     * @doesNotPerformAssertions
+     */
+    public function testVeryLongNonExistingFile(): void
+    {
         $this->csv->parse(str_repeat('long_string', PHP_MAXPATHLEN));
         $this->csv->auto(str_repeat('long_string', PHP_MAXPATHLEN));
     }
 
-    protected function _get_magazines_data() {
+    /**
+     * @return array
+     */
+    protected function _get_magazines_data(): array
+    {
         return [
             [
                 'title' => 'Красивая кулинария',
@@ -245,7 +275,11 @@ class ParseTest extends TestCase {
         ];
     }
 
-    public function autoQuotesDataProvider() {
+    /**
+     * @return array
+     */
+    public function autoQuotesDataProvider(): array
+    {
         return array(
             array('auto-double-enclosure.csv', '"'),
             array('auto-single-enclosure.csv', "'"),
@@ -260,7 +294,8 @@ class ParseTest extends TestCase {
      * @param string $file
      * @param string $enclosure
      */
-    public function testAutoQuotes($file, $enclosure) {
+    public function testAutoQuotes(string $file, string $enclosure): void
+    {
         $csv = new Csv();
         $csv->auto(__DIR__ . '/fixtures/' . $file, true, null, null, $enclosure);
         $this->assertArrayHasKey('column1', $csv->data[0], 'Data parsed incorrectly with enclosure ' . $enclosure);
@@ -276,16 +311,18 @@ class ParseTest extends TestCase {
      *
      * @return mixed Method return.
      */
-    private function invokeMethod(&$object, $methodName, array $parameters = array()) {
-        $reflection = new \ReflectionClass(get_class($object));
+    private function invokeMethod(object $object, string $methodName, array $parameters = [])
+    {
+        $reflection = new ReflectionClass(get_class($object));
         $method = $reflection->getMethod($methodName);
         $method->setAccessible(true);
 
         return $method->invokeArgs($object, $parameters);
     }
 
-    public function testWaiverFieldSeparator() {
-        $this->assertSame(false, $this->csv->auto(__DIR__ . '/../example_files/waiver_field_separator.csv'));
+    public function testWaiverFieldSeparator(): void
+    {
+        $this->assertFalse($this->csv->auto(__DIR__ . '/../example_files/waiver_field_separator.csv'));
         $expected = [
             'liability waiver',
             'release of liability form',

@@ -52,7 +52,8 @@ class ConstructTest extends TestCase {
      *
      * @see                  https://github.com/sebastianbergmann/phpunit/issues/720#issuecomment-10421092
      */
-    public function testCodeExamples() {
+    public function testCodeExamples(): void
+    {
         chdir('examples');
         foreach (glob('*.php') as $script_file) {
             ob_start();
@@ -62,7 +63,7 @@ class ConstructTest extends TestCase {
             $verb = strtok($script_file, '_.');
 
             if (!in_array($verb, ['download', 'save'], true)) {
-                $this->assertContains('<td>', $ob_get_clean);
+                $this->assertStringContainsString('<td>', $ob_get_clean);
             }
         }
         chdir('..');

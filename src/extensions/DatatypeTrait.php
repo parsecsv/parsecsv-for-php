@@ -3,8 +3,10 @@
 namespace ParseCsv\extensions;
 
 use ParseCsv\enums\DatatypeEnum;
+use UnexpectedValueException;
 
-trait DatatypeTrait {
+trait DatatypeTrait
+{
 
     /**
      * Data Types
@@ -19,13 +21,14 @@ trait DatatypeTrait {
      * Check data type for one column.
      * Check for most commonly data type for one column.
      *
-     * @param  array $datatypes
+     * @param  array $dataTypes
      *
      * @return string|false
      */
-    private function getMostFrequentDatatypeForColumn($datatypes) {
+    private function getMostFrequentDatatypeForColumn(array $dataTypes)
+    {
         // remove 'false' from array (can happen if CSV cell is empty)
-        $typesFiltered = array_filter($datatypes);
+        $typesFiltered = array_filter($dataTypes);
 
         if (empty($typesFiltered)) {
             return false;
@@ -36,7 +39,6 @@ trait DatatypeTrait {
         reset($typesFreq);
 
         return key($typesFreq);
-
     }
 
     /**
@@ -49,12 +51,13 @@ trait DatatypeTrait {
      *
      * @return array|bool
      */
-    public function getDatatypes() {
+    public function getDatatypes()
+    {
         if (empty($this->data)) {
             $this->data = $this->_parse_string();
         }
         if (!is_array($this->data)) {
-            throw new \UnexpectedValueException('No data set yet.');
+            throw new UnexpectedValueException('No data set yet.');
         }
 
         $result = [];
@@ -80,9 +83,10 @@ trait DatatypeTrait {
      *
      * @return bool
      */
-    public function autoDetectFileHasHeading() {
+    public function autoDetectFileHasHeading(): bool
+    {
         if (empty($this->data)) {
-            throw new \UnexpectedValueException('No data set yet.');
+            throw new UnexpectedValueException('No data set yet.');
         }
 
         if ($this->heading) {

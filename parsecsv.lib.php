@@ -19,6 +19,6 @@ if (!file_exists(__DIR__ . '/vendor/autoload.php')) {
 
 // This wrapper class should not be used by new projects. Please look at the
 // examples to find the up-to-date way of using this repo.
-class parseCSV extends ParseCsv\Csv {
+class parseCSV extends ParseCsv\Csv{
 
 }
