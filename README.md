@@ -1,5 +1,5 @@
 # ParseCsv
-[![Financial Contributors on Open Collective](https://opencollective.com/parsecsv/all/badge.svg?label=financial+contributors)](https://opencollective.com/parsecsv) 
+[![Financial Contributors on Open Collective](https://opencollective.com/parsecsv/all/badge.svg?label=financial+contributors)](https://opencollective.com/parsecsv)
 
 ParseCsv is an easy-to-use PHP class that reads and writes CSV data properly. It
 fully conforms to the specifications outlined on the on the
@@ -104,7 +104,7 @@ $count = $csv->getTotalDataRowCount();
 print_r($count);
 ```
 
-**Get most common data type for each column (Requires PHP >= 5.5)**
+**Get most common data type for each column**
 
 ```php
 $csv = new ParseCsv\Csv('data.csv');
@@ -146,7 +146,7 @@ _Only recommended when you know the exact structure of the file._
 
 ```php
 $csv = new ParseCsv\Csv();
-$csv->save('data.csv', array(array('1986', 'Home', 'Nowhere', '')), true);
+$csv->save('data.csv', array(array('1986', 'Home', 'Nowhere', '')), /* append */ true);
 ```
 
 **Convert 2D array to CSV data and send headers to browser to treat output as
@@ -157,7 +157,7 @@ $csv = new ParseCsv\Csv();
 $csv->output('movies.csv', $array, array('field 1', 'field 2'), ',');
 ```
 
-For more complex examples, see the ``tests`` and `examples` directories. 
+For more complex examples, see the ``tests`` and `examples` directories.
 
 ## Credits
 
@@ -170,17 +170,13 @@ For more complex examples, see the ``tests`` and `examples` directories.
 
 ## Contributors
 
+### Code Contributors
+
+This project exists thanks to all the people who contribute.
+
 Please find a complete list on the project's [contributors][] page.
 
 [contributors]: https://github.com/parsecsv/parsecsv-for-php/graphs/contributors
-
-
-
-## Contributors
-
-### Code Contributors
-
-This project exists thanks to all the people who contribute. [[Contribute](CONTRIBUTING.md)].
 <a href="https://github.com/parsecsv/parsecsv-for-php/graphs/contributors"><img src="https://opencollective.com/parsecsv/contributors.svg?width=890&button=false" /></a>
 
 ### Financial Contributors
