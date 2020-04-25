@@ -4,6 +4,7 @@ namespace ParseCsv\tests\methods;
 
 use ParseCsv\Csv;
 use PHPUnit\Framework\TestCase;
+use ReflectionClass;
 
 class ParseTest extends TestCase {
 
@@ -28,6 +29,9 @@ class ParseTest extends TestCase {
         $this->parseRepetitiveString('http://looks/like/an/url');
     }
 
+    /**
+     * @param string $content
+     */
     private function parseRepetitiveString($content) {
         $this->csv->delimiter = ';';
         $this->csv->heading = false;
@@ -56,6 +60,9 @@ class ParseTest extends TestCase {
         $this->assertEquals($this->_get_magazines_data(), $this->csv->data);
     }
 
+    /**
+     * @return array
+     */
     public function autoDetectionProvider() {
         return [
             'UTF8_no_BOM' => [__DIR__ . '/../example_files/UTF-8_sep_row_but_no_BOM.csv'],
@@ -66,7 +73,9 @@ class ParseTest extends TestCase {
 
     public function testSingleColumnWithZeros() {
         $this->csv->delimiter = null;
-        $this->csv->parse("URL\nhttp://www.amazon.com/ROX-Ice-Ball-Maker-Original/dp/B00MX59NMQ/ref=sr_1_1?ie=UTF8&qid=1435604374&sr=8-1&keywords=rox,+ice+molds");
+        $this->csv->parse(
+            "URL\nhttp://www.amazon.com/ROX-Ice-Ball-Maker-Original/dp/B00MX59NMQ/ref=sr_1_1?ie=UTF8&qid=1435604374&sr=8-1&keywords=rox,+ice+molds"
+        );
         $row = array_pop($this->csv->data);
         $expected_data = ['URL' => 'http://www.amazon.com/ROX-Ice-Ball-Maker-Original/dp/B00MX59NMQ/ref=sr_1_1?ie=UTF8&qid=1435604374&sr=8-1&keywords=rox,+ice+molds'];
         $this->assertEquals($expected_data, $row);
@@ -88,14 +97,17 @@ class ParseTest extends TestCase {
         $sInput = "86545235689,a\r\n34365587654,b\r\n13469874576,\"c\r\nd\"";
         $expected_data = [86545235689, 34365587654, 13469874576];
 
-        $actual_data = $this->invokeMethod($this->csv, '_parse_string', array($sInput));
+        $actual_data = $this->invokeMethod($this->csv, '_parse_string', [$sInput]);
         $actual_column = array_map('reset', $actual_data);
         $this->assertEquals($expected_data, $actual_column);
-        $this->assertEquals([
-            'a',
-            'b',
-            "c\r\nd",
-        ], array_map('next', $actual_data));
+        $this->assertEquals(
+            [
+                'a',
+                'b',
+                "c\r\nd",
+            ],
+            array_map('next', $actual_data)
+        );
     }
 
     public function testSingleColumn() {
@@ -115,18 +127,24 @@ class ParseTest extends TestCase {
         $this->csv->output_encoding = 'UTF-8';
         $this->csv->auto(__DIR__ . '/../example_files/Piwik_API_download.csv');
         $aAction27 = array_column($this->csv->data, 'url (actionDetails 27)');
-        $this->assertEquals([
-            'http://application/_Main/_GraphicMeanSTD_MDI/btnConfBandOptions',
-            '',
-            '',
-        ], $aAction27);
+        $this->assertEquals(
+            [
+                'http://application/_Main/_GraphicMeanSTD_MDI/btnConfBandOptions',
+                '',
+                '',
+            ],
+            $aAction27
+        );
 
         $aCity = array_column($this->csv->data, 'city');
-        $this->assertEquals([
-            'São Paulo',
-            'Johannesburg',
-            '',
-        ], $aCity);
+        $this->assertEquals(
+            [
+                'São Paulo',
+                'Johannesburg',
+                '',
+            ],
+            $aCity
+        );
     }
 
     /**
@@ -135,7 +153,8 @@ class ParseTest extends TestCase {
     public function testStringWithLeadingBOM() {
         $string_with_bom = strtr(
             file_get_contents(__DIR__ . '/../example_files/UTF-8_with_BOM_and_sep_row.csv'),
-            ["sep=;\n" => '']);
+            ["sep=;\n" => '']
+        );
 
         // Is the BOM still there?
         self::assertSame(0xEF, ord($string_with_bom));
@@ -220,11 +239,17 @@ class ParseTest extends TestCase {
         $this->assertFalse($this->csv->autoDetectFileHasHeading());
     }
 
+    /**
+     * @doesNotPerformAssertions
+     */
     public function testVeryLongNonExistingFile() {
         $this->csv->parse(str_repeat('long_string', PHP_MAXPATHLEN));
         $this->csv->auto(str_repeat('long_string', PHP_MAXPATHLEN));
     }
 
+    /**
+     * @return array
+     */
     protected function _get_magazines_data() {
         return [
             [
@@ -245,7 +270,11 @@ class ParseTest extends TestCase {
         ];
     }
 
-    public function autoQuotesDataProvider() {
+    /**
+     * @return array
+     */
+    public function autoQuotesDataProvider(): array
+    {
         return array(
             array('auto-double-enclosure.csv', '"'),
             array('auto-single-enclosure.csv', "'"),
@@ -270,14 +299,14 @@ class ParseTest extends TestCase {
     /**
      * Call protected/private method of a class.
      *
-     * @param object &$object     Instantiated object that we will run method on.
-     * @param string  $methodName Method name to call
-     * @param array   $parameters Array of parameters to pass into method.
+     * @param object $object     Instantiated object that we will run method on.
+     * @param string $methodName Method name to call
+     * @param array  $parameters Array of parameters to pass into method.
      *
      * @return mixed Method return.
      */
-    private function invokeMethod(&$object, $methodName, array $parameters = array()) {
-        $reflection = new \ReflectionClass(get_class($object));
+    private function invokeMethod($object, $methodName, $parameters = []) {
+        $reflection = new ReflectionClass(get_class($object));
         $method = $reflection->getMethod($methodName);
         $method->setAccessible(true);
 
@@ -285,7 +314,7 @@ class ParseTest extends TestCase {
     }
 
     public function testWaiverFieldSeparator() {
-        $this->assertSame(false, $this->csv->auto(__DIR__ . '/../example_files/waiver_field_separator.csv'));
+        $this->assertFalse($this->csv->auto(__DIR__ . '/../example_files/waiver_field_separator.csv'));
         $expected = [
             'liability waiver',
             'release of liability form',
