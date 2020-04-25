@@ -1,3 +1,19 @@
+ParseCSV 1.2.1
+-----------------------------------
+Date: 25-Apr-2020
+
+Breaking changes: none
+New features: none
+Bug fixes: none
+
+Code quality:
+- Switched from PHPUnit 4 to 6 to get rid of
+  wrappers. This will reduce friction for PhpStorm users,
+  because it gets rid of the "Multiple definitions" error
+  See issue #188. Thanks to @SharkMachine for the hint.
+-----------------------------------
+
+
 ParseCSV 1.2.0
 -----------------------------------
 Date: 07-Jan-2020
