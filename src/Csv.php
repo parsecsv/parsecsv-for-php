@@ -1108,6 +1108,8 @@ class Csv {
             'is greater than or equals',
             'contains',
             'does not contain',
+            'is number',
+            'is not number',
         );
 
         $operators_regex = array();
@@ -1148,6 +1150,10 @@ class Csv {
             if (array_key_exists($field, $row)) {
                 $op_equals = in_array($op, ['=', 'equals', 'is'], true);
                 if ($op_equals && $row[$field] == $value) {
+                    return '1';
+                } elseif ($op_equals && $value == 'number' && is_numeric($row[$field])) {
+                    return '1';
+                } elseif (($op == '!=' || $op == 'is not') && $value == 'number' && !is_numeric($row[$field])) {
                     return '1';
                 } elseif (($op == '!=' || $op == 'is not') && $row[$field] != $value) {
                     return '1';
