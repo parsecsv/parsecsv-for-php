@@ -6,7 +6,7 @@ fully conforms to the specifications outlined on the on the
 [Wikipedia article][CSV] (and thus RFC 4180). It has many advanced features which help make your
 life easier when dealing with CSV data.
 
-You may not need a library at all: before using ParseCsv, please make sure if PHP's own `str_getcsv()`, ``fgetcvs()`` or `fgetcsv()` meets your needs.
+You may not need a library at all: before using ParseCsv, please make sure if PHP's own `str_getcsv()`, ``fgetcsv()`` or `fputcsv()` meets your needs.
 
 This library was originally created in early 2007 by [jimeh](https://github.com/jimeh) due to the lack of built-in
 and third-party support for handling CSV data in PHP.
