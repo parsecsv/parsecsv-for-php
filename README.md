@@ -53,17 +53,17 @@ To use ParseCSV, you then have to add a `require 'parsecsv.lib.php';` line.
 
 ## Example Usage
 
-**General**
+**General parsing**
 
 ```php
-$csv = new ParseCsv\Csv('data.csv');
+$csv = new \ParseCsv\Csv('data.csv');
 print_r($csv->data);
 ```
 
 **Tab delimited, and encoding conversion**
 
 ```php
-$csv = new ParseCsv\Csv();
+$csv = new \ParseCsv\Csv();
 $csv->encoding('UTF-16', 'UTF-8');
 $csv->delimiter = "\t";
 $csv->parse('data.tsv');
@@ -73,7 +73,7 @@ print_r($csv->data);
 **Auto-detect delimiter character**
 
 ```php
-$csv = new ParseCsv\Csv();
+$csv = new \ParseCsv\Csv();
 $csv->auto('data.csv');
 print_r($csv->data);
 ```
@@ -81,7 +81,7 @@ print_r($csv->data);
 **Parse data with offset**
 * ignoring the first X (e.g. two) rows
 ```php
-$csv = new ParseCsv\Csv();
+$csv = new \ParseCsv\Csv();
 $csv->offset = 2;
 $csv->parse('data.csv');
 print_r($csv->data);
@@ -89,7 +89,7 @@ print_r($csv->data);
 
 **Limit the number of returned data rows**
 ```php
-$csv = new ParseCsv\Csv();
+$csv = new \ParseCsv\Csv();
 $csv->limit = 5;
 $csv->parse('data.csv');
 print_r($csv->data);
@@ -98,7 +98,7 @@ print_r($csv->data);
 **Get total number of data rows without parsing whole data**
 * Excluding heading line if present (see $csv->header property)
 ```php
-$csv = new ParseCsv\Csv();
+$csv = new \ParseCsv\Csv();
 $csv->load_data('data.csv');
 $count = $csv->getTotalDataRowCount();
 print_r($count);
@@ -107,7 +107,7 @@ print_r($count);
 **Get most common data type for each column**
 
 ```php
-$csv = new ParseCsv\Csv('data.csv');
+$csv = new \ParseCsv\Csv('data.csv');
 $csv->getDatatypes()
 print_r($csv->data_types);
 ```
@@ -116,7 +116,7 @@ print_r($csv->data_types);
 
 Change data values:
 ```php
-$csv = new ParseCsv\Csv();
+$csv = new \ParseCsv\Csv();
 $csv->sort_by = 'id';
 $csv->parse('data.csv');
 # "4" is the value of the "id" column of the CSV row
@@ -126,7 +126,7 @@ $csv->save();
 
 Enclose each data value by quotes:
 ```php
-$csv = new ParseCsv\Csv();
+$csv = new \ParseCsv\Csv();
 $csv->parse('data.csv');
 $csv->enclose_all = true;
 $csv->save();
@@ -135,7 +135,7 @@ $csv->save();
 **Replace field names or set ones if missing**
 
 ```php
-$csv = new ParseCsv\Csv();
+$csv = new \ParseCsv\Csv();
 $csv->fields = ['id', 'name', 'category']
 $csv->parse('data.csv');
 ```
@@ -145,7 +145,7 @@ $csv->parse('data.csv');
 _Only recommended when you know the exact structure of the file._
 
 ```php
-$csv = new ParseCsv\Csv();
+$csv = new \ParseCsv\Csv();
 $csv->save('data.csv', array(array('1986', 'Home', 'Nowhere', '')), /* append */ true);
 ```
 
@@ -153,8 +153,10 @@ $csv->save('data.csv', array(array('1986', 'Home', 'Nowhere', '')), /* append */
 a file and download it**
 
 ```php
-$csv = new ParseCsv\Csv();
-$csv->output('movies.csv', $array, array('field 1', 'field 2'), ',');
+$csv = new \ParseCsv\Csv();
+$csv->linefeed = "\n";
+$header = array('field 1', 'field 2');
+$csv->output('movies.csv', $data_array, $header, ',');
 ```
 
 For more complex examples, see the ``tests`` and `examples` directories.
