@@ -36,12 +36,12 @@ class ParseTest extends TestCase {
         $this->csv->delimiter = ';';
         $this->csv->heading = false;
         $success = $this->csv->parse(str_repeat($content . ';', 500));
-        $this->assertEquals(true, $success);
+        self::assertEquals(true, $success);
 
         $row = array_pop($this->csv->data);
         $expected_data = array_fill(0, 500, $content);
         $expected_data[] = '';
-        $this->assertEquals($expected_data, $row);
+        self::assertEquals($expected_data, $row);
     }
 
     /**
@@ -57,7 +57,7 @@ class ParseTest extends TestCase {
         $this->csv->output_encoding = 'UTF-8';
 
         $this->csv->auto($file);
-        $this->assertEquals($this->_get_magazines_data(), $this->csv->data);
+        self::assertEquals($this->_get_magazines_data(), $this->csv->data);
     }
 
     /**
@@ -78,17 +78,17 @@ class ParseTest extends TestCase {
         );
         $row = array_pop($this->csv->data);
         $expected_data = ['URL' => 'http://www.amazon.com/ROX-Ice-Ball-Maker-Original/dp/B00MX59NMQ/ref=sr_1_1?ie=UTF8&qid=1435604374&sr=8-1&keywords=rox,+ice+molds'];
-        $this->assertEquals($expected_data, $row);
+        self::assertEquals($expected_data, $row);
     }
 
     public function testAllNumericalCsv() {
         $this->csv->heading = false;
         $sInput = "86545235689\r\n34365587654\r\n13469874576";
-        $this->assertEquals(false, $this->csv->auto($sInput));
-        $this->assertEquals(null, $this->csv->delimiter);
+        self::assertEquals(false, $this->csv->autoDetectionForDataString($sInput));
+        self::assertEquals(null, $this->csv->delimiter);
         $expected_data = explode("\r\n", $sInput);
         $actual_data = array_map('reset', $this->csv->data);
-        $this->assertEquals($expected_data, $actual_data);
+        self::assertEquals($expected_data, $actual_data);
     }
 
     public function testMissingEndingLineBreak() {
@@ -99,8 +99,8 @@ class ParseTest extends TestCase {
 
         $actual_data = $this->invokeMethod($this->csv, '_parse_string', [$sInput]);
         $actual_column = array_map('reset', $actual_data);
-        $this->assertEquals($expected_data, $actual_column);
-        $this->assertEquals(
+        self::assertEquals($expected_data, $actual_column);
+        self::assertEquals(
             [
                 'a',
                 'b',
@@ -118,7 +118,7 @@ class ParseTest extends TestCase {
             ['SMS' => '6606'],
             ['SMS' => '7777'],
         ];
-        $this->assertEquals($expected, $this->csv->data);
+        self::assertEquals($expected, $this->csv->data);
     }
 
     public function testMatomoData() {
@@ -127,7 +127,7 @@ class ParseTest extends TestCase {
         $this->csv->output_encoding = 'UTF-8';
         $this->csv->auto(__DIR__ . '/../example_files/Piwik_API_download.csv');
         $aAction27 = array_column($this->csv->data, 'url (actionDetails 27)');
-        $this->assertEquals(
+        self::assertEquals(
             [
                 'http://application/_Main/_GraphicMeanSTD_MDI/btnConfBandOptions',
                 '',
@@ -137,7 +137,7 @@ class ParseTest extends TestCase {
         );
 
         $aCity = array_column($this->csv->data, 'city');
-        $this->assertEquals(
+        self::assertEquals(
             [
                 'São Paulo',
                 'Johannesburg',
@@ -161,7 +161,7 @@ class ParseTest extends TestCase {
 
         $this->csv->output_encoding = 'UTF-8';
         $this->csv->delimiter = ';';
-        self::assertTrue($this->csv->load_data($string_with_bom));
+        self::assertTrue($this->csv->loadDataString($string_with_bom));
         self::assertTrue($this->csv->parse($this->csv->file_data));
 
         // This also tests if ::load_data removed the BOM from the data;
@@ -214,7 +214,7 @@ class ParseTest extends TestCase {
             'price' => 'float',
         ];
 
-        $this->assertEquals($expected, $this->csv->data_types);
+        self::assertEquals($expected, $this->csv->data_types);
     }
 
     /**
@@ -222,21 +222,21 @@ class ParseTest extends TestCase {
      */
     public function testAutoDetectFileHasHeading() {
         $this->csv->auto(__DIR__ . '/fixtures/datatype.csv');
-        $this->assertTrue($this->csv->autoDetectFileHasHeading());
+        self::assertTrue($this->csv->autoDetectFileHasHeading());
 
         $this->csv->heading = false;
         $this->csv->auto(__DIR__ . '/fixtures/datatype.csv');
-        $this->assertTrue($this->csv->autoDetectFileHasHeading());
+        self::assertTrue($this->csv->autoDetectFileHasHeading());
 
         $this->csv->heading = false;
         $sInput = "86545235689\r\n34365587654\r\n13469874576";
-        $this->csv->auto($sInput);
-        $this->assertFalse($this->csv->autoDetectFileHasHeading());
+        $this->csv->autoDetectionForDataString($sInput);
+        self::assertFalse($this->csv->autoDetectFileHasHeading());
 
         $this->csv->heading = true;
         $sInput = "86545235689\r\n34365587654\r\n13469874576";
-        $this->csv->auto($sInput);
-        $this->assertFalse($this->csv->autoDetectFileHasHeading());
+        $this->csv->autoDetectionForDataString($sInput);
+        self::assertFalse($this->csv->autoDetectFileHasHeading());
     }
 
     /**
@@ -291,8 +291,8 @@ class ParseTest extends TestCase {
     public function testAutoQuotes($file, $enclosure) {
         $csv = new Csv();
         $csv->auto(__DIR__ . '/fixtures/' . $file, true, null, null, $enclosure);
-        $this->assertArrayHasKey('column1', $csv->data[0], 'Data parsed incorrectly with enclosure ' . $enclosure);
-        $this->assertEquals('value1', $csv->data[0]['column1'], 'Data parsed incorrectly with enclosure ' . $enclosure);
+        self::assertArrayHasKey('column1', $csv->data[0], 'Data parsed incorrectly with enclosure ' . $enclosure);
+        self::assertEquals('value1', $csv->data[0]['column1'], 'Data parsed incorrectly with enclosure ' . $enclosure);
     }
 
     /**
@@ -313,7 +313,7 @@ class ParseTest extends TestCase {
     }
 
     public function testWaiverFieldSeparator() {
-        $this->assertFalse($this->csv->auto(__DIR__ . '/../example_files/waiver_field_separator.csv'));
+        self::assertFalse($this->csv->auto(__DIR__ . '/../example_files/waiver_field_separator.csv'));
         $expected = [
             'liability waiver',
             'release of liability form',
@@ -322,6 +322,6 @@ class ParseTest extends TestCase {
             'sample waiver form',
         ];
         $actual = array_column($this->csv->data, 'keyword');
-        $this->assertSame($expected, $actual);
+        self::assertSame($expected, $actual);
     }
 }
