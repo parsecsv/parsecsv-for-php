@@ -372,8 +372,9 @@ class Csv {
      * Parse a CSV file or string
      *
      * @param string|null $input       The CSV string or a direct file path
-     *                                 Supplying file paths here is
-     *                                 deprecated.
+     *                                 WARNING: Supplying file paths here is
+     *                                 deprecated and will trigger an
+     *                                 E_USER_DEPRECATED error.
      * @param int|null    $offset      Number of rows to ignore from the
      *                                 beginning of  the data
      * @param int|null    $limit       Limits the number of returned rows to
