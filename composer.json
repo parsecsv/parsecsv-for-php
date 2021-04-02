@@ -45,6 +45,11 @@
             "dev-master": "1.0.x-dev"
         }
     },
+    "scripts": {
+        "test": [
+            "vendor/bin/phpunit -c tests tests --disallow-test-output --coverage-clover coverage_clover.xml --whitelist src"
+        ]
+    },
     "support": {
         "issues": "https://github.com/parsecsv/parsecsv-for-php/issues",
         "source": "https://github.com/parsecsv/parsecsv-for-php"

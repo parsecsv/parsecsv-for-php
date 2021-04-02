@@ -1,5 +1,6 @@
 *.bak
 /.idea
+/coverage_clover.xml
 /phive.xml
 /tools
 composer.lock
