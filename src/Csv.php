@@ -311,9 +311,11 @@ class Csv {
      * Constructor
      * Class constructor
      *
-     * @param string|null $input           The CSV string or a direct file path.
-     *                                     Supplying file paths here is
+     * @param string|null $data            The CSV string or a direct file path.
+     *
+     *                                     WARNING: Supplying file paths here is
      *                                     deprecated. Use parseFile() instead.
+     *
      * @param int|null    $offset          Number of rows to ignore from the
      *                                     beginning of  the data
      * @param int|null    $limit           Limits the number of returned rows
@@ -324,11 +326,11 @@ class Csv {
      *                                     successful parsing
      *                                     (useful for debugging)
      */
-    public function __construct($input = null, $offset = null, $limit = null, $conditions = null, $keep_file_data = null) {
+    public function __construct($data = null, $offset = null, $limit = null, $conditions = null, $keep_file_data = null) {
         $this->init($offset, $limit, $conditions, $keep_file_data);
 
-        if (!empty($input)) {
-            $this->parse($input);
+        if (!empty($data)) {
+            $this->parse($data);
         }
     }
 
@@ -506,11 +508,14 @@ class Csv {
      * Auto-Detect Delimiter: Find delimiter by analyzing a specific number of
      * rows to determine most probable delimiter character
      *
-     * @param string|null $file         Local CSV file
-     * @param bool        $parse        True/false parse file directly
-     * @param int|null    $search_depth Number of rows to analyze
-     * @param string|null $preferred    Preferred delimiter characters
-     * @param string|null $enclosure    Enclosure character, default is double quote (").
+     * @param string|null $file          Local CSV file
+     *                                   Supplying CSV data (file content) here is deprecated.
+     *                                   For CSV data, please use autoDetectionForDataString().
+     *                                   Support for CSV data will be removed in v2.0.0.
+     * @param bool        $parse         True/false parse file directly
+     * @param int|null    $search_depth  Number of rows to analyze
+     * @param string|null $preferred     Preferred delimiter characters
+     * @param string|null $enclosure     Enclosure character, default is double quote (").
      *
      * @return string|false The detected field delimiter
      */
@@ -543,6 +548,13 @@ class Csv {
             $data = &$this->file_data;
         }
 
+        $this->autoDetectionForDataString($data, $parse, $search_depth, $preferred, $enclosure);
+
+        return $this->delimiter;
+    }
+
+    public function autoDetectionForDataString($data, $parse = true, $search_depth = null, $preferred = null, $enclosure = null) {
+        $this->file_data = &$data;
         if (!$this->_detect_and_remove_sep_row_from_data($data)) {
             $this->_guess_delimiter($search_depth, $preferred, $enclosure, $data);
         }
@@ -935,39 +947,66 @@ class Csv {
      * @param string|null $input  CSV file path or CSV data as a string
      *
      *                            Supplying CSV data (file content) here is deprecated.
-     *                            For CSV data, please use parse().
+     *                            For CSV data, please use loadDataString().
      *                            Support for CSV data will be removed in v2.0.0.
      *
      * @return bool  True on success
+     * @deprecated Use loadDataString() or loadFile() instead.
      */
     public function load_data($input = null) {
-        $data = null;
-        $file = null;
+        return $this->loadFile($input);
+    }
 
-        if (is_null($input)) {
-            $file = $this->file;
-            $data = $this->_rfile($file);
-        } elseif (\strlen($input) <= PHP_MAXPATHLEN && file_exists($input)) {
-            $file = $input;
+    /**
+     * Load a file, but don't parse it.
+     *
+     * Only use this function if auto() and parseFile() don't handle your data well.
+     *
+     * This function is able to handle BOMs and encodings. The data
+     * is stored within the $this->file_data class field.
+     *
+     * @param string|null $file  CSV file path
+     *
+     * @return bool  True on success
+     */
+    public function loadFile($file = null) {
+        $data = null;
+
+        if (is_null($file)) {
+            $data = $this->_rfile($this->file);
+        } elseif (\strlen($file) <= PHP_MAXPATHLEN && file_exists($file)) {
             $data = $this->_rfile($file);
             if ($this->file != $file) {
                 $this->file = $file;
             }
         } else {
             // It is CSV data as a string.
-            $data = $input;
-            trigger_error(
-                'Supplying CSV data to load_data() will no longer ' .
-                'be supported in a future version of ParseCsv. ' .
-                'This function will return false for invalid paths from v2.0.0 onwards. ' .
-                'Use ->loadDataString() instead.',
-                E_USER_DEPRECATED
-            );
+
+            // WARNING:
+            // Supplying CSV data to load_data() will no longer
+            // be supported in a future version of ParseCsv.
+            // This function will return false for invalid paths from v2.0.0 onwards.
+
+            // Use ->loadDataString() instead.
+
+            $data = $file;
         }
 
         return $this->loadDataString($data);
     }
 
+    /**
+     * Load a data string, but don't parse it.
+     *
+     * Only use this function if autoDetectionForDataString() and parse() don't handle your data well.
+     *
+     * This function is able to handle BOMs and encodings. The data
+     * is stored within the $this->file_data class field.
+     *
+     * @param string|null $file_path  CSV file path
+     *
+     * @return bool  True on success
+     */
     public function loadDataString($data) {
         if (!empty($data)) {
             if (strpos($data, "\xef\xbb\xbf") === 0) {
@@ -1258,6 +1297,7 @@ class Csv {
 
             if (preg_match('/\.php$/i', $file) && preg_match('/<\?.*?\?>(.*)/ms', $data, $strip)) {
                 // Return section behind closing tags.
+                // This parsing is deprecated and will be removed in v2.0.0.
                 $data = ltrim($strip[1]);
             }
 

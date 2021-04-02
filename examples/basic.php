@@ -18,8 +18,8 @@ $csv->auto('_books.csv');
 # if its not the default comma...
 // $csv->delimiter = "\t";   # tab delimited
 
-# ...and then use the parse() function.
-// $csv->parse('_books.csv');
+# ...and then use the parseFile() function.
+// $csv->parseFile('_books.csv');
 
 
 # Output result.
