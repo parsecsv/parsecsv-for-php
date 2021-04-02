@@ -47,7 +47,7 @@ class DataRowCountTest extends TestCase {
     public function testGetTotalRowCountFromFile($file, $expectedRows) {
         $this->csv->heading = true;
         $this->csv->load_data(__DIR__ . '/fixtures/' . $file);
-        $this->assertEquals($expectedRows, $this->csv->getTotalDataRowCount());
+        self::assertEquals($expectedRows, $this->csv->getTotalDataRowCount());
     }
 
     public function testGetTotalRowCountMissingEndingLineBreak() {
