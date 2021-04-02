@@ -17,13 +17,7 @@ class DataRowCountTest extends TestCase {
      */
     protected $csv;
 
-    /**
-     * Setup
-     * Setup our test environment objects
-     *
-     * @access public
-     */
-    public function setUp() {
+    protected function setUp(): void {
         $this->csv = new Csv();
     }
 

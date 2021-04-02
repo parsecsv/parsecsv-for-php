@@ -16,25 +16,9 @@ class DefaultValuesPropertiesTest extends TestCase {
      */
     protected $csv = null;
 
-    /**
-     * Setup
-     * Setup our test environment objects
-     *
-     * @access public
-     */
-    public function setUp() {
+    protected function setUp(): void {
         //setup parse CSV
         $this->csv = new Csv();
-    }
-
-    /**
-     * Tear down
-     * Tear down our test environment objects
-     *
-     * @access public
-     */
-    public function tearDown() {
-        $this->csv = null;
     }
 
     public function test_heading_default() {
