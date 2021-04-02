@@ -324,4 +324,11 @@ class ParseTest extends TestCase {
         $actual = array_column($this->csv->data, 'keyword');
         self::assertSame($expected, $actual);
     }
+
+    public function testEmptyInput() {
+        self::assertFalse($this->csv->parse(''));
+        self::assertFalse($this->csv->parse(null));
+        self::assertFalse($this->csv->parseFile(''));
+        self::assertFalse($this->csv->parseFile(null));
+    }
 }
