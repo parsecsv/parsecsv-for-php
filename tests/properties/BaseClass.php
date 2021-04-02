@@ -19,7 +19,7 @@ class BaseClass extends TestCase {
      * Setup
      * Setup our test environment objects
      */
-    protected function setUp() {
+    protected function setUp(): void {
         $this->csv = new Csv();
     }
 

@@ -19,7 +19,7 @@ class ParseTest extends TestCase {
      *
      * @access public
      */
-    public function setUp() {
+    protected function setUp(): void {
         $this->csv = new Csv();
     }
 

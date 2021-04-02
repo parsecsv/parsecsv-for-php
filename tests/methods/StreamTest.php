@@ -11,7 +11,7 @@ use PHPUnit\Framework\TestCase;
  */
 class StreamTest extends TestCase {
 
-    public function setUp() {
+    protected function setUp(): void {
         static $done;
         if ($done) {
             // Make sure we register the stream just once - or PHP will scream.

@@ -11,11 +11,11 @@ use PHPUnit\Framework\TestCase;
  */
 class OldRequireTest extends TestCase {
 
-    protected function setUp() {
+    protected function setUp(): void {
         rename('vendor/autoload.php', '__autoload');
     }
 
-    protected function tearDown() {
+    protected function tearDown(): void {
         rename('__autoload', 'vendor/autoload.php');
     }
 

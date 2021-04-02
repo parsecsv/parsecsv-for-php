@@ -15,7 +15,7 @@ class SaveTest extends TestCase {
     /**
      * Setup our test environment objects; will be called before each test.
      */
-    public function setUp() {
+    protected function setUp(): void {
         $this->csv = new Csv();
         $this->csv->auto(__DIR__ . '/../example_files/single_column.csv');
 

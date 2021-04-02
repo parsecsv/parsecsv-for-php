@@ -14,7 +14,7 @@ class UnparseTest extends Testcase {
     /**
      * Setup our test environment objects; will be called before each test.
      */
-    public function setUp() {
+    protected function setUp(): void {
         $this->csv = new Csv();
         $this->csv->auto(__DIR__ . '/fixtures/auto-double-enclosure.csv');
     }
