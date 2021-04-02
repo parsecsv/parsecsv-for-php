@@ -40,7 +40,7 @@ class ParseTest extends TestCase {
 
         $row = array_pop($this->csv->data);
         $expected_data = array_fill(0, 500, $content);
-        $expected_data [] = '';
+        $expected_data[] = '';
         $this->assertEquals($expected_data, $row);
     }
 
@@ -273,8 +273,7 @@ class ParseTest extends TestCase {
     /**
      * @return array
      */
-    public function autoQuotesDataProvider(): array
-    {
+    public function autoQuotesDataProvider(): array {
         return array(
             array('auto-double-enclosure.csv', '"'),
             array('auto-single-enclosure.csv', "'"),

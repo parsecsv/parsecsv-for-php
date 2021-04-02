@@ -48,7 +48,6 @@ class UnparseTest extends Testcase {
         $this->csv->auto(__DIR__ . '/fixtures/auto-double-enclosure.csv');
         $expected = "column1,column2\rvalue1,value2\rvalue3,value4\r";
         $this->unparseAndCompare($expected);
-
     }
 
     public function testUnparseRenameFields() {

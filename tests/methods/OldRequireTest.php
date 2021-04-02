@@ -23,7 +23,6 @@ class OldRequireTest extends TestCase {
      * @runInSeparateProcess so that disabled autoloading has an effect
      */
     public function testOldLibWithoutComposer() {
-
         file_put_contents('__eval.php', '<?php require "parsecsv.lib.php"; new \ParseCsv\Csv;');
         exec("php __eval.php", $output, $return_var);
         unlink('__eval.php');
@@ -35,7 +34,6 @@ class OldRequireTest extends TestCase {
      * @runInSeparateProcess so that disabled autoloading has an effect
      */
     public function testOldLibWithOldClassName() {
-
         file_put_contents('__eval.php', '<?php require "parsecsv.lib.php"; new parseCSV;');
         exec("php __eval.php", $output, $return_var);
         unlink('__eval.php');
