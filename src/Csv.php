@@ -731,9 +731,8 @@ class Csv {
                 } else {
                     $enclosed = false;
                 }
-
                 // end of field/row/csv
-            } elseif (($ch === $this->delimiter || $ch == "\n" || $ch == "\r" || $ch === false) && !$enclosed) {
+            } elseif ((in_array($ch, [$this->delimiter, "\n", "\r", false], true)) && !$enclosed) {
                 $key = !empty($head[$col]) ? $head[$col] : $col;
                 $row[$key] = $was_enclosed ? $current : trim($current);
                 $current = '';
