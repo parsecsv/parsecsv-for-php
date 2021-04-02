@@ -34,7 +34,7 @@ class OffsetTest extends BaseClass {
     /**
      * @dataProvider numberRangeZeroToFourProvider
      *
-     * @param integer $offset
+     * @param int $offset
      */
     public function testOffsetOfOneNoHeader($offset) {
         $this->csv->offset = $offset;
