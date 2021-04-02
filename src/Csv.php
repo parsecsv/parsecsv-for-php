@@ -936,10 +936,6 @@ class Csv {
                 $this->file = $file;
             }
 
-            if (preg_match('/\.php$/i', $file) && preg_match('/<\?.*?\?>(.*)/ms', $data, $strip)) {
-                $data = ltrim($strip[1]);
-            }
-
             if (strpos($data, "\xef\xbb\xbf") === 0) {
                 // strip off BOM (UTF-8)
                 $data = substr($data, 3);
@@ -1225,6 +1221,12 @@ class Csv {
             if ($data === false) {
                 return false;
             }
+
+            if (preg_match('/\.php$/i', $file) && preg_match('/<\?.*?\?>(.*)/ms', $data, $strip)) {
+                // Return section behind closing tags.
+                $data = ltrim($strip[1]);
+            }
+
             return rtrim($data, "\r\n");
         }
 
