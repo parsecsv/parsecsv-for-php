@@ -108,7 +108,7 @@ print_r($count);
 
 ```php
 $csv = new \ParseCsv\Csv('data.csv');
-$csv->getDatatypes()
+$csv->getDatatypes();
 print_r($csv->data_types);
 ```
 
@@ -136,7 +136,7 @@ $csv->save();
 
 ```php
 $csv = new \ParseCsv\Csv();
-$csv->fields = ['id', 'name', 'category']
+$csv->fields = ['id', 'name', 'category'];
 $csv->parse('data.csv');
 ```
 
