@@ -98,4 +98,3 @@ class ExampleStream {
         return false;
     }
 }
-

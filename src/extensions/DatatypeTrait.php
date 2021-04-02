@@ -19,7 +19,7 @@ trait DatatypeTrait {
      * Check data type for one column.
      * Check for most commonly data type for one column.
      *
-     * @param  array $datatypes
+     * @param array $datatypes
      *
      * @return string|false
      */
@@ -36,7 +36,6 @@ trait DatatypeTrait {
         reset($typesFreq);
 
         return key($typesFreq);
-
     }
 
     /**
