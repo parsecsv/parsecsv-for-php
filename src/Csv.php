@@ -1015,7 +1015,7 @@ class Csv {
      * @param array       $row        array with values from a row
      * @param string|null $conditions specified conditions that the row must match
      *
-     * @return  true of false
+     * @return bool
      */
     protected function _validate_row_conditions($row = array(), $conditions = null) {
         if (!empty($row)) {
@@ -1142,7 +1142,7 @@ class Csv {
      *
      * @param int $current_row the current row number being processed
      *
-     * @return  true of false
+     * @return bool
      */
     protected function _validate_offset($current_row) {
         return
