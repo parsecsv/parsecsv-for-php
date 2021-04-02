@@ -73,4 +73,8 @@ class DataRowCountTest extends TestCase {
         $this->csv->loadDataString($sInput);
         $this->assertEquals(1, $this->csv->getTotalDataRowCount());
     }
+
+    public function testGetTotalRowCountNoData() {
+        self::assertFalse($this->csv->getTotalDataRowCount());
+    }
 }
