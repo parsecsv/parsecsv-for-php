@@ -612,6 +612,11 @@ class Csv {
         }
 
         if (empty($this->file_data)) {
+            /**
+             * @see self::keep_file_data
+             * Usually, _parse_string will clean this
+             * Instead of leaving stale data for the next parseFile call behind.
+             */
             $this->load_data($file);
         }
 
