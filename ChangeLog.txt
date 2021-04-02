@@ -1,3 +1,19 @@
+ParseCSV 1.3.0
+-----------------------------------
+Date: ?-Apr-2021
+
+Breaking changes:
+- Passing file paths to parse() or new Csv() is now deprecated
+  and will be removed in v2.0.0. Use ->parseFile() instead.
+  It will only call trigger_error() for now.
+  This change is to avoid security issues and to make this
+  library easier to learn (less magic).
+
+New features: none
+Bug fixes: none
+-----------------------------------
+
+
 ParseCSV 1.2.1
 -----------------------------------
 Date: 25-Apr-2020

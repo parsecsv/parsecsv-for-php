@@ -311,7 +311,9 @@ class Csv {
      * Constructor
      * Class constructor
      *
-     * @param string|null $input           The CSV string or a direct file path
+     * @param string|null $input           The CSV string or a direct file path.
+     *                                     Supplying file paths here is
+     *                                     deprecated. Use parseFile() instead.
      * @param int|null    $offset          Number of rows to ignore from the
      *                                     beginning of  the data
      * @param int|null    $limit           Limits the number of returned rows
@@ -368,6 +370,8 @@ class Csv {
      * Parse a CSV file or string
      *
      * @param string|null $input       The CSV string or a direct file path
+     *                                 Supplying file paths here is
+     *                                 deprecated.
      * @param int|null    $offset      Number of rows to ignore from the
      *                                 beginning of  the data
      * @param int|null    $limit       Limits the number of returned rows to
@@ -379,7 +383,8 @@ class Csv {
      */
     public function parse($input = null, $offset = null, $limit = null, $conditions = null) {
         if (is_null($input)) {
-            $input = $this->file;
+            $this->data = $this->parseFile();
+            return $this->data !== false;
         }
 
         if (empty($input)) {
@@ -390,7 +395,13 @@ class Csv {
 
         if (strlen($input) <= PHP_MAXPATHLEN && is_readable($input)) {
             $this->file = $input;
-            $this->data = $this->_parse_file();
+            $this->data = $this->parseFile();
+            trigger_error(
+                'Supplying file paths to parse() will no longer ' .
+                'be supported in a future version of ParseCsv. ' .
+                'Use ->parseFile() instead.',
+                E_USER_DEPRECATED
+            );
         } else {
             $this->file = null;
             $this->file_data = &$input;
@@ -588,11 +599,14 @@ class Csv {
      * Parse File
      * Read file to string and call _parse_string()
      *
-     * @param string|null $file Local CSV file
+     * @param string|null $file  Path to a CSV file.
+     *                           If configured in files such as php.ini,
+     *                           the path may also contain a protocol:
+     *                           https://example.org/some/file.csv
      *
      * @return array|bool
      */
-    protected function _parse_file($file = null) {
+    public function parseFile($file = null) {
         if (is_null($file)) {
             $file = $this->file;
         }
@@ -914,7 +928,11 @@ class Csv {
      * This function load_data() is able to handle BOMs and encodings. The data
      * is stored within the $this->file_data class field.
      *
-     * @param string|null $input local CSV file or CSV data as a string
+     * @param string|null $input  CSV file path or CSV data as a string
+     *
+     *                            Supplying CSV data (file content) here is deprecated.
+     *                            For CSV data, please use parse().
+     *                            Support for CSV data will be removed in v2.0.0.
      *
      * @return bool  True on success
      */
@@ -924,18 +942,30 @@ class Csv {
 
         if (is_null($input)) {
             $file = $this->file;
+            $data = $this->_rfile($file);
         } elseif (\strlen($input) <= PHP_MAXPATHLEN && file_exists($input)) {
             $file = $input;
-        } else {
-            // It is CSV data as a string.
-            $data = $input;
-        }
-
-        if (!empty($data) || $data = $this->_rfile($file)) {
+            $data = $this->_rfile($file);
             if ($this->file != $file) {
                 $this->file = $file;
             }
+        } else {
+            // It is CSV data as a string.
+            $data = $input;
+            trigger_error(
+                'Supplying CSV data to load_data() will no longer ' .
+                'be supported in a future version of ParseCsv. ' .
+                'This function will return false for invalid paths from v2.0.0 onwards. ' .
+                'Use ->loadDataString() instead.',
+                E_USER_DEPRECATED
+            );
+        }
 
+        return $this->loadDataString($data);
+    }
+
+    public function loadDataString($data) {
+        if (!empty($data)) {
             if (strpos($data, "\xef\xbb\xbf") === 0) {
                 // strip off BOM (UTF-8)
                 $data = substr($data, 3);

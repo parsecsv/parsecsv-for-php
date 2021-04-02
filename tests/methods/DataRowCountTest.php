@@ -60,15 +60,15 @@ class DataRowCountTest extends TestCase {
         $this->csv->heading = false;
         $this->csv->enclosure = '"';
         $sInput = "86545235689,a\r\n34365587654,b\r\n13469874576,\"c\r\nd\"";
-        $this->csv->load_data($sInput);
-        $this->assertEquals(3, $this->csv->getTotalDataRowCount());
+        $this->csv->loadDataString($sInput);
+        self::assertEquals(3, $this->csv->getTotalDataRowCount());
     }
 
     public function testGetTotalRowCountSingleEnclosure() {
         $this->csv->heading = false;
         $this->csv->enclosure = "'";
         $sInput = "86545235689,a\r\n34365587654,b\r\n13469874576,\'c\r\nd\'";
-        $this->csv->load_data($sInput);
+        $this->csv->loadDataString($sInput);
         $this->assertEquals(3, $this->csv->getTotalDataRowCount());
     }
 
@@ -76,7 +76,7 @@ class DataRowCountTest extends TestCase {
         $this->csv->heading = false;
         $this->csv->enclosure = "'";
         $sInput = "86545235689";
-        $this->csv->load_data($sInput);
+        $this->csv->loadDataString($sInput);
         $this->assertEquals(1, $this->csv->getTotalDataRowCount());
     }
 }
