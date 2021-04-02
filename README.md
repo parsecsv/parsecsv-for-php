@@ -66,7 +66,7 @@ print_r($csv->data);
 $csv = new \ParseCsv\Csv();
 $csv->encoding('UTF-16', 'UTF-8');
 $csv->delimiter = "\t";
-$csv->parse('data.tsv');
+$csv->parseFile('data.tsv');
 print_r($csv->data);
 ```
 
@@ -83,7 +83,7 @@ print_r($csv->data);
 ```php
 $csv = new \ParseCsv\Csv();
 $csv->offset = 2;
-$csv->parse('data.csv');
+$csv->parseFile('data.csv');
 print_r($csv->data);
 ```
 
@@ -91,7 +91,7 @@ print_r($csv->data);
 ```php
 $csv = new \ParseCsv\Csv();
 $csv->limit = 5;
-$csv->parse('data.csv');
+$csv->parseFile('data.csv');
 print_r($csv->data);
 ```
 
@@ -99,7 +99,7 @@ print_r($csv->data);
 * Excluding heading line if present (see $csv->header property)
 ```php
 $csv = new \ParseCsv\Csv();
-$csv->load_data('data.csv');
+$csv->loadFile('data.csv');
 $count = $csv->getTotalDataRowCount();
 print_r($count);
 ```
@@ -118,7 +118,7 @@ Change data values:
 ```php
 $csv = new \ParseCsv\Csv();
 $csv->sort_by = 'id';
-$csv->parse('data.csv');
+$csv->parseFile('data.csv');
 # "4" is the value of the "id" column of the CSV row
 $csv->data[4] = array('firstname' => 'John', 'lastname' => 'Doe', 'email' => 'john@doe.com');
 $csv->save();
@@ -127,7 +127,7 @@ $csv->save();
 Enclose each data value by quotes:
 ```php
 $csv = new \ParseCsv\Csv();
-$csv->parse('data.csv');
+$csv->parseFile('data.csv');
 $csv->enclose_all = true;
 $csv->save();
 ```
@@ -137,7 +137,7 @@ $csv->save();
 ```php
 $csv = new \ParseCsv\Csv();
 $csv->fields = ['id', 'name', 'category'];
-$csv->parse('data.csv');
+$csv->parseFile('data.csv');
 ```
 
 **Add row/entry to end of CSV file**
