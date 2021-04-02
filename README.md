@@ -161,6 +161,18 @@ $csv->output('movies.csv', $data_array, $header, ',');
 
 For more complex examples, see the ``tests`` and `examples` directories.
 
+## Test coverage
+
+All tests are located in the `tests` directory. To execute tests, run the following commands:
+
+````bash
+composer install
+composer run test
+````
+
+When pushing code to GitHub, tests will be executed using Travis CI. The relevant configuration is in the
+file `.travis.yml`.
+
 ## Credits
 
 * ParseCsv is based on the concept of [Ming Hong Ng][ming]'s [CsvFileParser][]
