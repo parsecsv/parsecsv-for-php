@@ -371,7 +371,7 @@ class Csv {
      * Parse
      * Parse a CSV file or string
      *
-     * @param string|null $input       The CSV string or a direct file path
+     * @param string|null $dataString  The CSV string or a direct file path
      *                                 WARNING: Supplying file paths here is
      *                                 deprecated and will trigger an
      *                                 E_USER_DEPRECATED error.
@@ -384,20 +384,20 @@ class Csv {
      *
      * @return bool True on success
      */
-    public function parse($input = null, $offset = null, $limit = null, $conditions = null) {
-        if (is_null($input)) {
+    public function parse($dataString = null, $offset = null, $limit = null, $conditions = null) {
+        if (is_null($dataString)) {
             $this->data = $this->parseFile();
             return $this->data !== false;
         }
 
-        if (empty($input)) {
+        if (empty($dataString)) {
             return false;
         }
 
         $this->init($offset, $limit, $conditions);
 
-        if (strlen($input) <= PHP_MAXPATHLEN && is_readable($input)) {
-            $this->file = $input;
+        if (strlen($dataString) <= PHP_MAXPATHLEN && is_readable($dataString)) {
+            $this->file = $dataString;
             $this->data = $this->parseFile();
             trigger_error(
                 'Supplying file paths to parse() will no longer ' .
@@ -407,7 +407,7 @@ class Csv {
             );
         } else {
             $this->file = null;
-            $this->file_data = &$input;
+            $this->file_data = &$dataString;
             $this->data = $this->_parse_string();
         }
 
@@ -1285,18 +1285,18 @@ class Csv {
     /**
      * Read local file.
      *
-     * @param string $file local filename
+     * @param string $filePath  local filename
      *
      * @return string|false Data from file, or false on failure
      */
-    protected function _rfile($file) {
-        if (is_readable($file)) {
-            $data = file_get_contents($file);
+    protected function _rfile($filePath) {
+        if (is_readable($filePath)) {
+            $data = file_get_contents($filePath);
             if ($data === false) {
                 return false;
             }
 
-            if (preg_match('/\.php$/i', $file) && preg_match('/<\?.*?\?>(.*)/ms', $data, $strip)) {
+            if (preg_match('/\.php$/i', $filePath) && preg_match('/<\?.*?\?>(.*)/ms', $data, $strip)) {
                 // Return section behind closing tags.
                 // This parsing is deprecated and will be removed in v2.0.0.
                 $data = ltrim($strip[1]);
