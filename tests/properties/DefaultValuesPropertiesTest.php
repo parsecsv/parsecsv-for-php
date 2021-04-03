@@ -17,7 +17,6 @@ class DefaultValuesPropertiesTest extends TestCase {
     protected $csv = null;
 
     protected function setUp(): void {
-        //setup parse CSV
         $this->csv = new Csv();
     }
 
