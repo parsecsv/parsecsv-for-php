@@ -1,6 +1,6 @@
 ParseCSV 1.3.0
 -----------------------------------
-Date: ?-Apr-2021
+Date: 14-Apr-2021
 
 Breaking changes:
 - Passing file paths to parse() or new Csv() is now deprecated
