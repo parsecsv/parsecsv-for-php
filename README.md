@@ -53,14 +53,7 @@ To use ParseCSV, you then have to add a `require 'parsecsv.lib.php';` line.
 
 ## Example Usage
 
-**General parsing**
-
-```php
-$csv = new \ParseCsv\Csv('data.csv');
-print_r($csv->data);
-```
-
-**Tab delimited, and encoding conversion**
+**Parse a tab-delimited CSV file with encoding conversion**
 
 ```php
 $csv = new \ParseCsv\Csv();
@@ -70,7 +63,7 @@ $csv->parseFile('data.tsv');
 print_r($csv->data);
 ```
 
-**Auto-detect delimiter character**
+**Auto-detect field delimiter character**
 
 ```php
 $csv = new \ParseCsv\Csv();
@@ -151,6 +144,8 @@ $csv->save('data.csv', array(array('1986', 'Home', 'Nowhere', '')), /* append */
 
 **Convert 2D array to CSV data and send headers to browser to treat output as
 a file and download it**
+
+Your web app users would call this an export.
 
 ```php
 $csv = new \ParseCsv\Csv();
