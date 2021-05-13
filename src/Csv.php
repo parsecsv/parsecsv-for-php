@@ -98,12 +98,19 @@ class Csv {
     /**
      * Enclosure character
      *
+     * This is useful for cell values that are either multi-line
+     * or contain the field delimiter character.
+     *
      * @var string
      */
     public $enclosure = '"';
 
     /**
-     * Force enclosing all columns
+     * Force enclosing all columns.
+     *
+     * If false, only cells that are either multi-line or
+     * contain the field delimiter character are enclosed
+     * in the $enclosure char.
      *
      * @var bool
      */
@@ -156,6 +163,7 @@ class Csv {
 
     /**
      * Should we convert the CSV character encoding?
+     * Used for both parse and unparse operations.
      *
      * @var bool
      */
@@ -187,6 +195,7 @@ class Csv {
 
     /**
      * Line feed characters used by unparse, save, and output methods
+     * Popular choices are "\r\n" and "\n".
      *
      * @var string
      */
@@ -277,7 +286,8 @@ class Csv {
     public $titles = array();
 
     /**
-     * Two-dimensional array of CSV data
+     * Two-dimensional array of CSV data.
+     * The first dimension are the line numbers. Each line is represented as an array with field names as keys.
      *
      * @var array
      */
@@ -415,7 +425,9 @@ class Csv {
     }
 
     /**
-     * Generate a CSV based string for output.
+     * Generate a CSV-based string for output.
+     *
+     * Useful for exports in web applications.
      *
      * @param string|null $filename    If a filename is specified here or in the
      *                                 object, headers and data will be output
@@ -461,8 +473,13 @@ class Csv {
     /**
      * Convert character encoding
      *
-     * @param string|null $input  Input character encoding, uses default if left blank
+     * Specify the encoding to use for the next parsing or unparsing.
+     * Calling this function will not change the data held in the object immediately.
+     *
+     * @param string|null $input  Input character encoding
+     *   If the value null is passed, the existing input encoding remains set (default: ISO-8859-1).
      * @param string|null $output Output character encoding, uses default if left blank
+     *   If the value null is passed, the existing input encoding remains set (default: ISO-8859-1).
      *
      * @return void
      */
@@ -1205,14 +1222,14 @@ class Csv {
                 $file = $this->file;
             }
 
-            return $this->load_data($file);
+            return $this->loadFile($file);
         }
 
         return true;
     }
 
     /**
-     * Check if passed info might be delimiter
+     * Check if passed info might be delimiter.
      * Only used by find_delimiter
      *
      * @param string $char      Potential field separating character
