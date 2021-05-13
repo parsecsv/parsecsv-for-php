@@ -331,4 +331,10 @@ class ParseTest extends TestCase {
         self::assertFalse($this->csv->parseFile(''));
         self::assertFalse($this->csv->parseFile(null));
     }
+
+    public function testParseFile() {
+        $data = $this->csv->parseFile(__DIR__ . '/fixtures/auto-double-enclosure.csv');
+        self::assertCount(2, $data);
+        self::assertEquals($data, $this->csv->data);
+    }
 }
