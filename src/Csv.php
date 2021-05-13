@@ -621,7 +621,10 @@ class Csv {
             return false;
         }
 
-        return !empty($this->file_data) ? $this->_parse_string() : false;
+        if (empty($this->file_data)) {
+            return false;
+        }
+        return $this->data = $this->_parse_string();
     }
 
     /**
