@@ -166,18 +166,22 @@ class ParseTest extends TestCase {
 
         // This also tests if ::load_data removed the BOM from the data;
         // otherwise the 'title' column would have 3 extra bytes.
-        $this->assertEquals([
-            'title',
-            'isbn',
-            'publishedAt',
-        ], array_keys(reset($this->csv->data)));
+        $this->assertEquals(
+            [
+                'title',
+                'isbn',
+                'publishedAt',
+            ],
+            array_keys(reset($this->csv->data)));
 
         $titles = array_column($this->csv->data, 'title');
-        $this->assertEquals([
-            'Красивая кулинария',
-            'The Wine Connoisseurs',
-            'Weißwein',
-        ], $titles);
+        $this->assertEquals(
+            [
+                'Красивая кулинария',
+                'The Wine Connoisseurs',
+                'Weißwein',
+            ],
+            $titles);
     }
 
     public function testWithMultipleNewlines() {
@@ -185,18 +189,20 @@ class ParseTest extends TestCase {
         $aElse9 = array_column($this->csv->data, 'else9');
 
         /** @noinspection SpellCheckingInspection */
-        $this->assertEquals([
-            'Abweichung',
-            'Abweichung',
-            'Abweichung',
-            'Alt',
-            'Fehlt',
-            'Neu',
-            'OK',
-            'Fehlt',
-            'Fehlt',
-            'Fehlt',
-        ], $aElse9);
+        $this->assertEquals(
+            [
+                'Abweichung',
+                'Abweichung',
+                'Abweichung',
+                'Alt',
+                'Fehlt',
+                'Neu',
+                'OK',
+                'Fehlt',
+                'Fehlt',
+                'Fehlt',
+            ],
+            $aElse9);
     }
 
     /**
@@ -298,9 +304,9 @@ class ParseTest extends TestCase {
     /**
      * Call protected/private method of a class.
      *
-     * @param object $object     Instantiated object that we will run method on.
-     * @param string $methodName Method name to call
-     * @param array  $parameters Array of parameters to pass into method.
+     * @param object $object      Instantiated object that we will run method on.
+     * @param string $methodName  Method name to call
+     * @param array  $parameters  Array of parameters to pass into method.
      *
      * @return mixed Method return.
      */
