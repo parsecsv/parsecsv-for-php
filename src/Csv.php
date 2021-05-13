@@ -49,7 +49,7 @@ class Csv {
      */
 
     /**
-     * Heading
+     * Header row:
      * Use first line/entry as field names
      *
      * @var bool
@@ -57,7 +57,6 @@ class Csv {
     public $heading = true;
 
     /**
-     * Fields
      * Override field names
      *
      * @var array
@@ -65,7 +64,6 @@ class Csv {
     public $fields = array();
 
     /**
-     * Sort By
      * Sort CSV by this field
      *
      * @var string|null
@@ -73,15 +71,13 @@ class Csv {
     public $sort_by = null;
 
     /**
-     * Sort Reverse
-     * Reverse the sort function
+     * Reverse the sort direction
      *
      * @var bool
      */
     public $sort_reverse = false;
 
     /**
-     * Sort Type
      * Sort behavior passed to sort methods
      *
      * regular = SORT_REGULAR
@@ -93,15 +89,13 @@ class Csv {
     public $sort_type = SortEnum::SORT_TYPE_REGULAR;
 
     /**
-     * Delimiter
-     * Delimiter character
+     * Field delimiter character
      *
      * @var string
      */
     public $delimiter = ',';
 
     /**
-     * Enclosure
      * Enclosure character
      *
      * @var string
@@ -109,7 +103,6 @@ class Csv {
     public $enclosure = '"';
 
     /**
-     * Enclose All
      * Force enclosing all columns
      *
      * @var bool
@@ -117,7 +110,6 @@ class Csv {
     public $enclose_all = false;
 
     /**
-     * Conditions
      * Basic SQL-Like conditions for row matching
      *
      * @var string|null
@@ -125,7 +117,6 @@ class Csv {
     public $conditions = null;
 
     /**
-     * Offset
      * Number of rows to ignore from beginning of data. If present, the heading
      * row is also counted (if $this->heading == true). In other words,
      * $offset == 1 and $offset == 0 have the same meaning in that situation.
@@ -135,7 +126,6 @@ class Csv {
     public $offset = null;
 
     /**
-     * Limit
      * Limits the number of returned rows to the specified amount
      *
      * @var int|null
@@ -143,7 +133,6 @@ class Csv {
     public $limit = null;
 
     /**
-     * Auto Depth
      * Number of rows to analyze when attempting to auto-detect delimiter
      *
      * @var int
@@ -151,7 +140,6 @@ class Csv {
     public $auto_depth = 15;
 
     /**
-     * Auto Non Chars
      * Characters that should be ignored when attempting to auto-detect delimiter
      *
      * @var string
@@ -159,7 +147,6 @@ class Csv {
     public $auto_non_chars = "a-zA-Z0-9\n\r";
 
     /**
-     * Auto Preferred
      * preferred delimiter characters, only used when all filtering method
      * returns multiple possible delimiters (happens very rarely)
      *
@@ -168,7 +155,6 @@ class Csv {
     public $auto_preferred = ",;\t.:|";
 
     /**
-     * Convert Encoding
      * Should we convert the CSV character encoding?
      *
      * @var bool
@@ -176,7 +162,6 @@ class Csv {
     public $convert_encoding = false;
 
     /**
-     * Input Encoding
      * Set the input encoding
      *
      * @var string
@@ -184,7 +169,6 @@ class Csv {
     public $input_encoding = 'ISO-8859-1';
 
     /**
-     * Output Encoding
      * Set the output encoding
      *
      * @var string
@@ -202,7 +186,6 @@ class Csv {
     public $use_mb_convert_encoding = false;
 
     /**
-     * Linefeed
      * Line feed characters used by unparse, save, and output methods
      *
      * @var string
@@ -210,7 +193,6 @@ class Csv {
     public $linefeed = "\r";
 
     /**
-     * Output Delimiter
      * Sets the output delimiter used by the output method
      *
      * @var string
@@ -218,7 +200,6 @@ class Csv {
     public $output_delimiter = ',';
 
     /**
-     * Output filename
      * Sets the output filename
      *
      * @var string
@@ -226,7 +207,6 @@ class Csv {
     public $output_filename = 'data.csv';
 
     /**
-     * Keep File Data
      * keep raw file data in memory after successful parsing (useful for debugging)
      *
      * @var bool
@@ -270,7 +250,6 @@ class Csv {
     public $error = 0;
 
     /**
-     * Error Information
      * Detailed error information
      *
      * @var array
@@ -298,7 +277,6 @@ class Csv {
     public $titles = array();
 
     /**
-     * Data
      * Two-dimensional array of CSV data
      *
      * @var array
@@ -308,7 +286,6 @@ class Csv {
     use DatatypeTrait;
 
     /**
-     * Constructor
      * Class constructor
      *
      * @param string|null $data            The CSV string or a direct file path.
@@ -368,7 +345,6 @@ class Csv {
     // ==============================================
 
     /**
-     * Parse
      * Parse a CSV file or string
      *
      * @param string|null $dataString  The CSV string or a direct file path
@@ -415,8 +391,7 @@ class Csv {
     }
 
     /**
-     * Save
-     * Save changes, or write a new file and/or data
+     * Save changes, or write a new file and/or data.
      *
      * @param string $file    File location to save to
      * @param array  $data    2D array of data
@@ -440,7 +415,6 @@ class Csv {
     }
 
     /**
-     * Output
      * Generate a CSV based string for output.
      *
      * @param string|null $filename    If a filename is specified here or in the
@@ -485,7 +459,6 @@ class Csv {
     }
 
     /**
-     * Encoding
      * Convert character encoding
      *
      * @param string|null $input  Input character encoding, uses default if left blank
@@ -505,8 +478,7 @@ class Csv {
     }
 
     /**
-     * Auto
-     * Auto-Detect Delimiter: Find delimiter by analyzing a specific number of
+     * Auto-detect delimiter: Find delimiter by analyzing a specific number of
      * rows to determine most probable delimiter character
      *
      * @param string|null $file          Local CSV file
@@ -609,7 +581,6 @@ class Csv {
     // ==============================================
 
     /**
-     * Parse File
      * Read file to string and call _parse_string()
      *
      * @param string|null $file  Path to a CSV file.
