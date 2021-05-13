@@ -289,7 +289,7 @@ class Csv {
      * Two-dimensional array of CSV data.
      * The first dimension are the line numbers. Each line is represented as an array with field names as keys.
      *
-     * @var array
+     * @var array<array>
      */
     public $data = array();
 
@@ -605,7 +605,7 @@ class Csv {
      *                           the path may also contain a protocol:
      *                           https://example.org/some/file.csv
      *
-     * @return array|bool
+     * @return array<array>|false
      */
     public function parseFile($file = null) {
         if (is_null($file)) {
@@ -635,7 +635,8 @@ class Csv {
      *
      * @param string|null $data CSV data
      *
-     * @return array|false - 2D array with CSV data, or false on failure
+     * @return array<array>|false
+     *   2D array with CSV data, or false on failure
      */
     protected function _parse_string($data = null) {
         if (empty($data)) {
