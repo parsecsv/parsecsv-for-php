@@ -612,13 +612,13 @@ class Csv {
             $file = $this->file;
         }
 
-        if (empty($this->file_data)) {
-            /**
-             * @see self::keep_file_data
-             * Usually, _parse_string will clean this
-             * Instead of leaving stale data for the next parseFile call behind.
-             */
-            $this->load_data($file);
+        /**
+         * @see self::keep_file_data
+         * Usually, _parse_string will clean this
+         * Instead of leaving stale data for the next parseFile call behind.
+         */
+        if (empty($this->file_data) && !$this->loadFile($file)) {
+            return false;
         }
 
         return !empty($this->file_data) ? $this->_parse_string() : false;
