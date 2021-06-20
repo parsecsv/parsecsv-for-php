@@ -168,6 +168,10 @@ composer run test
 When pushing code to GitHub, tests will be executed using Travis CI. The relevant configuration is in the
 file `.travis.yml`.
 
+## Security
+
+If you discover any security related issues, please email ParseCsv@blaeul.de instead of using GitHub issues.
+
 ## Credits
 
 * ParseCsv is based on the concept of [Ming Hong Ng][ming]'s [CsvFileParser][]
