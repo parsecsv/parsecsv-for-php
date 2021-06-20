@@ -1,6 +1,6 @@
 ParseCSV 1.3.1
 -----------------------------------
-Date: to be released
+Date: 20-Jun-2021
 
 Bugfix:
 - `parseFile()` will now set `$csv->data`.
