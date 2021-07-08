@@ -56,6 +56,34 @@ class SaveTest extends TestCase {
         $this->saveAndCompare($expected);
     }
 
+    public function testSaveWithDelimiterOfComma() {
+        $this->csv = new Csv();
+        $this->csv->heading = false;
+        $this->csv->delimiter = ",";
+        $this->csv->linefeed = "\n";
+        $this->csv->data = [
+            [
+                '3,21',
+                'Twitter',
+                'Monsieur',
+                'eat more vegan food',
+            ],
+            [
+                '"9,72"',
+                'newsletter',
+                'Madame',
+                '"free travel"',
+            ],
+        ];
+
+        // Yep, these double quotes are what Excel and Open Office understand.
+        $expected =
+            '"3,21",Twitter,Monsieur,eat more vegan food' . "\n" .
+            '"""9,72""",newsletter,Madame,"""free travel"""' . "\n";
+        $actual = $this->csv->unparse();
+        self::assertSame($expected, $actual);
+    }
+
     public function testSaveWithoutHeader() {
         $this->csv->linefeed = "\n";
         $this->csv->heading = false;
@@ -63,9 +91,9 @@ class SaveTest extends TestCase {
         $this->saveAndCompare($expected);
     }
 
-    public function testAllQuotes() {
+    public function testEncloseAllWithQuotes() {
         $this->csv->enclose_all = true;
-        $expected = "\"SMS\"\r\"0444\"\r\"5555\"\r";
+        $expected = '"SMS"\r"0444"\r"5555"\r';
         $this->saveAndCompare($expected);
     }
 
