@@ -121,6 +121,15 @@ class ParseTest extends TestCase {
         self::assertEquals($expected, $this->csv->data);
     }
 
+    public function testSingleRow() {
+        $this->csv->auto(__DIR__ . '/../example_files/single_row.csv');
+        self::assertEquals([], $this->csv->data, 'Single row is detected as header');
+        $this->csv->heading = false;
+        $this->csv->auto(__DIR__ . '/../example_files/single_row.csv');
+        $expected = [['C1', 'C2', 'C3']];
+        self::assertEquals($expected, $this->csv->data);
+    }
+
     public function testMatomoData() {
         // Matomo (Piwik) export cannot be read with
         $this->csv->use_mb_convert_encoding = true;

@@ -1261,7 +1261,7 @@ class Csv {
                 }
             }
 
-            if ($equal) {
+            if ($equal || $depth === 1) {
                 $match = $almost ? 2 : 1;
                 $pref = strpos($preferred, $char);
                 $pref = ($pref !== false) ? str_pad($pref, 3, '0', STR_PAD_LEFT) : '999';
