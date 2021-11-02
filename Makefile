@@ -11,5 +11,11 @@ phpunit-dep:
 		exit 1 \
 	)
 
+# Requires:
+# - Docker: https://docker.com
+# - act: https://github.com/nektos/act
+local-ci:
+	act -P ubuntu-latest=shivammathur/node:latest -W .github/workflows/ci.yml
+
 .SILENT:
-.PHONY: test phpunit-dep
+.PHONY: test phpunit-dep local-ci
