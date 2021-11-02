@@ -14,5 +14,8 @@ insert_final_newline = true
 [composer.json]
 indent_size = 4
 
-[.travis.yml]
+[Makefile]
+indent_style = tab
+
+[*.yml,*.yaml]
 indent_size = 2
