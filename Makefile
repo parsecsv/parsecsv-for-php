@@ -15,6 +15,16 @@ phpunit-dep:
 # - Docker: https://docker.com
 # - act: https://github.com/nektos/act
 local-ci:
+ifeq (, $(shell which act))
+define ACT_ERROR
+Consider running the following to install 'act':
+
+   curl https://raw.githubusercontent.com/nektos/act/master/install.sh | sudo bash
+
+The dependency 'act' was not found
+endef
+$(error ${ACT_ERROR})
+endif
 	act -P ubuntu-latest=shivammathur/node:latest -W .github/workflows/ci.yml
 
 .SILENT:
