@@ -1,3 +1,16 @@
+ParseCSV 1.3.2
+-----------------------------------
+Date: 07-Nov-2021
+
+Bugfix:
+- Allow _guess_delimiter to work with a single
+  row of data. As a consequence, `$csv->auto()`
+  now works for files with just one row of data.
+  See issue #206.
+
+-----------------------------------
+
+
 ParseCSV 1.3.1
 -----------------------------------
 Date: 20-Jun-2021
