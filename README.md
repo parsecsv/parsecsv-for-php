@@ -165,8 +165,12 @@ composer install
 composer run test
 ````
 
-When pushing code to GitHub, tests will be executed using Travis CI. The relevant configuration is in the
-file `.travis.yml`.
+When pushing code to GitHub, tests will be executed using GitHub Actions. The relevant configuration is in the
+file `.github/workflows/ci.yml`. To run the `test` action locally, you can execute the following command:
+
+````bash
+make local-ci
+````
 
 ## Security
 
