@@ -1248,7 +1248,7 @@ class Csv {
             $first = null;
             $equal = null;
             $almost = false;
-            foreach ($array as $key => $value) {
+            foreach ($array as $value) {
                 if ($first == null) {
                     $first = $value;
                 } elseif ($value == $first && $equal !== false) {
@@ -1405,7 +1405,7 @@ class Csv {
             $is_newline = ($ch == "\n" && $pch != "\r") || $ch == "\r";
             if ($ch == $enclosure) {
                 if (!$enclosed || $nch != $enclosure) {
-                    $enclosed = $enclosed ? false : true;
+                    $enclosed = !$enclosed;
                 } elseif ($enclosed) {
                     $i++;
                 }
