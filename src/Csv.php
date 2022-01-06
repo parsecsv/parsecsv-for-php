@@ -317,7 +317,7 @@ class Csv {
         $this->init($offset, $limit, $conditions, $keep_file_data);
 
         if (!empty($data)) {
-            $this->parse($data);
+            $this->parseFile($data);
         }
     }
 
