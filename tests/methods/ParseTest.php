@@ -87,7 +87,9 @@ class ParseTest extends TestCase {
         self::assertEquals(false, $this->csv->autoDetectionForDataString($sInput));
         self::assertEquals(null, $this->csv->delimiter);
         $expected_data = explode("\r\n", $sInput);
-        $actual_data = array_map('reset', $this->csv->data);
+        $actual_data = array_map(function ($k) {
+            return reset($k);
+        }, $this->csv->data);
         self::assertEquals($expected_data, $actual_data);
     }
 
@@ -98,7 +100,9 @@ class ParseTest extends TestCase {
         $expected_data = [86545235689, 34365587654, 13469874576];
 
         $actual_data = $this->invokeMethod($this->csv, '_parse_string', [$sInput]);
-        $actual_column = array_map('reset', $actual_data);
+        $actual_column = array_map(function ($k) {
+            return reset($k);
+        }, $actual_data);
         self::assertEquals($expected_data, $actual_column);
         self::assertEquals(
             [
@@ -106,7 +110,9 @@ class ParseTest extends TestCase {
                 'b',
                 "c\r\nd",
             ],
-            array_map('next', $actual_data)
+            array_map(function ($el) {
+                return next($el);
+            }, $actual_data)
         );
     }
 
