@@ -13,7 +13,7 @@ class SaveTest extends TestCase {
     private $temp_filename;
 
     /**
-     * Setup our test environment objects; will be called before each test.
+     * Set up our test environment objects; will be called before each test.
      */
     protected function setUp(): void {
         $this->csv = new Csv();
