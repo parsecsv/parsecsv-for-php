@@ -33,6 +33,8 @@ jobs:
           path: ${{ steps.composer-cache.outputs.dir }}
           key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
           restore-keys: ${{ runner.os }}-composer-
+      - name: Update PHPUnit
+        run: composer require phpunit/phpunit --dev -W
       - name: Install dependencies
         run: composer update
       - name: Validate dependencies
