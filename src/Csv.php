@@ -419,7 +419,7 @@ class Csv {
         }
 
         $mode = FileProcessingModeEnum::getAppendMode($append);
-        $is_php = preg_match('/\.php$/i', $file) ? true : false;
+        $is_php = (bool) preg_match('/\.php$/i', $file);
 
         return $this->_wfile($file, $this->unparse($data, $fields, $append, $is_php), $mode);
     }
@@ -855,9 +855,8 @@ class Csv {
             $string .= implode($delimiter, $entry) . $this->linefeed;
             $entry = array();
         }
-
         // create data
-        foreach ($data as $key => $row) {
+        foreach ($data as $row) {
             foreach (array_keys($fieldOrder) as $index) {
                 $cell_value = $row[$index];
                 $entry[] = $this->_enclose_value($cell_value, $delimiter);
