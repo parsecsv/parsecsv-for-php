@@ -1,5 +1,6 @@
 # ParseCsv
 [![Financial Contributors on Open Collective](https://opencollective.com/parsecsv/all/badge.svg?label=financial+contributors)](https://opencollective.com/parsecsv)
+![PHPUnit](https://github.com/parsecsv/parsecsv-for-php/actions/workflows/phpunit.yml/badge.svg)
 
 ParseCsv is an easy-to-use PHP class that reads and writes CSV data properly. It
 fully conforms to the specifications outlined on the on the
