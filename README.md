@@ -2,7 +2,7 @@
 ![PHPUnit](https://github.com/parsecsv/parsecsv-for-php/actions/workflows/phpunit.yml/badge.svg)
 
 ParseCsv is an easy-to-use PHP class that reads and writes CSV data properly. It
-fully conforms to the specifications outlined on the on the
+fully conforms to the specifications outlined on the
 [Wikipedia article][CSV] (and thus RFC 4180). It has many advanced features which help make your
 life easier when dealing with CSV data.
 
@@ -28,7 +28,7 @@ and third-party support for handling CSV data in PHP.
 * Support for character encoding conversion using PHP's
   `iconv()` and `mb_convert_encoding()` functions.
 * Supports PHP 5.5 and higher.
-  It certainly works with PHP 7.2 and all versions in between.
+  It certainly works with PHP 8.3 and all versions in between.
 
 ## Installation
 
@@ -165,6 +165,8 @@ composer install
 composer run test
 ````
 
+Note that PHP 8.2 and newer allow PHPUnit versions that deprecate `@annotations`. The GitHub actions use Rector to
+convert them to `#[attributes]`.
 When pushing code to GitHub, tests will be executed using GitHub Actions. The relevant configuration is in the
 file `.github/workflows/ci.yml`. To run the `test` action locally, you can execute the following command:
 
