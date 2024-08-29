@@ -61,8 +61,13 @@ class ConstructTest extends TestCase {
             $ob_get_clean = ob_get_clean();
             $verb = strtok($script_file, '_.');
 
-            if (!in_array($verb, ['download', 'save'], true)) {
-                $this->assertStringContainsString('<td>', $ob_get_clean);
+            if (!in_array($verb, ['download', 'save'], TRUE)) {
+                if (method_exists($this, 'assertStringContainsString')) {
+                    $this->assertStringContainsString('<td>', $ob_get_clean);
+                }
+                else {
+                    $this->assertContains('<td>', $ob_get_clean);
+                }
             }
         }
         chdir('..');
