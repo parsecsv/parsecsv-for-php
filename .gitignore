@@ -1,7 +1,14 @@
 *.bak
+.env
+.envrc
 /.idea
+/.vscode
+/composer-setup.php
 /composer.lock
 /coverage_clover.xml
+/docker-compose.yml
+/examples/people.csv
 /phive.xml
+/tests/.phpunit.result.cache
 /tools
 /vendor/

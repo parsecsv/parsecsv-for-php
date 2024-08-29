@@ -63,7 +63,7 @@ class ParseTest extends TestCase {
     /**
      * @return array
      */
-    public function autoDetectionProvider() {
+    public static function autoDetectionProvider() {
         return [
             'UTF8_no_BOM' => [__DIR__ . '/../example_files/UTF-8_sep_row_but_no_BOM.csv'],
             'UTF8' => [__DIR__ . '/../example_files/UTF-8_with_BOM_and_sep_row.csv'],
@@ -294,7 +294,7 @@ class ParseTest extends TestCase {
     /**
      * @return array
      */
-    public function autoQuotesDataProvider(): array {
+    public static function autoQuotesDataProvider(): array {
         return array(
             array('auto-double-enclosure.csv', '"'),
             array('auto-single-enclosure.csv', "'"),
