@@ -326,7 +326,7 @@ class ParseTest extends TestCase {
      * @return mixed Method return.
      */
     private function invokeMethod($object, $methodName, $parameters = []) {
-        $reflection = new ReflectionClass(get_class($object));
+        $reflection = new ReflectionClass($object::class);
         $method = $reflection->getMethod($methodName);
         $method->setAccessible(true);
 

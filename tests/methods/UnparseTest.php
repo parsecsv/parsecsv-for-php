@@ -20,7 +20,7 @@ class UnparseTest extends Testcase {
     }
 
     public function testUnparseWithParameters() {
-        $fields = array('a' => 'AA', 'b' => 'BB');
+        $fields = ['a' => 'AA', 'b' => 'BB'];
         $data = [['a' => 'value1', 'b' => 'value2']];
         $csv_object = new Csv();
         $csv_string = $csv_object->unparse($data, $fields);
@@ -52,24 +52,21 @@ class UnparseTest extends Testcase {
 
     public function testUnparseRenameFields() {
         $expected = "C1,C2\rvalue1,value2\rvalue3,value4\r";
-        $this->unparseAndCompare($expected, array("C1", "C2"));
+        $this->unparseAndCompare($expected, ["C1", "C2"]);
     }
 
     public function testReorderFields() {
         $expected = "column2,column1\rvalue2,value1\rvalue4,value3\r";
-        $this->unparseAndCompare($expected, array("column2", "column1"));
+        $this->unparseAndCompare($expected, ["column2", "column1"]);
     }
 
     public function testSubsetFields() {
         $expected = "column1\rvalue1\rvalue3\r";
-        $this->unparseAndCompare($expected, array("column1"));
+        $this->unparseAndCompare($expected, ["column1"]);
     }
 
     public function testReorderAndRenameFields() {
-        $fields = array(
-            'column2' => 'C2',
-            'column1' => 'C1',
-        );
+        $fields = ['column2' => 'C2', 'column1' => 'C1'];
         $expected = "C2,C1\rvalue2,value1\rvalue4,value3\r";
         $this->unparseAndCompare($expected, $fields);
     }
@@ -99,7 +96,7 @@ class UnparseTest extends Testcase {
         $this->unparseAndCompare($expected);
     }
 
-    private function unparseAndCompare($expected, $fields = array()) {
+    private function unparseAndCompare($expected, $fields = []) {
         $str = $this->csv->unparse($this->csv->data, $fields);
         $this->assertEquals($expected, $str);
     }
