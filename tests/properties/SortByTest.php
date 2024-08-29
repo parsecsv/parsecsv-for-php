@@ -7,7 +7,7 @@ class SortByTest extends BaseClass {
     public function testSortByRating() {
         $this->csv->sort_by = 'rating';
         $this->csv->conditions = 'title does not contain Blood';
-        if (!preg_match('/^8\.2\./', phpversion()))
+        if (!preg_match('/^8\.2\./', phpversion()) && !preg_match('/^8\.3\./', phpversion()))
             $this->_compareWithExpected([
                 // Rating 0
                 'The Killing Kind',

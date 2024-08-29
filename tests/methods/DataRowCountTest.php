@@ -21,7 +21,7 @@ class DataRowCountTest extends TestCase {
         $this->csv = new Csv();
     }
 
-    public function countRowsProvider() {
+    public static function countRowsProvider() {
         return [
             'auto-double-enclosure' => [
                 'auto-double-enclosure.csv',

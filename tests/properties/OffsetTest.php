@@ -25,7 +25,7 @@ class OffsetTest extends BaseClass {
         $this->assertEquals($expected, $actual);
     }
 
-    public function numberRangeZeroToFourProvider() {
+    public static function numberRangeZeroToFourProvider() {
         return array_map(function ($number) {
             return [$number];
         }, range(0, 4));
