@@ -43,6 +43,9 @@ class UnparseTest extends Testcase {
         $this->unparseAndCompare($expected);
     }
 
+    /**
+     * @doesNotPerformAssertions
+     */
     public function testUnparseDefaultWithoutHeading() {
         $this->csv->heading = false;
         $this->csv->auto(__DIR__ . '/fixtures/auto-double-enclosure.csv');
